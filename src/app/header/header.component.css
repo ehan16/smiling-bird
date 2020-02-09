@@ -1,0 +1,145 @@
+body,
+button {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+}
+
+button {
+  background-color: transparent;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.btnList {
+  background: #0da8b1;
+}
+
+button,
+.home {
+  font-size: 0.9rem;
+  padding: 14px;
+  color: #121212;
+  vertical-align: middle;
+}
+
+.btnList:hover,
+.home:hover {
+  background: #73ced3;
+  color: #101010;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+[class*="container"] {
+  display: block;
+  position: relative;
+  float: left;
+}
+
+.home,
+#btnMenu {
+  position: relative;
+  float: left;
+}
+
+#btnMenu,
+.close {
+  display: none;
+}
+
+header {
+  background: #006066;
+  width: 100%;
+  padding: 16px;
+  display: block;
+  position: absolute;
+  z-index: 10;
+  box-shadow: 0 8px 6px -6px #000;
+  letter-spacing: 5px;
+  text-align: center;
+  text-shadow: -0.5px 0 #fff8e4, 0 0.5px #84c7cb, 0.5px 0 #84c7cb, 0 -0.5px #84c7cb;
+}
+
+#sticky_nav {
+  background: #0da8b1;
+  width: 100%;
+  /* top: -50px; */
+  display: block;
+  position: fixed;
+  z-index: 999;
+  transition: all 0.5s ease;
+}
+
+@media (max-width: 683px) {
+  #btnMenu {
+    display: block;
+  }
+  .container_menu {
+    display: none;
+  }
+
+  .btnList {
+    width: 8rem;
+    box-shadow: 0 2px 2px -2px #333;
+    background: #0da8b1;
+  }
+
+  .show_menu {
+    background: #04b0b9;
+    width: 100%;
+    top: 45px;
+    display: block;
+    position: absolute;
+  }
+}
+
+.visible {
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
+
+@keyframes buble {
+  from {
+    transform: rotate(45deg) translate(-50%, 0) scale(0.8, 0.8);
+  }
+  to {
+    transform: rotate(45deg) translate(-50%, 0) scale(1, 1);
+  }
+}
+
+@keyframes height {
+  from {
+    padding: 0;
+    opacity: 0;
+  }
+  to {
+    padding: 20px 0;
+    opacity: 1;
+  }
+}
+
+@keyframes width {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 150px;
+    opacity: 1;
+  }
+}
