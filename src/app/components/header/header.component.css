@@ -32,17 +32,17 @@ button,
   color: #101010;
 }
 
-h1 {
+/* h1 {
   margin: 0;
   padding: 0;
   font-size: 2rem;
-}
+} */
 
-p {
+/* p {
   margin: 0;
   padding: 0;
   font-size: 1.2rem;
-}
+} */
 
 [class*="container"] {
   display: block;
@@ -89,7 +89,7 @@ header {
     display: block;
   }
 
-  .container_menu {
+  .none {
     display: none;
   }
 
@@ -99,23 +99,24 @@ header {
     background: #0da8b1;
   }
 
-  .show_menu {
-    background: #04b0b9;
+  .opened {
     width: 100%;
-    top: 45px;
+    top: 5rem;
     display: block;
     position: absolute;
   }
-}
 
-.visible {
-  display: inline-block;
-}
-.hidden {
-  display: none;
+  .opened .btnList {
+    background: #12aeb6;
+    display: inline-block;
+    width: 100%;
+  }
+
 }
 
 .nav-right {
   position: absolute;
+  top: 0;
   right: 0;
+  border: none;
 }

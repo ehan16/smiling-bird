@@ -8,12 +8,12 @@
 		<a class="home">
       <img src="../../assets/home.png" height="20rem">
     </a>
-    <button id="btnMenu" onclick="openMenu()">
+    <button id="btnMenu" (click)="toggleCollapse()" class="navbar-toggler navbar-toggler-right">
       <div class="bars"><img src="../../assets/barras.png" height="17rem"></div>
       <div class="close"><img src="../../assets/close.png" height="20rem"></div>
 		</button>
 	</div>
-	<div class="container_menu" id="thisMenu">
+	<div class="container-menu collapse" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >
 			<button class="btnList" >Home</button>
 			<button class="btnList" *ngIf="currentUser.type === 'patient'">Odontólogos</button>
 			<button class="btnList" *ngIf="currentUser.type === 'patient'">Historial</button>
