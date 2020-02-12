@@ -1,6 +1,6 @@
 body,
 button {
-  font-family: Roboto;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-style: normal;
   font-weight: 400;
   text-align: center;
@@ -15,6 +15,7 @@ button {
 
 .btnList {
   background: #0da8b1;
+  font-size: 1.2rem;
 }
 
 button,
@@ -40,7 +41,7 @@ h1 {
 p {
   margin: 0;
   padding: 0;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 [class*="container"] {
@@ -61,10 +62,11 @@ p {
 }
 
 header {
-  background: #006066;
+  box-sizing: border-box;
+  background: #04666d;
   width: 100%;
-  padding: 16px;
-  display: block;
+  padding-bottom: 16px;
+  /* display: block; */
   position: absolute;
   z-index: 10;
   box-shadow: 0 8px 6px -6px #000;
@@ -75,18 +77,20 @@ header {
 
 #sticky_nav {
   background: #0da8b1;
+  height: fit-content;
   width: 100%;
   /* top: -50px; */
   display: block;
   position: fixed;
-  z-index: 999;
-  transition: all 0.5s ease;
+  display: flex;
 }
 
 @media (max-width: 683px) {
+
   #btnMenu {
     display: block;
   }
+
   .container_menu {
     display: none;
   }
@@ -113,33 +117,7 @@ header {
   display: none;
 }
 
-@keyframes buble {
-  from {
-    transform: rotate(45deg) translate(-50%, 0) scale(0.8, 0.8);
-  }
-  to {
-    transform: rotate(45deg) translate(-50%, 0) scale(1, 1);
-  }
+.nav-right {
+  float: right;
 }
 
-@keyframes height {
-  from {
-    padding: 0;
-    opacity: 0;
-  }
-  to {
-    padding: 20px 0;
-    opacity: 1;
-  }
-}
-
-@keyframes width {
-  from {
-    width: 0;
-    opacity: 0;
-  }
-  to {
-    width: 150px;
-    opacity: 1;
-  }
-}

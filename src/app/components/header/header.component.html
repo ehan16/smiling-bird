@@ -1,0 +1,29 @@
+<header>
+  <img src="../../assets/logo2.png" alt="Smiling Bird logo" height="100rem">
+	<!-- <h1>Smiling Bird</h1> -->
+	<!-- <p>Tu clínica dental de confianza</p> -->
+</header>
+<nav id="sticky_nav" #stickyNav>
+	<div class="container_left">
+		<a class="home">
+      <img src="../../assets/home.png" height="20rem">
+    </a>
+    <button id="btnMenu" onclick="openMenu()">
+      <div class="bars"><img src="../../assets/barras.png" height="17rem"></div>
+      <div class="close"><img src="../../assets/close.png" height="20rem"></div>
+		</button>
+	</div>
+	<div class="container_menu" id="thisMenu">
+			<button class="btnList" >Home</button>
+			<button class="btnList" *ngIf="currentUser.type === 'patient'">Odontólogos</button>
+			<button class="btnList" *ngIf="currentUser.type === 'patient'">Historial</button>
+			<button class="btnList" *ngIf="currentUser.type === 'patient'">Pago</button>
+      <button class="btnList" *ngIf="currentUser.type === 'dentist'">Pacientes</button>
+      <button class="btnList" *ngIf="currentUser.type === 'dentist'">Reportes</button>
+      <button class="btnList" *ngIf="currentUser.type === 'admin'">Usuarios</button>
+      <span class="navbar-nav">
+        <button class="btnList" *ngIf="!logged;else loggedUser">Iniciar sesión</button>
+        <ng-template #loggedUser><button class="btnList">{{ currentUser.name }}</button></ng-template>
+      </span>
+    </div>
+</nav>
