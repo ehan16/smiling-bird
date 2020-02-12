@@ -21,9 +21,9 @@
       <button class="btnList" *ngIf="currentUser.type === 'dentist'">Pacientes</button>
       <button class="btnList" *ngIf="currentUser.type === 'dentist'">Reportes</button>
       <button class="btnList" *ngIf="currentUser.type === 'admin'">Usuarios</button>
-      <span class="navbar-nav">
-        <button class="btnList" *ngIf="!logged;else loggedUser">Iniciar sesión</button>
-        <ng-template #loggedUser><button class="btnList">{{ currentUser.name }}</button></ng-template>
-      </span>
     </div>
+    <span class="nav-right">
+      <button class="btnList" *ngIf="!logged;else loggedUser">Iniciar sesión</button>
+      <ng-template #loggedUser><button class="btnList">{{ currentUser.name }}</button></ng-template>
+    </span>
 </nav>

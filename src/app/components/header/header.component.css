@@ -21,7 +21,7 @@ button {
 button,
 .home {
   font-size: 0.9rem;
-  padding: 14px;
+  padding: 16px;
   color: #121212;
   vertical-align: middle;
 }
@@ -65,21 +65,19 @@ header {
   box-sizing: border-box;
   background: #04666d;
   width: 100%;
-  padding-bottom: 16px;
-  /* display: block; */
+  /* padding-bottom: 16px; */
   position: absolute;
   z-index: 10;
   box-shadow: 0 8px 6px -6px #000;
-  letter-spacing: 5px;
+  /* letter-spacing: 5px; */
   text-align: center;
-  text-shadow: -0.5px 0 #fff8e4, 0 0.5px #84c7cb, 0.5px 0 #84c7cb, 0 -0.5px #84c7cb;
+  /* text-shadow: -0.5px 0 #fff8e4, 0 0.5px #84c7cb, 0.5px 0 #84c7cb, 0 -0.5px #84c7cb; */
 }
 
 #sticky_nav {
   background: #0da8b1;
   height: fit-content;
   width: 100%;
-  /* top: -50px; */
   display: block;
   position: fixed;
   display: flex;
@@ -118,6 +116,6 @@ header {
 }
 
 .nav-right {
-  float: right;
+  position: absolute;
+  right: 0;
 }
-
