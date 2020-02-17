@@ -17,5 +17,16 @@
 .jumbotron {
   background-color: #03779b;
   text-align: center;
-  color: rgb(255, 255, 249);
+  color: white;
+  text-shadow: -0.5px 0 #fff8e4, 0 0.5px #242424, 0.5px 0 #242424, 0 -0.5px #242424;
 }
+
+.testimonial {
+  background-color: #03779b;
+  height: 20rem;
+}
+
+.carousel-caption {
+  font-size: 15px;
+}
+

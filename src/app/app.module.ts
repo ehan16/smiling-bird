@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -20,7 +22,6 @@ import { AppointmentItemComponent } from './components/shared/appointments/appoi
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { UserItemComponent } from './components/shared/users-list/user-item/user-item.component';
 import { UserEditComponent } from './components/shared/users-list/user-edit/user-edit.component';
-import { AppRoutingModule } from './app-routing.module';
 import { ConsultListComponent } from './components/shared/medical-history/consult-list/consult-list.component';
 import { ConsultItemComponent } from './components/shared/medical-history/consult-list/consult-item/consult-item.component';
 import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
@@ -57,7 +58,8 @@ import { AdminComponent } from './components/admin/admin.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgbCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]
