@@ -1,7 +1,5 @@
 body,
 button {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-style: normal;
   font-weight: 400;
   text-align: center;
 }
@@ -14,7 +12,7 @@ button {
 }
 
 .btnList {
-  background: #0da8b1;
+  background: transparent;
   font-size: 1.2rem;
 }
 
@@ -31,18 +29,6 @@ button,
   background: #73ced3;
   color: #101010;
 }
-
-/* h1 {
-  margin: 0;
-  padding: 0;
-  font-size: 2rem;
-} */
-
-/* p {
-  margin: 0;
-  padding: 0;
-  font-size: 1.2rem;
-} */
 
 [class*="container"] {
   display: block;
@@ -63,30 +49,33 @@ button,
 
 header {
   box-sizing: border-box;
-  background: #04666d;
+  background: #005772;
   width: 100%;
-  /* padding-bottom: 16px; */
   position: absolute;
   z-index: 10;
   box-shadow: 0 8px 6px -6px #000;
-  /* letter-spacing: 5px; */
   text-align: center;
   /* text-shadow: -0.5px 0 #fff8e4, 0 0.5px #84c7cb, 0.5px 0 #84c7cb, 0 -0.5px #84c7cb; */
 }
 
 #sticky_nav {
-  background: #0da8b1;
+  background: #0d90b1;
   height: fit-content;
   width: 100%;
   display: block;
   position: fixed;
   display: flex;
+  box-shadow: 0 6px 4px -4px #333333;
 }
 
 @media (max-width: 683px) {
 
   #btnMenu {
     display: block;
+  }
+
+  header {
+    display: none;
   }
 
   .none {
@@ -96,20 +85,24 @@ header {
   .btnList {
     width: 8rem;
     box-shadow: 0 2px 2px -2px #333;
-    background: #0da8b1;
+    background: #0d90b1;
   }
 
   .opened {
     width: 100%;
-    top: 5rem;
+    top: 100%;
     display: block;
     position: absolute;
   }
 
   .opened .btnList {
-    background: #12aeb6;
+    background: #0d90b1;
     display: inline-block;
     width: 100%;
+  }
+
+  .nav-right .btnList {
+    padding: 0.8rem;
   }
 
 }

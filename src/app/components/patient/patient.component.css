@@ -1,0 +1,21 @@
+.address img {
+  position: relative;
+}
+
+.place {
+  background-color: rgba(255, 243, 225, 0.527);
+  border-radius: 10px;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+
+.place p {
+  margin-top: 7%;
+}
+
+.jumbotron {
+  background-color: #03779b;
+  text-align: center;
+  color: rgb(255, 255, 249);
+}
