@@ -44,3 +44,8 @@
   box-shadow: 0 8px 6px -1px #000;
 }
 
+.treatment:hover {
+  background-color: rgb(190, 190, 190);
+  border-radius: 5px;
+}
+
