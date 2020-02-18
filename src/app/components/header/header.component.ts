@@ -23,8 +23,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
-    console.log('Holis');
-  }
+  // @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+  //   console.log('Holis');
+  // }
 
 }

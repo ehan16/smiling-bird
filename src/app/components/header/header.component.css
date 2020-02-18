@@ -1,6 +1,5 @@
 body,
 button {
-  font-weight: 400;
   text-align: center;
 }
 
@@ -13,7 +12,6 @@ button {
 
 .btnList {
   background: transparent;
-  font-size: 1.2rem;
 }
 
 button,
@@ -52,7 +50,7 @@ header {
   background: #005772;
   width: 100%;
   position: absolute;
-  z-index: 10;
+  z-index: 999;
   box-shadow: 0 8px 6px -6px #000;
   text-align: center;
   /* text-shadow: -0.5px 0 #fff8e4, 0 0.5px #84c7cb, 0.5px 0 #84c7cb, 0 -0.5px #84c7cb; */
@@ -65,6 +63,7 @@ header {
   display: block;
   position: fixed;
   display: flex;
+  z-index: 100;
   box-shadow: 0 6px 4px -4px #333333;
 }
 
