@@ -1,16 +1,14 @@
 <header>
-  <img src="../../assets/logo2.png" alt="Smiling Bird logo" height="100rem">
-	<!-- <h1>Smiling Bird</h1> -->
-	<!-- <p>Tu clínica dental de confianza</p> -->
+  <img src="../../assets/logo/logo2.png" alt="Smiling Bird logo" height="100rem">
 </header>
 <nav id="sticky_nav" #stickyNav>
 	<div class="container_left">
 		<a class="home">
-      <img src="../../assets/home.png" height="20rem">
+      <img src="../../assets/icon/home.png" height="20rem">
     </a>
     <button id="btnMenu" (click)="toggleCollapse()" class="navbar-toggler navbar-toggler-right">
-      <div class="bars"><img src="../../assets/barras.png" height="17rem"></div>
-      <div class="close"><img src="../../assets/close.png" height="20rem"></div>
+      <div class="bars"><img src="../../assets/icon/barras.png" height="17rem"></div>
+      <div class="close"><img src="../../assets/icon/close.png" height="20rem"></div>
 		</button>
 	</div>
 	<div class="container-menu collapse" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >
