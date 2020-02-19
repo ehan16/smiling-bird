@@ -1,6 +1,5 @@
 .address {
   position: relative;
-  display: block;
 }
 
 .direction {
@@ -13,13 +12,13 @@
   height: 100%;
   color: rgba(255, 255, 255, 0);
   transition: all 1s linear;
+  font-size: 0.9rem;
 }
 
 .address:hover .direction {
   background-color: rgba(0, 0, 0, .8);
   color: rgba(255, 255, 255, 1);
   transition: all .2s linear;
-  font-size: 0.9rem;
 }
 
 .jumbotron {
@@ -49,3 +48,15 @@
   border-radius: 5px;
 }
 
+@media (max-width: 640px) {
+  /* For mobile phones: */
+  [class*="col-"] {
+    width: 100%;
+  }
+
+  .direction {
+    background-color: rgba(0, 0, 0, .8);
+  color: rgba(255, 255, 255, 1);
+  }
+
+}
