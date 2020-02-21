@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  loginForm: FormGroup;
+
   constructor() { }
 
   ngOnInit() {
+    this.loginForm = new FormGroup({
+      username: new FormControl(null,[Validators.required, Validators.email]),
+      password: new FormControl(null, Validators.required)
+    });
   }
+
+  onSubmit() {
+
+  }
+
+  // forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+  //   const promise = new Promise<any>((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (this.forbiddenEmails(.indexOf(control.value)) !== -1) {
+  //         resolve({'emailIsForbidden': true});
+  //       } else {
+  //         resolve(null);
+  //       }
+  //     }, 1500);
+  //   });
+  //   return promise;
+  // }
 
 }

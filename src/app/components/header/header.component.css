@@ -1,8 +1,3 @@
-body,
-button {
-  text-align: center;
-}
-
 button {
   background-color: transparent;
   margin: 0;
@@ -10,16 +5,11 @@ button {
   cursor: pointer;
 }
 
-.btnList {
-  background: transparent;
-}
-
 button,
 .home {
   font-size: 0.9rem;
   padding: 16px;
   color: #121212;
-  vertical-align: middle;
 }
 
 .btnList:hover,
@@ -40,8 +30,7 @@ button,
   float: left;
 }
 
-#btnMenu,
-.close {
+#btnMenu {
   display: none;
 }
 
@@ -53,7 +42,6 @@ header {
   z-index: 999;
   box-shadow: 0 8px 6px -6px #000;
   text-align: center;
-  /* text-shadow: -0.5px 0 #fff8e4, 0 0.5px #84c7cb, 0.5px 0 #84c7cb, 0 -0.5px #84c7cb; */
 }
 
 #sticky_nav {
@@ -73,11 +61,7 @@ header {
     display: block;
   }
 
-  header {
-    display: none;
-  }
-
-  .none {
+  header, .none {
     display: none;
   }
 
@@ -85,6 +69,7 @@ header {
     width: 8rem;
     box-shadow: 0 2px 2px -2px #333;
     background: #0d90b1;
+    width: 100%;
   }
 
   .opened {
@@ -95,13 +80,11 @@ header {
   }
 
   .opened .btnList {
-    background: #0d90b1;
     display: inline-block;
-    width: 100%;
   }
 
   .nav-right .btnList {
-    padding: 0.8rem;
+    padding: 0.9rem;
   }
 
 }

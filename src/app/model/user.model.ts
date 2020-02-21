@@ -1,3 +1,4 @@
+import { Appointment } from './appointment.model';
 
 export class User {
 
@@ -11,6 +12,7 @@ export class User {
   public debt: number;
 
   public patients: User[] = [];
+  public appointments: Appointment[];
 
   constructor(user: string, password: string, name: string){
     this.name = name;

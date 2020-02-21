@@ -4,5 +4,7 @@
 }
 
 .content {
-  min-height: calc(100vh-10px);
+  /* min-height: calc(100vh-20px); */
+  min-height: 110vh;
+  padding: 10vh 0 0 0;
 }
