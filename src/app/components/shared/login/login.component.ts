@@ -23,6 +23,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     console.log(this.loginForm);
     // this.loginForm.reset();
+
+    // Buscar cual usuario es y redirigir
+
   }
 
   // forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {

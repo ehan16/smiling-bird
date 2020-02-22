@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PatientComponent } from './components/patient/patient.component';
 import { LoginComponent } from './components/shared/login/login.component';
-import { SignInComponent } from './components/shared/sign-in/sign-in.component';
+import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
 import { PaymentComponent } from './components/patient/payment/payment.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
@@ -12,7 +12,7 @@ const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignInComponent},
+  {path: 'signup', component: SignUpComponent},
   {path: 'patient/:id', component: PatientComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
