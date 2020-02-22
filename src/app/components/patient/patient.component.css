@@ -50,13 +50,15 @@
 
 @media (max-width: 640px) {
   /* For mobile phones: */
-  [class*="col-"] {
-    width: 100%;
-  }
 
   .direction {
     background-color: rgba(0, 0, 0, .8);
-  color: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 0.8rem;
+  }
+
+  .testimonial {
+    height: 70vh;
   }
 
 }
