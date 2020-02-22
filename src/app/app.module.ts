@@ -29,6 +29,7 @@ import { ConsultDetailComponent } from './components/shared/medical-history/cons
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/shared/login/login.component';
 import { SignInComponent } from './components/shared/sign-in/sign-in.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { SignInComponent } from './components/shared/sign-in/sign-in.component';
     ConsultDetailComponent,
     AdminComponent,
     LoginComponent,
-    SignInComponent
+    SignInComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

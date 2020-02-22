@@ -14,13 +14,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl(null,[Validators.required, Validators.email]),
-      password: new FormControl(null, Validators.required)
+      username : new FormControl('', [ Validators.required, Validators.email]),
+      password : new FormControl('', Validators.required)
     });
+
   }
 
   onSubmit() {
-
+    console.log(this.loginForm);
+    // this.loginForm.reset();
   }
 
   // forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
