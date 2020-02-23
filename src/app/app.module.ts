@@ -30,6 +30,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/shared/login/login.component';
 import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProfileDetailComponent } from './components/shared/profile/profile-detail/profile-detail.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { HomeComponent } from './components/home/home.component';
     AdminComponent,
     LoginComponent,
     SignUpComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileDetailComponent
   ],
   imports: [
     BrowserModule,

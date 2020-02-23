@@ -1,11 +1,3 @@
-input.ng-invalid.ng-touched {
-  border: 1px solid red;
-}
-
-.form-field {
-  background-color: #e6fcff;
-}
-
 span {
   font-size: 0.7rem;
 }
@@ -13,8 +5,4 @@ span {
 .login-form {
   padding-top: 20vh;
   padding-bottom: 20vh;
-}
-
-.page {
-  background-color: #fffef0;
 }

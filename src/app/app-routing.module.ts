@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PaymentComponent } from './components/patient/payment/payment.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
+import { ProfileComponent } from './components/shared/profile/profile.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -17,8 +18,9 @@ const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
-    {path: 'payment', component: PaymentComponent}
+    {path: 'payment', component: PaymentComponent},
   ]},
+  {path: ':userType/:id/profile', component: ProfileComponent},
   {path: '**', redirectTo: '/home'}
 ];
 

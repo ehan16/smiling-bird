@@ -1,27 +1,6 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-
 .content {
   /* min-height: calc(100vh-20px); */
   min-height: 110vh;
-  padding: 8vh 0 0 0;
+  padding: 7.5vh 0 0 0;
 }
 
-/* input.ng-invalid.ng-touched {
-  border: 1px solid red;
-} */
-
-/* .form-field {
-  background-color: #e6fcff;
-} */
-
-@media (max-width: 640px) {
-  /* For mobile phones: */
-
-  * {
-    font-size: 0.9rem;
-  }
-
-}
