@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { User } from '../model/user.model';
 export class UserService {
 
   userList: User[] = [];
+  startedEditing = new Subject<number>();
 
   constructor() { }
 

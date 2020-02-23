@@ -1,19 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/model/user.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   editMode = false;
   currentUser: User;
+  subscription: Subscription;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
   ngOnInit() {
+    this.subscription = this.userService.startedEditing.subscribe(
+      (id: number) => {
+        this.editMode = true;
+        console.log(id);
+      }
+    )
+  }
+
+  onEditMode() {
+    this.editMode = !this.editMode;
+
+    if (this.editMode){
+      this.router.navigate(['profile-edit'], {relativeTo: this.route});
+    } else {
+      this.router.navigate(['../'], {relativeTo: this.route});
+    }
+
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
