@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   editMode = false;
-  currentUser: User;
+  currentUser: User = new User('Test', 'test', 'Robert');
   subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
@@ -30,9 +30,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editMode = !this.editMode;
 
     if (this.editMode){
-      this.router.navigate(['profile-edit'], {relativeTo: this.route});
+      this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile', 'edit']);
     } else {
-      this.router.navigate(['../'], {relativeTo: this.route});
+      this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile']);
+      // this.router.navigate(['..'], {relativeTo: this.route});
     }
 
   }

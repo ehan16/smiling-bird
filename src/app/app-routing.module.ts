@@ -8,6 +8,8 @@ import { PaymentComponent } from './components/patient/payment/payment.component
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
 import { ProfileComponent } from './components/shared/profile/profile.component';
+import { ProfileDetailComponent } from './components/shared/profile/profile-detail/profile-detail.component';
+import { ProfileEditComponent } from './components/shared/profile/profile-edit/profile-edit.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -20,7 +22,10 @@ const appRoutes: Routes = [
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'payment', component: PaymentComponent},
   ]},
-  {path: ':userType/:id/profile', component: ProfileComponent},
+  {path: ':userType/:id/profile', component: ProfileComponent, children: [
+    {path: '', component: ProfileDetailComponent},
+    {path: 'edit', component: ProfileEditComponent}
+  ]},
   {path: '**', redirectTo: '/home'}
 ];
 
