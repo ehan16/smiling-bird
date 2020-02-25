@@ -1,23 +1,23 @@
-<div class="px-4">
+<div class="px-5">
   <h5 class="text-center my-3">INFORMACIÓN</h5>
   <hr>
   <div class="row information px-4 flex-column">
-    <h6>Nombre:</h6>
+    <h6 class="text-uppercase font-weight-bold">Nombre:</h6>
     <p>{{ currentUser.name }}</p>
-    <h6>Cedula:</h6>
-    <p>{{ currentUser.id }}</p>
-    <h6>Correo:</h6>
+    <h6 class="text-uppercase font-weight-bold">Cedula:</h6>
+    <p>{{ currentUser.identification }}</p>
+    <h6 class="text-uppercase font-weight-bold">Correo:</h6>
     <p>{{ currentUser.user }}</p>
-    <h6>Año de nacimiento:</h6>
+    <h6 class="text-uppercase font-weight-bold">Año de nacimiento:</h6>
     <p>{{ currentUser.birth.day }} - {{ currentUser.birth.month }} - {{ currentUser.birth.year }}</p>
-    <h6>Género:</h6>
+    <h6 class="text-uppercase font-weight-bold">Género:</h6>
     <p>{{ currentUser.gender }}</p>
     <span *ngIf="currentUser.type === 'patient'">
-      <h6>Estado de cuenta:</h6>
+      <h6 class="text-uppercase font-weight-bold">Estado de cuenta:</h6>
       <p>{{ currentUser.debt }}</p>
     </span>
     <span *ngIf="currentUser.type === 'dentist'">
-      <h6>Horario:</h6>
+      <h6 class="text-uppercase font-weight-bold">Horario:</h6>
       <p>{{ currentUser.shift }}</p>
     </span>
   </div>

@@ -1,1 +1,122 @@
-<p>configuration works!</p>
+<div class="px-5">
+  <h5 class="text-center my-3">INFORMACIÓN</h5>
+  <hr />
+  <form [formGroup]="editForm">
+    <div class="form-group">
+      <label for="name" class="text-uppercase font-weight-bold">Nombre</label>
+      <input type="text" id="name" formControlName="name" class="form-control form-field" />
+      <!-- <span
+      *ngIf="
+        !loginForm.get('username').valid && loginForm.get('username').touched
+      "
+      class="help-block"
+    > -->
+      <!-- <span *ngIf="loginForm.get('username').errors['nameIsForbidden']">El nombre es inválido</span> -->
+      <!-- <span *ngIf="loginForm.get('username').errors['required']"
+        >El campo es obligatorio</span
+      >
+      <span *ngIf="loginForm.get('username').errors['email']"
+        >El dato introducido es incorrecto</span
+      >
+    </span> -->
+    </div>
+
+    <div class="form-group">
+      <label for="identification" class="text-uppercase font-weight-bold">Cédula</label>
+      <input
+        type="number"
+        value="{{ currentUser.identification }}"
+        id="identification"
+        class="form-control form-field"
+        disabled
+      />
+      <!-- <span
+        *ngIf="
+          !loginForm.get('password').valid && loginForm.get('password').touched
+        "
+        class="help-block"
+      >
+        <span *ngIf="loginForm.get('password').errors['required']"
+          >El campo es obligatorio</span
+        >
+      </span> -->
+    </div>
+
+    <div class="form-group">
+      <label for="user" class="text-uppercase font-weight-bold">Correo</label>
+      <input
+        id="user"
+        formControlName="user"
+        class="form-control form-field"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="birthDate" class="text-uppercase font-weight-bold">Año de nacimiento</label>
+      <div class="form-inline" id="birthDate">
+
+        <input
+          type="number"
+          id="day"
+          formControlName="day"
+          class="form-control form-field m-2 w-25"
+          min="1"
+          max="31"
+        />
+
+        <input
+          type="number"
+          id="month"
+          formControlName="month"
+          class="form-control form-field m-2 w-25"
+          min="1"
+          max="12"
+        />
+
+        <input
+          type="number"
+          id="year"
+          formControlName="year"
+          class="form-control form-field m-2 w-25"
+          min="1900"
+        />
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender" class="text-uppercase font-weight-bold">Género</label>
+      <select
+        id="gender"
+        formControlName="gender"
+        class="form-control form-field"
+      >
+        <option value="mujer">Mujer</option>
+        <option value="hombre">Hombre</option>
+      </select>
+    </div>
+
+    <span *ngIf="currentUser.type === 'dentist'">
+      <div class="form-group">
+        <label for="shift" class="text-uppercase font-weight-bold">Horario</label>
+        <input
+          id="user"
+          formControlName="user"
+          class="form-control form-field"
+        />
+      </div>
+    </span>
+
+    <span *ngIf="currentUser.type === 'dentist'">
+      <div class="form-group">
+        <label for="payment-methods" class="text-uppercase font-weight-bold">Métodos de pago</label>
+        <input
+          id="payment-methods"
+          formControlName="payment-methods"
+          class="form-control form-field"
+        />
+      </div>
+    </span>
+
+  </form>
+</div>

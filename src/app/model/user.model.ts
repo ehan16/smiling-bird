@@ -5,7 +5,7 @@ export class User {
 
   public name: string;
   public user: string;
-  public id: number;
+  public identification: number;
   public password: string;
   public type: string;
   public birth: Date;
@@ -14,16 +14,17 @@ export class User {
   public appointments: Appointment[];
 
   public debt: number;
+  public record: Appointment[];
 
-  public patients: User[] = [];
+  // public patients: User[] = [];
   public shift: string;
 
   constructor(user: string, password: string, name: string){
     this.name = name;
     this.user = user;
-    this.id = 0;
+    this.identification = 0;
     this.password = password;
-    this.gender = 'Hombre';
+    this.gender = 'hombre';
     this.type = 'patient';
     this.enable = true;
     this.debt = 0;

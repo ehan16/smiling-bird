@@ -10,6 +10,7 @@ export class UserService {
 
   userList: User[] = [];
   startedEditing = new Subject<number>();
+  editedProfile = new Subject<User>();
 
   constructor() { }
 
@@ -33,6 +34,5 @@ export class UserService {
 
   updateList() {
   }
-
 
 }
