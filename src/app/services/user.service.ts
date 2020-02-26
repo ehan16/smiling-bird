@@ -8,31 +8,9 @@ import { Subject } from 'rxjs';
 
 export class UserService {
 
-  userList: User[] = [];
   startedEditing = new Subject<number>();
-  editedProfile = new Subject<User>();
+  editedProfile = new Subject<any>();
 
   constructor() { }
-
-  getUser() {
-  }
-
-  getDentistList() {
-  }
-
-  getUserList() {
-  }
-
-  getPatientList() {
-  }
-
-  addUser() {
-  }
-
-  modifyUser() {
-  }
-
-  updateList() {
-  }
 
 }

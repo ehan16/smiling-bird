@@ -11,12 +11,11 @@
   <!-- Avatar -->
   <div class="col-md-4 text-center py-4 px-sm-4 pale-yellow">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
-    <button class="btn btn-warning w-50" (click)="onEditMode()">{{ editMode ? 'Actualizar' : 'Editar perfil'}}</button>
+    <button class="btn btn-warning w-50" (click)="onEditMode()">{{ editMode ? 'Modo visualización' : 'Modo edición' }}</button>
   </div>
 
   <div class="col-md-8 py-4">
     <div class="border rounded">
-      <!-- <app-profile-detail></app-profile-detail> -->
       <router-outlet></router-outlet>
     </div>
   </div>

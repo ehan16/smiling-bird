@@ -1,7 +1,7 @@
-<header>
+<header class="text-center">
   <img src="../../assets/logo/logo2.png" alt="Smiling Bird logo" height="100rem">
 </header>
-<nav id="sticky_nav" #stickyNav>
+<nav class="main-theme sticky_nav" #stickyNav>
 	<div class="container_left">
 		<a class="home" routerLinkActive="active" (click)="goToHome()">
       <img src="../../../assets/icon-logo/home.png" height="20rem">
@@ -10,7 +10,7 @@
       <div class="bars"><img src="../../../assets/icon-logo/barras.png" height="17rem"></div>
 		</button>
 	</div>
-	<div class="container-menu collapse" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >
+	<div class="container-menu collapse main-theme" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >
 			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'dentist-list']" *ngIf="currentUser.type === 'patient'">Odontólogos</button>
 			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'medical-record']" *ngIf="currentUser.type === 'patient'">Historial</button>
 			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'payment']" *ngIf="currentUser.type === 'patient'">Pago</button>
@@ -19,7 +19,7 @@
       <button class="btnList" routerLinkActive="active" [routerLink]="['/admin','user-list']" *ngIf="currentUser.type === 'admin'">Usuarios</button>
     </div>
     <span class="nav-right">
-      <button class="btnList" routerLink="/login" *ngIf="!logged;else loggedUser">Iniciar sesión</button>
+      <button class="btnList main-theme" routerLink="/login" *ngIf="!logged;else loggedUser">Iniciar sesión</button>
       <ng-template #loggedUser><button class="btnList" [routerLink]="[currentUser.type, currentUser.user, 'profile']">{{ currentUser.name }}</button></ng-template>
     </span>
 </nav>

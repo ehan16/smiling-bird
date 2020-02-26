@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   editMode = false;
   currentUser: User = new User('Test', 'test', 'Robert');
   subscription: Subscription;
+  // editedButtonSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 

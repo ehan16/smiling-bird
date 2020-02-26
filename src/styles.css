@@ -30,6 +30,10 @@ input.ng-invalid.ng-touched {
   background-color: #fffef0;
 }
 
+.main-theme {
+  background: #007396;
+}
+
 .banner {
   position: relative;
 }
