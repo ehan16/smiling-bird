@@ -9,7 +9,6 @@ import { Subject } from 'rxjs';
 export class UserService {
 
   startedEditing = new Subject<number>();
-  editedProfile = new Subject<any>();
 
   constructor() { }
 

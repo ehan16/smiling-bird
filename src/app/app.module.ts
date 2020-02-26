@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -59,7 +59,8 @@ import { UserService } from './services/user.service';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    NgbDatepickerModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

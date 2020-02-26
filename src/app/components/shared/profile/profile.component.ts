@@ -12,9 +12,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   editMode = false;
-  currentUser: User = new User('Test', 'test', 'Robert');
+  currentUser: User = new User('Test', 'test', 'Robert Madera');
   subscription: Subscription;
-  // editedButtonSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 

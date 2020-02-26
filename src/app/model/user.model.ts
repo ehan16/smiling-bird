@@ -1,5 +1,5 @@
 import { Appointment } from './appointment.model';
-import { Date } from './date.model';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 export class User {
 
@@ -8,7 +8,7 @@ export class User {
   public identification: number;
   public password: string;
   public type: string;
-  public birth: Date;
+  public birth: NgbDate;
   public gender: string;
   public enable: boolean;
   public appointments: Appointment[];
@@ -28,7 +28,7 @@ export class User {
     this.type = 'patient';
     this.enable = true;
     this.debt = 0;
-    this.birth = new Date();
+    this.birth = new NgbDate(2008, 2, 12);
     this.shift = '';
   }
 
