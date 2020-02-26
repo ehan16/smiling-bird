@@ -9,7 +9,7 @@
     <h6 class="text-uppercase font-weight-bold">Correo:</h6>
     <p>{{ currentUser.user }}</p>
     <h6 class="text-uppercase font-weight-bold">Año de nacimiento:</h6>
-    <p>{{ currentUser.birth }}</p>
+    <p>{{ currentUser.birth.day }}-{{ currentUser.birth.month }}-{{ currentUser.birth.year }}</p>
     <h6 class="text-uppercase font-weight-bold">Género:</h6>
     <p>{{ currentUser.gender }}</p>
     <span *ngIf="currentUser.type === 'patient'">

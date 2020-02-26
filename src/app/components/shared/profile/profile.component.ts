@@ -13,23 +13,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   editMode = false;
   currentUser: User = new User('Test', 'test', 'Robert Madera');
-  subscription: Subscription;
+  // subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
   ngOnInit() {
-    this.subscription = this.userService.startedEditing.subscribe(
-      (id: number) => {
-        this.editMode = true;
-        console.log(id);
-      }
-    )
+    // this.subscription = this.userService.startedEditing.subscribe(
+    //   (id: number) => {
+    //     this.editMode = true;
+    //     console.log(id);
+    //   }
+    // );
   }
 
   onEditMode() {
     this.editMode = !this.editMode;
 
-    if (this.editMode){
+    if (this.editMode) {
       this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile', 'edit']);
     } else {
       this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile']);
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
 }

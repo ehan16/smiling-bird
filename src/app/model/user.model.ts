@@ -19,7 +19,7 @@ export class User {
   // public patients: User[] = [];
   public shift: string;
 
-  constructor(user: string, password: string, name: string){
+  constructor(user: string, password: string, name: string) {
     this.name = name;
     this.user = user;
     this.identification = 0;
