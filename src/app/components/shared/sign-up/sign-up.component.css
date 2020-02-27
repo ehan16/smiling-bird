@@ -1,0 +1,37 @@
+.register-form {
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+}
+
+span {
+  font-size: 0.7rem;
+}
+
+.module {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgba(191, 191, 63, 0.7);
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .45);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .45);
+}
+
+.form-control.form-field:focus {
+  outline: none;
+  border: rgba(24, 149, 215, 1) 2px solid;
+  color: rgba(24, 149, 215, 1);
+}
+
+.btn {
+  border-radius: 3px;
+  padding: 10px;
+  background: #03779b;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 12pt;
+  transition: background .4s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #03779b;
+}
