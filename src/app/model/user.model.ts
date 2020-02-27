@@ -14,7 +14,7 @@ export class User {
   public appointments: Appointment[];
 
   public debt: number;
-  public record: Appointment[];
+  // public record: Appointment[];
 
   // public patients: User[] = [];
   public shift: string;
@@ -29,7 +29,6 @@ export class User {
     this.enable = true;
     this.debt = 0;
     this.birth = new NgbDate(2008, 2, 12);
-    this.shift = '';
   }
 
 }
