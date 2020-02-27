@@ -32,7 +32,7 @@
         formControlName="identification"
       />
       <span
-        *ngIf="!editForm.get('user').valid && editForm.get('user').touched"
+        *ngIf="!editForm.get('identification').valid && editForm.get('identification').touched"
         class="help-block"
       >
         <span *ngIf="editForm.get('identification').errors['required']"
