@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbCarouselModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -60,7 +62,8 @@ import { UserService } from './services/user.service';
     ReactiveFormsModule,
     FormsModule,
     NgbCarouselModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
