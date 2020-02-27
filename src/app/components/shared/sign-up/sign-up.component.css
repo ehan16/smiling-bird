@@ -26,9 +26,7 @@ span {
   padding: 10px;
   background: #03779b;
   color: #FFF;
-  font-weight: bold;
   font-size: 12pt;
-  transition: background .4s;
   cursor: pointer;
 }
 
