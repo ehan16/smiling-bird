@@ -1,95 +1,128 @@
 <div class="fondo">
-    <div class="module">
-        <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">  
-            <div class="form-group">
-<!--nombre -->drgfergergergreg
-                <label for="name">Nombre completo</label>
-                <input 
-                type="text" 
-                placeholder="pedrito" 
-                id="name" 
-                formControlName="name" 
-                class="form-control form-field" 
-                />
-                <span 
-                *ngIf="!RegisterForm.get('name').valid && RegisterForm.get('name').touched" class="help-block">
-                <!-- <span *ngIf="RegisterForm.get('name').errors['nameIsForbidden']">El nombre es inválido</span> -->
-                <span 
-                *ngIf="RegisterForm.get('name').errors['required']">El campo es obligatorio</span>
-                <span 
-                *ngIf="RegisterForm.get('name').errors['text']">El dato introducido es incorrecto</span>
-                </span>
-<!--Email --> 
-                <label for="email">Correo electronico</label>
-                <input 
-                type="email" 
-                placeholder="Usuario@123.com"
-                id="email" 
-                formControlName="email"
-                class="form-control form-field" />
-                <span *ngIf="!RegisterForm.get('email').valid && RegisterForm.get('email').touched"
-                  class="help-block">
-                <!-- <span *ngIf="RegisterForm.get('email').errors['emailIsForbidden']">El nombre es inválido</span> -->
-                <span 
-                *ngIf="RegisterForm.get('email').errors['required']">El campo es obligatorio</span>
-                <span 
-                *ngIf="RegisterForm.get('email').errors['email']">El dato introducido es incorrecto</span>
-                </span>
-<!--Clave -->
-                <label for="password">Contraseña</label>
-                <input 
-                type="password"
-                placeholder="**********" 
-                id="password"
-                formControlName="password"
-                class="form-control form-field" />
-                <span *ngIf="!RegisterForm.get('password').valid && RegisterForm.get('password').touched"
-                  class="help-block">
-                <!-- <span *ngIf="RegisterForm.get('password').errors['passwordIsForbidden']">El nombre es inválido</span> -->
-                <span 
-                *ngIf="RegisterForm.get('password').errors['required']">El campo es obligatorio</span>
-                <span 
-                *ngIf="RegisterForm.get('password').errors['password']">El dato introducido es incorrecto</span>
-                </span>
-<!--Clave2 -->
-                <label for="password">Repetir contraseña</label>
-                <input type="password" 
-                placeholder="**********" 
-                id="password2" 
-                formControlName="password2"
-                class="form-control form-field" />
-                <span *ngIf="!RegisterForm.get('password2').valid && RegisterForm.get('password2').touched"
-                class="help-block">
-                <!-- <span *ngIf="RegisterForm.get('password').errors['passwordIsForbidden']">El nombre es inválido</span> -->
-                <span *ngIf="RegisterForm.get('password2').errors['required']">El campo es obligatorio</span>
-                <span *ngIf="RegisterForm.get('password2').errors['password']">El dato introducido es
-                incorrecto</span>
-                </span>
-<!--Cedula -->
-                <label for="Cedula">Cedula</label>
-                <input 
-                type="number" 
-                placeholder="123456" 
-                id="Cedula" 
-                formControlName="Cedula"
-                class="form-control form-field" />
-                <span *ngIf="!RegisterForm.get('Cedula').valid && RegisterForm.get('Cedula').touched"
-                  class="help-block">
-                <!-- <span *ngIf="RegisterForm.get('Cedula').errors['numberIsForbidden']">El nombre es inválido</span> -->
-                <span 
-                *ngIf="RegisterForm.get('Cedula').errors['required']">El campo es obligatorio</span>
-                <span 
-                *ngIf="RegisterForm.get('Cedula').errors['number']">El dato introducido es incorrecto</span>
-                </span>
+  <div class="module">
+    <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nombre completo</label>
+        <input
+          type="text"
+          placeholder="pedrito"
+          id="name"
+          formControlName="name"
+          class="form-control form-field"
+        />
+        <span
+          *ngIf="
+            !RegisterForm.get('name').valid && RegisterForm.get('name').touched
+          "
+          class="help-block"
+        >
+          <span *ngIf="RegisterForm.get('name').errors['required']"
+            >El campo es obligatorio</span
+          >
+        </span>
+        <label for="email">Correo electronico</label>
+        <input
+          type="email"
+          placeholder="Usuario@123.com"
+          id="email"
+          formControlName="email"
+          class="form-control form-field"
+        />
+        <span
+          *ngIf="
+            !RegisterForm.get('email').valid &&
+            RegisterForm.get('email').touched
+          "
+          class="help-block"
+        >
+          <span *ngIf="RegisterForm.get('email').errors['required']"
+            >El campo es obligatorio</span
+          >
+          <span *ngIf="RegisterForm.get('email').errors['email']"
+            >El dato introducido es incorrecto</span
+          >
+        </span>
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          placeholder="**********"
+          id="password"
+          formControlName="password"
+          class="form-control form-field"
+        />
+        <span
+          *ngIf="
+            !RegisterForm.get('password').valid &&
+            RegisterForm.get('password').touched
+          "
+          class="help-block"
+        >
+          <span *ngIf="RegisterForm.get('password').errors['required']"
+            >El campo es obligatorio</span
+          >
+          <span *ngIf="RegisterForm.get('password').errors['password']"
+            >El dato introducido es incorrecto</span
+          >
+        </span>
+        <label for="password">Repetir contraseña</label>
+        <input
+          type="password"
+          placeholder="**********"
+          id="password2"
+          formControlName="password2"
+          class="form-control form-field"
+        />
+        <span
+          *ngIf="
+            !RegisterForm.get('password2').valid &&
+            RegisterForm.get('password2').touched
+          "
+          class="help-block"
+        >
+          <span *ngIf="RegisterForm.get('password2').errors['required']"
+            >El campo es obligatorio</span
+          >
+          <span *ngIf="RegisterForm.get('password2').errors['password']"
+            >El dato introducido es incorrecto</span
+          >
+        </span>
+        <label for="Cedula">Cedula</label>
+        <input
+          type="number"
+          placeholder="123456"
+          id="Cedula"
+          formControlName="cedula"
+          class="form-control form-field"
+        />
+        <span
+          *ngIf="
+            !RegisterForm.get('cedula').valid &&
+            RegisterForm.get('cedula').touched
+          "
+          class="help-block"
+        >
+          <span *ngIf="RegisterForm.get('cedula').errors['required']"
+            >El campo es obligatorio</span
+          >
+          <span *ngIf="RegisterForm.get('cedula').errors['number']"
+            >El dato introducido es incorrecto</span
+          >
+        </span>
 
-                <button class="btn btn-warning btn-block" 
-                type="submit" [disabled]="!RegisterForm.get('name').valid || !RegisterForm.get('email').valid ||
-                !RegisterForm.get('password').valid || !RegisterForm.get('password2').valid
-                || !RegisterForm.get('Cedula').valid
-                ">
-                Registrarse
-                </button>
-                 </div>
-             </form>         
-        </div>
-    </div>
+        <button
+          class="btn btn-warning btn-block"
+          type="submit"
+          [disabled]="
+            !RegisterForm.get('name').valid ||
+            !RegisterForm.get('email').valid ||
+            !RegisterForm.get('password').valid ||
+            !RegisterForm.get('password2').valid ||
+            !RegisterForm.get('Cedula').valid
+          "
+        >
+          Registrarse
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
