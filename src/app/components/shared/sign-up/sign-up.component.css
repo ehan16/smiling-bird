@@ -1,44 +1,18 @@
-* {
-  margin: 0;
-  padding: 0;
+.register-form {
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+}
+
+span {
+  font-size: 0.7rem;
 }
 
 .module {
-  position: relative;
-  top: 15%;
-  height: 70%;
-  width: 450px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 15px;
   border-radius: 5px;
+  background-color: rgba(191, 191, 63, 0.7);
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .45);
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .45);
-}
-
-.module ul {
-  list-style-type: none;
-  margin: 0;
-}
-
-.form-group {
-  float: left;
-  height: 86%;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 20px;
-  background-color: rgba(191, 191, 63, 0.7);
-  border-radius: 10%;
-  margin-top: 30%;
-}
-
-.form-control.form-field {
-  height: 50px;
-  width: 100%;
-  border-radius: 3px;
-  border: rgba(0, 0, 0, .3) 2px solid;
-  box-sizing: border-box;
-  padding: 10px;
-  margin-bottom: 10px;
 }
 
 .form-control.form-field:focus {
@@ -48,13 +22,8 @@
 }
 
 .btn {
-  height: 50px;
-  width: 100%;
   border-radius: 3px;
-  border: rgba(0, 0, 0, .3) 0px solid;
-  box-sizing: border-box;
   padding: 10px;
-  margin-bottom: 30px;
   background: #03779b;
   color: #FFF;
   font-weight: bold;
@@ -65,5 +34,4 @@
 
 .btn:hover {
   background: #03779b;
-
 }
