@@ -22,19 +22,15 @@ export class ProfileEditComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
-    // tslint:disable-next-line: max-line-length
-    // const date: NgbDate = new NgbDate(this.currentUser.birth.getFullYear(), this.currentUser.birth.getMonth(), this.currentUser.birth.getDate());
-    // const date: NgbDate = this.currentUser.birth;
 
     this.editForm = new FormGroup({
       name: new FormControl(this.currentUser.name, Validators.required),
       user: new FormControl(this.currentUser.user, [Validators.required, Validators.email]),
+      identification: new FormControl(this.currentUser.identification, Validators.required),
       birthDate: new FormControl(this.date , Validators.required),
       gender: new FormControl(this.currentUser.gender, Validators.required),
       // shift: new FormControl
     });
-
-
 
   }
 

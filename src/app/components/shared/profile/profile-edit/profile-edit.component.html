@@ -29,8 +29,16 @@
         value="{{ currentUser.identification }}"
         id="identification"
         class="form-control form-field"
-        disabled
+        formControlName="identification"
       />
+      <span
+        *ngIf="!editForm.get('user').valid && editForm.get('user').touched"
+        class="help-block"
+      >
+        <span *ngIf="editForm.get('name').errors['required']"
+          >El campo es obligatorio</span
+        >
+      </span>
     </div>
 
     <div class="form-group">
