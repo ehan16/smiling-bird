@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/model/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users-list',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersListComponent implements OnInit {
 
-  constructor() { }
+  userList: User[];
+  currentUser: User;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+
+    this.currentUser = this.userService.currentUser;
+    if (this.currentUser.type === 'patient') {
+
+    } else if (this.currentUser.type === 'dentist') {
+
+    } else {
+
+    }
   }
 
 }

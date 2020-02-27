@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   editMode = false;
-  currentUser: User = new User('Test', 'test', 'Robert Madera');
+  currentUser: User;
   // subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     //     console.log(id);
     //   }
     // );
+    this.currentUser = this.userService.currentUser;
   }
 
   onEditMode() {

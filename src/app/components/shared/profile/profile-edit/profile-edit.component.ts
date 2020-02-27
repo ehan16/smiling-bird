@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -13,14 +14,14 @@ export class ProfileEditComponent implements OnInit {
   editForm: FormGroup;
   currentUser: User = new User('Test@gmail.com', 'test', 'Robert');
   todayDate = new Date();
-  maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth(), this.todayDate.getDate() + 1);
+  maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
   date: NgbDate = this.currentUser.birth;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-
+    this.currentUser = this.userService.currentUser;
     // tslint:disable-next-line: max-line-length
     // const date: NgbDate = new NgbDate(this.currentUser.birth.getFullYear(), this.currentUser.birth.getMonth(), this.currentUser.birth.getDate());
     // const date: NgbDate = this.currentUser.birth;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user.model';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -9,18 +10,18 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  currentUser: User = new User('Test', 'test', 'Robert');
+  currentUser: User;
   logged = true;
-
   show = false;
 
   toggleCollapse() {
     this.show = !this.show;
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
+    this.currentUser = this.userService.currentUser;
   }
 
   goToHome() {
@@ -34,9 +35,5 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-
-  // @HostListener('window:scroll', ['$event']) onScrollEvent($event){
-  //   console.log('Holis');
-  // }
 
 }

@@ -3,14 +3,6 @@
   margin: 0;
 }
 
-@media (max-width: 640px) {
-  /* For mobile phones: */
-
-  .testimonial {
-    font-size: 0.9rem;
-  }
-
-}
 
 .font-title {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -56,4 +48,17 @@ input.ng-invalid.ng-touched {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 640px) {
+  /* For mobile phones: */
+
+  .testimonial {
+    font-size: 0.9rem;
+  }
+
+  .banner img {
+    height: 45vh;
+  }
+
 }
