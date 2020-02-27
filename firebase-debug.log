@@ -1,0 +1,78 @@
+[debug] [2020-02-27T03:36:45.330Z] ----------------------------------------------------------------------
+[debug] [2020-02-27T03:36:45.335Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2020-02-27T03:36:45.336Z] CLI Version:   7.14.0
+[debug] [2020-02-27T03:36:45.336Z] Platform:      darwin
+[debug] [2020-02-27T03:36:45.336Z] Node Version:  v13.3.0
+[debug] [2020-02-27T03:36:45.348Z] Time:          Wed Feb 26 2020 23:36:45 GMT-0400 (hora de Venezuela)
+[debug] [2020-02-27T03:36:45.348Z] ----------------------------------------------------------------------
+[debug] [2020-02-27T03:36:45.348Z] 
+[debug] [2020-02-27T03:36:45.380Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-02-27T03:36:45.381Z] > authorizing via signed-in user
+[debug] [2020-02-27T03:36:45.381Z] [iam] checking project smiling-bird for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-02-27T03:36:45.384Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/smiling-bird:testIamPermissions  
+
+[debug] [2020-02-27T03:36:46.014Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-27T03:36:46.018Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/smiling-bird  
+ 
+[debug] [2020-02-27T03:36:46.550Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-27T03:36:46.566Z] Error: spawn npm ENOENT
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:266:19)
+    at onErrorNT (internal/child_process.js:468:16)
+    at processTicksAndRejections (internal/process/task_queues.js:84:21)
+[info] 
+[info] === Deploying to 'smiling-bird'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-02-27T03:36:46.573Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smiling-bird/versions  
+
+[debug] [2020-02-27T03:36:48.227Z] <<< HTTP RESPONSE 200
+[info] i  hosting[smiling-bird]: beginning deploy...
+[info] i  hosting[smiling-bird]: found 72 files in dist
+[debug] [2020-02-27T03:36:51.964Z] [hosting] hash cache [ZGlzdA] stored for 72 files
+[debug] [2020-02-27T03:36:51.965Z] [hosting][hash queue][FINAL]
+[debug] [2020-02-27T03:36:51.965Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smiling-bird/versions/2e0b75e324aad935:populateFiles  
+ <request body omitted>
+[debug] [2020-02-27T03:36:52.837Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-27T03:36:52.842Z] [hosting][populate queue][FINAL]
+[debug] [2020-02-27T03:36:52.842Z] [hosting] uploads queued: 4
+[debug] [2020-02-27T03:36:55.614Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[smiling-bird]: file upload complete
+[debug] [2020-02-27T03:36:55.615Z] [hosting] deploy completed after 7386ms
+[debug] [2020-02-27T03:38:11.003Z] [
+  {
+    "config": {
+      "public": "dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "smiling-bird"
+    },
+    "site": "smiling-bird",
+    "version": "sites/smiling-bird/versions/2e0b75e324aad935"
+  }
+]
+[info] i  hosting[smiling-bird]: finalizing version...
+[debug] [2020-02-27T03:38:11.007Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/smiling-bird/versions/2e0b75e324aad935?updateMask=status  
+
+[debug] [2020-02-27T03:38:11.581Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-27T03:38:11.583Z] [hosting] finalized version for smiling-bird:
+[info] ✔  hosting[smiling-bird]: version finalized
+[info] i  hosting[smiling-bird]: releasing new version...
+[debug] [2020-02-27T03:38:11.585Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smiling-bird/releases?version_name=sites/smiling-bird/versions/2e0b75e324aad935  
+
+[debug] [2020-02-27T03:38:12.021Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-27T03:38:12.021Z] [hosting] release:
+[info] ✔  hosting[smiling-bird]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/smiling-bird/overview
+[info] Hosting URL: https://smiling-bird.firebaseapp.com
