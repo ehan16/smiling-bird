@@ -9,14 +9,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UsersListComponent implements OnInit {
 
-  userList: User[];
+  userList: User[] = [];
   currentUser: User;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-
     this.currentUser = this.userService.currentUser;
+    this.userList.push(this.currentUser);
     if (this.currentUser.type === 'patient') {
 
     } else if (this.currentUser.type === 'dentist') {

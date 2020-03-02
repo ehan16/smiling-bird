@@ -1,6 +1,33 @@
-<p>Guillen imagina una lista aqui</p>
 <div class="row m-0">
-  <div class="list">
-    {{ currentUser.name }}
+
+  <div class="banner">
+    <img src="../../../../assets/background/teeth.jpg" alt="banner" width="100%">
+    <div class="subtitle font-title">
+      <p *ngIf="currentUser.type === 'patient'">Odontólogos<p>
+      <p *ngIf="currentUser.type === 'dentist'">Pacientes<p>
+      <p *ngIf="currentUser.type === 'admin'">Usuarios<p>
+    </div>
+  </div>
+
+  <div class="col-md-6 list pale-yellow py-5">
+    <div *ngFor="let user of userList" class="user-item">
+      <div class="user-info">
+        <p>Nombre: {{ user.name }}</p>
+        <!-- Referencia del usuario -->
+        <p class="text-capitalize">Tipo: {{ user.type }}</p>
+        <!-- Colocar el id del usuario -->
+      </div>
+      <div class="user-handler">
+        <!-- Botones que apareceran segun el tipo de usuario -->
+        <button *ngIf="currentUser.type === 'patient'" class="btn btn-warning">Solicitar cita</button>
+        <button *ngIf="currentUser.type === 'dentist'" class="btn btn-warning">Historial médico</button>
+        <button *ngIf="currentUser.type === 'dentist'" class="btn btn-warning">Mensajería</button>
+        <button *ngIf="currentUser.type === 'admin'" class="btn btn-warning">Modificar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 py-5">
+    <!-- Se muestra la informacion del usuario si es admin -->
   </div>
 </div>

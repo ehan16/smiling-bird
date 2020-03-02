@@ -1,0 +1,21 @@
+.list {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-item {
+  border-radius: 10px;
+  border: 2px solid #1d1d1d;
+  margin: 10px;
+  padding: 10px;
+  background-color: #dceeff;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.user-item:hover {
+  background-color: #97b5d1;
+  /* color: #dceeff; */
+  border: 2px solid rgb(18, 81, 122);
+}

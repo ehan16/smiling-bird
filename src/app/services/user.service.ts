@@ -10,6 +10,7 @@ export class UserService {
 
   startedEditing = new Subject<number>();
   currentUser: User = new User('Test', 'test', 'Robert');
+  userList: User[];
 
   constructor() { }
 
