@@ -35,17 +35,30 @@
   min-height: 50vh;
 }
 
-tr:hover {
+/* tr:hover {
   background-color: rgb(223, 242, 255);
+} */
+
+.btn-user {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  text-align: left;
 }
 
-@media (max-width: 760px) {
+
+
+@media (max-width: 650px) {
   /* For mobile phones: */
   /* .table-wrapper{
     padding: 10px;
   } */
-  .list {
+  /* .list {
     margin:auto;
     width: fit-content;
+  } */
+  .table-wrapper {
+    min-height: 60vh;
   }
+
 }

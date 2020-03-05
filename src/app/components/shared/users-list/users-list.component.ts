@@ -11,12 +11,23 @@ export class UsersListComponent implements OnInit {
 
   userList: User[] = [];
   currentUser: User;
+  show = false;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
     this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+    this.userList.push(this.currentUser);
+
     if (this.currentUser.type === 'patient') {
 
     } else if (this.currentUser.type === 'dentist') {
@@ -24,6 +35,10 @@ export class UsersListComponent implements OnInit {
     } else {
 
     }
+  }
+
+  toggle(index: number) {
+    // document.getElementById('user' + index)= document.getElementById('user' + index).show;
   }
 
 }
