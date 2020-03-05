@@ -32,18 +32,20 @@
   align-items: center;
   justify-content: center;
   padding: 10vw;
+  min-height: 50vh;
 }
 
 tr:hover {
   background-color: rgb(223, 242, 255);
 }
 
-@media (max-width: 570px) {
+@media (max-width: 760px) {
   /* For mobile phones: */
   /* .table-wrapper{
     padding: 10px;
   } */
   .list {
     margin:auto;
+    width: fit-content;
   }
 }
