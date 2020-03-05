@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileEditComponent implements OnInit {
 
   editForm: FormGroup;
-  currentUser: User = new User('Test@gmail.com', 'test', 'Robert');
+  currentUser: User;
   todayDate = new Date();
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());

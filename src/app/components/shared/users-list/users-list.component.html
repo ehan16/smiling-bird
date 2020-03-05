@@ -1,4 +1,4 @@
-<div class="row m-0">
+<div class="row m-0 pale-yellow">
 
   <div class="banner">
     <img src="../../../../assets/background/teeth.jpg" alt="banner" width="100%">
@@ -9,25 +9,30 @@
     </div>
   </div>
 
-  <div class="col-md-6 list pale-yellow py-5">
-    <div *ngFor="let user of userList" class="user-item">
-      <div class="user-info">
-        <p>Nombre: {{ user.name }}</p>
-        <!-- Referencia del usuario -->
-        <p class="text-capitalize">Tipo: {{ user.type }}</p>
-        <!-- Colocar el id del usuario -->
-      </div>
-      <div class="user-handler">
-        <!-- Botones que apareceran segun el tipo de usuario -->
-        <button *ngIf="currentUser.type === 'patient'" class="btn btn-warning">Solicitar cita</button>
-        <button *ngIf="currentUser.type === 'dentist'" class="btn btn-warning">Historial médico</button>
-        <button *ngIf="currentUser.type === 'dentist'" class="btn btn-warning">Mensajería</button>
-        <button *ngIf="currentUser.type === 'admin'" class="btn btn-warning">Modificar</button>
-      </div>
-    </div>
+  <div class="col-12 py-5 table-wrapper">
+    <table class="table table-responsive-sm list">
+      <thead>
+        <tr class="bg-info">
+          <th>Nombre</th>
+          <th>Cédula</th>
+          <th>Correo</th>
+          <th>Tipo</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userList">
+          <th scope="row">{{ user.name }}</th>
+          <td>{{ user.identification }}</td>
+          <td>{{ user.user }}</td>
+          <td class="text-capitalize">{{ user.type }}</td>
+          <td>
+            Botones
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 
-  <div class="col-md-6 py-5">
-    <!-- Se muestra la informacion del usuario si es admin -->
-  </div>
 </div>

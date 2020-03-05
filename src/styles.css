@@ -57,6 +57,10 @@ input.ng-invalid.ng-touched {
     font-size: 0.9rem;
   }
 
+  .banner .subtitle{
+    font-size: 2.5rem;
+  }
+
   .banner img {
     height: 45vh;
   }

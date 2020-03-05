@@ -3,6 +3,7 @@ import { User } from 'src/app/model/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   currentUser: User;
   // subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, public auth: AngularFireAuth) { }
 
   ngOnInit() {
     // this.subscription = this.userService.startedEditing.subscribe(
@@ -37,6 +38,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       // this.router.navigate(['..'], {relativeTo: this.route});
     }
 
+  }
+
+  logOut() {
+  //   this.auth.signOut();
   }
 
   ngOnDestroy() {

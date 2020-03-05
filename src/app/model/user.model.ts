@@ -6,7 +6,6 @@ export class User {
   public name: string;
   public user: string;
   public identification: number;
-  public password: string;
   public type: string;
   public birth: NgbDate;
   public gender: string;
@@ -19,11 +18,10 @@ export class User {
   // public patients: User[] = [];
   public shift: string;
 
-  constructor(user: string, password: string, name: string) {
+  constructor(user: string, name: string) {
     this.name = name;
     this.user = user;
     this.identification = 0;
-    this.password = password;
     this.gender = 'hombre';
     this.type = 'patient';
     this.enable = true;

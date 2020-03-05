@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbCarouselModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -20,7 +21,7 @@ import { AppointmentsComponent } from './components/shared/appointments/appointm
 import { AppointmentEditComponent } from './components/shared/appointments/appointment-edit/appointment-edit.component';
 import { AppointmentDetailComponent } from './components/shared/appointments/appointment-detail/appointment-detail.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
-import { UserEditComponent } from './components/shared/users-list/user-edit/user-edit.component';
+import { UserEditComponent } from './components/shared/user-edit/user-edit.component';
 import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -63,7 +64,8 @@ import { UserService } from './services/user.service';
     FormsModule,
     NgbCarouselModule,
     NgbDatepickerModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

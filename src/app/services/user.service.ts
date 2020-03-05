@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 export class UserService {
 
   startedEditing = new Subject<number>();
-  currentUser: User = new User('Test', 'test', 'Robert');
+  currentUser: User = new User('Test', 'Robert');
   userList: User[];
 
   constructor() { }
