@@ -10,13 +10,12 @@ export class User {
   public birth: NgbDate;
   public gender: string;
   public enable: boolean;
-  public appointments: Appointment[];
+  public appointments: Appointment[]; //Para el historial medico se filtran los completados y asi
 
   public debt: number;
-  // public record: Appointment[];
 
   // public patients: User[] = [];
-  public shift: string;
+  public shift: number[];
 
   constructor(user: string, name: string) {
     this.name = name;
@@ -26,7 +25,7 @@ export class User {
     this.type = 'patient';
     this.enable = true;
     this.debt = 0;
-    this.birth = new NgbDate(2008, 2, 12);
+    this.birth = new NgbDate(2020, 1, 17);
+    this.shift = [8, 14];
   }
-
 }

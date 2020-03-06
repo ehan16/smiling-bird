@@ -4,10 +4,10 @@
 <nav class="main-theme sticky_nav" #stickyNav>
 	<div class="container_left">
 		<a class="home" routerLinkActive="active" (click)="goToHome()">
-      <img src="../../../assets/icon-logo/home.png" height="20rem">
+      <li class="fas fa-home"></li>
     </a>
     <button id="btnMenu" (click)="toggleCollapse()" class="navbar-toggler navbar-toggler-right">
-      <div class="bars"><img src="../../../assets/icon-logo/barras.png" height="17rem"></div>
+      <li class="fas fa-bars"></li>
 		</button>
 	</div>
 	<div class="container-menu collapse main-theme" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >

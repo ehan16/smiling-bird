@@ -16,7 +16,6 @@ export class ProfileEditComponent implements OnInit {
   todayDate = new Date();
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
-  date: NgbDate = this.currentUser.birth;
 
   constructor(private userService: UserService) { }
 
@@ -27,7 +26,7 @@ export class ProfileEditComponent implements OnInit {
       name: new FormControl(this.currentUser.name, Validators.required),
       user: new FormControl(this.currentUser.user, [Validators.required, Validators.email]),
       identification: new FormControl(this.currentUser.identification, Validators.required),
-      birthDate: new FormControl(this.date , Validators.required),
+      birthDate: new FormControl(this.currentUser.birth , Validators.required),
       gender: new FormControl(this.currentUser.gender, Validators.required),
       // shift: new FormControl
     });

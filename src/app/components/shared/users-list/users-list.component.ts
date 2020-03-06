@@ -11,7 +11,6 @@ export class UsersListComponent implements OnInit {
 
   userList: User[] = [];
   currentUser: User;
-  show = false;
 
   constructor(private userService: UserService) { }
 
@@ -29,16 +28,12 @@ export class UsersListComponent implements OnInit {
     this.userList.push(this.currentUser);
 
     if (this.currentUser.type === 'patient') {
-
+      // this.userList = this.userList.filter(user => user.type === 'dentist');
     } else if (this.currentUser.type === 'dentist') {
-
+      this.userList = this.userList.filter(user => user.type === 'patient');
     } else {
-
+      // this.userList = this.userService.userList;
     }
-  }
-
-  toggle(index: number) {
-    // document.getElementById('user' + index)= document.getElementById('user' + index).show;
   }
 
 }
