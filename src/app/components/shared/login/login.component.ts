@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {  } from '@angular/fire';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm);
+    this.auth.signInWithEmail(this.loginForm.value.username, this.loginForm.value.password);
     // this.loginForm.reset();
 
     // Buscar cual usuario es y redirigir

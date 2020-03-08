@@ -32,7 +32,7 @@ export class UsersListComponent implements OnInit {
     } else if (this.currentUser.type === 'dentist') {
       this.userList = this.userList.filter(user => user.type === 'patient');
     } else {
-      // this.userList = this.userService.userList;
+      this.userList = this.userService.userList;
     }
   }
 
