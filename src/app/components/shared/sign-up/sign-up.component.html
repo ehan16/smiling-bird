@@ -1,7 +1,9 @@
-<div class="row m-0 justify-content-center align-content-center pale-yellow px-sm-5">
+<div
+  class="row m-0 justify-content-center align-content-center pale-yellow px-sm-5"
+>
   <div class="register-form w-75">
     <div class="module">
-      <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="name">Nombre completo</label>
           <input
@@ -13,11 +15,12 @@
           />
           <span
             *ngIf="
-              !RegisterForm.get('name').valid && RegisterForm.get('name').touched
+              !registerForm.get('name').valid &&
+              registerForm.get('name').touched
             "
             class="help-block"
           >
-            <span *ngIf="RegisterForm.get('name').errors['required']"
+            <span *ngIf="registerForm.get('name').errors['required']"
               >El campo es obligatorio</span
             >
           </span>
@@ -34,15 +37,15 @@
           />
           <span
             *ngIf="
-              !RegisterForm.get('email').valid &&
-              RegisterForm.get('email').touched
+              !registerForm.get('email').valid &&
+              registerForm.get('email').touched
             "
             class="help-block"
           >
-            <span *ngIf="RegisterForm.get('email').errors['required']"
+            <span *ngIf="registerForm.get('email').errors['required']"
               >El campo es obligatorio</span
             >
-            <span *ngIf="RegisterForm.get('email').errors['email']"
+            <span *ngIf="registerForm.get('email').errors['email']"
               >El dato introducido es incorrecto</span
             >
           </span>
@@ -59,12 +62,12 @@
           />
           <span
             *ngIf="
-              !RegisterForm.get('password').valid &&
-              RegisterForm.get('password').touched
+              !registerForm.get('password').valid &&
+              registerForm.get('password').touched
             "
             class="help-block"
           >
-            <span *ngIf="RegisterForm.get('password').errors['required']"
+            <span *ngIf="registerForm.get('password').errors['required']"
               >El campo es obligatorio</span
             >
           </span>
@@ -81,12 +84,12 @@
           />
           <span
             *ngIf="
-              !RegisterForm.get('password2').valid &&
-              RegisterForm.get('password2').touched
+              !registerForm.get('password2').valid &&
+              registerForm.get('password2').touched
             "
             class="help-block"
           >
-            <span *ngIf="RegisterForm.get('password2').errors['required']"
+            <span *ngIf="registerForm.get('password2').errors['required']"
               >El campo es obligatorio</span
             >
           </span>
@@ -103,29 +106,24 @@
           />
           <span
             *ngIf="
-              !RegisterForm.get('cedula').valid &&
-              RegisterForm.get('cedula').touched
+              !registerForm.get('cedula').valid &&
+              registerForm.get('cedula').touched
             "
             class="help-block"
           >
-            <span *ngIf="RegisterForm.get('cedula').errors['required']"
+            <span *ngIf="registerForm.get('cedula').errors['required']"
               >El campo es obligatorio</span
             >
           </span>
         </div>
 
-          <button
-            class="btn btn-block my-4 font-weight-bold"
-            type="submit"
-            [disabled]="
-              !RegisterForm.get('name').valid ||
-              !RegisterForm.get('email').valid ||
-              !RegisterForm.get('password').valid ||
-              !RegisterForm.get('password2').valid ||
-              !RegisterForm.get('cedula').valid"
-          >
-            Registrarse
-          </button>
+        <button
+          class="btn btn-block my-4 font-weight-bold"
+          type="submit"
+          [disabled]="!registerForm.valid"
+        >
+          Registrarse
+        </button>
       </form>
     </div>
   </div>

@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/model/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,15 +15,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   currentUser: User;
   // subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, public auth: AngularFireAuth) { }
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, public auth: AuthService) { }
 
   ngOnInit() {
-    // this.subscription = this.userService.startedEditing.subscribe(
-    //   (id: number) => {
-    //     this.editMode = true;
-    //     console.log(id);
-    //   }
-    // );
     this.currentUser = this.userService.currentUser;
   }
 
@@ -34,14 +27,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile', 'edit']);
     } else {
-      this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile']);
-      // this.router.navigate(['..'], {relativeTo: this.route});
+      // this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile']);
+      this.router.navigate(['../'], {relativeTo: this.route});
     }
 
   }
 
   logOut() {
-  //   this.auth.signOut();
+  this.auth.signOut();
   }
 
   ngOnDestroy() {

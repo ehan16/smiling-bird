@@ -4,17 +4,15 @@
       src="../../../assets/background/smile.jpeg"
       alt="banner"
       width="100%"
-      height="30%"
+
     />
   </div>
 
-  <div class="row">
-    <div class="w-100 jumbotron">
-        <h1 class="font-weight-light">Smiling Bird</h1>
-        <h4 class="font-weight-light">
-          Su clínica de confianza, siempre contigo
-        </h4>
-    </div>
+  <div class="row name">
+      <h1 class="font-weight-light">Smiling Bird</h1>
+      <h4 class="font-weight-light">
+        Su clínica de confianza, siempre contigo
+      </h4>
   </div>
 
   <div class="row align-items-end justify-content-center mb-5">
@@ -42,7 +40,7 @@
 
   <div class="row">
     <ngb-carousel class="w-100">
-      <ng-template ngbSlide>
+      <ng-template ngbSlide *ngFor="let testimonial of testimonials">
         <div class="picsum-img-wrapper">
           <div class="testimonial p-4">
             <h2 class="font-weight-light w-100 text-center">
@@ -52,63 +50,12 @@
         </div>
         <div class="carousel-caption">
           <p class="font-italic">
-            “Quería colocarme implantes dentales y no sabía dónde. Solicité
-            varias opiniones y finalmente me decidí por SMILING BIRD porque me
-            ofrecieron las mejores garantías y me transmitieron mucha seguridad.
-            Ahora que acabé el tratamiento puedo decir que quedé encantada y que
-            todo el equipo me pareció muy profesional”.
+            {{ testimonial.opinion }}
           </p>
           <hr />
-          <h6 class="font-weight-light">Sara López</h6>
+          <h6 class="font-weight-light">{{ testimonial.name }}}</h6>
           <h6 class="font-weigt-lighter my-3 text-white-50 font-italic">
-            Abogada
-          </h6>
-        </div>
-      </ng-template>
-
-      <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <div class="testimonial p-4">
-            <h2 class="font-weight-light w-100 text-center">
-              Testimonios y opiniones
-            </h2>
-          </div>
-        </div>
-        <div class="carousel-caption">
-          <p class="font-italic">
-            “Antes me daba vergüenza sonreír porque no estaba conforme con el
-            aspecto de mi dentadura. Desde que visité SMILING BIRD me siento más
-            cómoda y segura de mi misma. Me hicieron un diseño digital de
-            sonrisa, me cortaron las encías y me blanquearon los dientes”.
-          </p>
-          <hr />
-          <h6 class="font-weight-light">Jessica Wong</h6>
-          <h6 class="font-weigt-lighter my-3 text-white-50 font-italic">
-            Estudiante
-          </h6>
-        </div>
-      </ng-template>
-
-      <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <div class="testimonial p-4">
-            <h2 class="font-weight-light w-100 text-center">
-              Testimonios y opiniones
-            </h2>
-          </div>
-        </div>
-        <div class="carousel-caption">
-          <p class="font-italic">
-            “Me vi en la necesidad de ir a la clínica para tratar algunas caries
-            y hacerme dos tratamientos de conducto. Recomendaría a SMILING BIRD
-            por la asesoría, por la receptividad de su personal, por sus
-            impecables instalaciones, y sobre todo porque los procedimientos
-            fueron ejecutados sin ningún tipo de dolor”.
-          </p>
-          <hr />
-          <h6 class="font-weight-light">Pablo Marcano</h6>
-          <h6 class="font-weigt-lighter my-3 text-white-50 font-italic">
-            Contador Público
+            {{ testimonial.career }}
           </h6>
         </div>
       </ng-template>
@@ -116,7 +63,6 @@
   </div>
 
   <div class="row text-center">
-
     <h2 class="font-weight-light w-100 m-5">
       Nuestros servicios
     </h2>
@@ -124,119 +70,17 @@
       ¡Todas las Especialidades en el mismo lugar!
     </p>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm treatment m-sm-5 p-sm-5">
-          <img
-            class="thumbnail"
-            alt="thumbnail"
-            src="../../../assets/treatments/blanqueamiento.jpg"
-          />
-          <div class="cover">
-            <h4 class="font-weight-light m-5">ESTÉTICA DENTAL</h4>
-            <hr />
-            <p>
-              Análisis y estudio de las características dentogingivales para
-              corregir defectos cosméticos y embellecer el aspecto general de la
-              dentadura
-            </p>
-            <hr />
-          </div>
-        </div>
-
-        <div class="col-sm treatment m-sm-5 p-sm-5">
-          <img
-            class="thumbnail"
-            alt="thumbnail"
-            src="../../../assets/treatments/cirugia_bucal.jpg"
-          />
-          <div class="cover">
-            <h4 class="font-weight-light m-5">CIRUGÍA BUCAL</h4>
-            <hr />
-            <p>
-              Prevención, diagnóstico y tratamiento de toda la patología
-              quirúrgica propia o asociada a dientes, mucosas, labios, encías y
-              huesos maxilares.
-            </p>
-            <hr />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm treatment m-sm-5 p-sm-5">
-          <img
-            class="thumbnail"
-            alt="thumbnail"
-            src="../../../assets/treatments/implante.jpg"
-          />
-          <div class="cover">
-            <h4 class="font-weight-light m-5">IMPLANTES</h4>
-            <hr />
-            <p>
-              Reposición de los dientes perdidos con dispositivos biocompatibles
-              de titanio que viabilizan la rehabilitación oral fija de los
-              pacientes parcial o totalmente edéntulos.
-            </p>
-            <hr />
-          </div>
-        </div>
-
-        <div class="col-sm treatment m-sm-5 p-sm-5">
-          <img
-            class="thumbnail"
-            alt="thumbnail"
-            src="../../../assets/treatments/tratamiento_conducto.jpg"
-          />
-          <div class="cover">
-            <h4 class="font-weight-light m-5">ENDODONCIA</h4>
-            <hr />
-            <p>
-              Limpieza, desinfección y conformación de los conductos radiculares
-              como paso previo a los múltiples procedimmientos de próteses y
-              restauración dental.
-            </p>
-            <hr />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm treatment m-sm-5 p-sm-5">
-          <img
-            class="thumbnail"
-            alt="thumbnail"
-            src="../../../assets/treatments/ortodoncia.jpg"
-          />
-          <div class="cover">
-            <h4 class="font-weight-light m-5">ORTODONCIA</h4>
-            <hr />
-            <p>
-              Brackets y aparatoría funcional para la correción biomecánica de
-              maloclusiones, malposiciones dentales y deformidades
-              dentofaciales.
-            </p>
-            <hr />
-          </div>
-        </div>
-
-        <div class="col-sm treatment m-sm-5 p-sm-5">
-          <img
-            class="thumbnail"
-            alt="thumbnail"
-            src="../../../assets/treatments/protesis_dental.jpg"
-          />
-          <div class="cover">
-            <h4 class="font-weight-light m-5">PRÓTESIS ORAL</h4>
-            <hr />
-            <p>
-              Diseño y confección de coronas cerámicas y estructuras protésicas
-              que restituyen la integridad de las arcadas dentales, estética y
-              función masticatoria.
-            </p>
-            <hr />
-          </div>
-        </div>
+    <div *ngFor="let service of services" class="col-sm treatment m-sm-5 p-5">
+      <img class="thumbnail" alt="thumbnail" src="{{ service.image }}" />
+      <div class="cover">
+        <h4 class="font-weight-light m-5 text-uppercase">
+          {{ service.title }}
+        </h4>
+        <hr />
+        <p>
+          {{ service.description }}
+        </p>
+        <hr />
       </div>
     </div>
   </div>
@@ -248,9 +92,7 @@
       width="100%"
       class="map img-responsive"
     />
-    <div
-      class="direction text-center d-flex justify-content-center align-items-center"
-    >
+    <div class="direction">
       <p class="font-weight-light">
         Distribuidor Universidad <br />
         Av. Boyacá con autopista Petare-Guarenas. <br />

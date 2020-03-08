@@ -3,8 +3,11 @@
   margin: 0;
 }
 
+p, label, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
 .font-title {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   letter-spacing: 3px;
   text-shadow: 2px 2px rgb(255, 245, 152);
 }
@@ -25,7 +28,7 @@ input.ng-invalid.ng-touched {
   background: #007396;
 }
 
-.banner {
+.banner, .address {
   position: relative;
 }
 
@@ -51,10 +54,6 @@ input.ng-invalid.ng-touched {
 
 @media (max-width: 640px) {
   /* For mobile phones: */
-
-  .testimonial {
-    font-size: 0.9rem;
-  }
 
   .banner .subtitle{
     font-size: 2.5rem;

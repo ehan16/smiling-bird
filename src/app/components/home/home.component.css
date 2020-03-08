@@ -1,7 +1,3 @@
-.address {
-  position: relative;
-}
-
 .direction {
   position: absolute;
   top: 0;
@@ -13,6 +9,10 @@
   color: rgba(255, 255, 255, 0);
   transition: all 1s linear;
   font-size: 0.9rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .address:hover .direction {
@@ -25,6 +25,15 @@
   background-color: #03779b;
   text-align: center;
   color: white;
+}
+
+.name {
+  padding: 20px 0px;
+  display: block;
+  background-color: #03779b;
+  text-align: center;
+  color: white;
+  height: fit-content;
 }
 
 .testimonial {
@@ -59,6 +68,10 @@
   hr {
     margin-top: 20px;
     margin-bottom: 20px;
+  }
+
+  .testimonial {
+    font-size: 0.9rem;
   }
 
 }
