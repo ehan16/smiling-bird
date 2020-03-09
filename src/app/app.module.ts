@@ -34,6 +34,7 @@ import { DentistDashComponent } from './components/doctor/dentist-view/dentist-d
 import { PatientViewComponent } from './components/patient/patient-view/patient-view.component';
 import { PaymentComponent } from './components/patient/patient-view/payment/payment.component';
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
+import { UserManagementComponent } from './components/login/user-management/user-management.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MessageComponent } from './components/doctor/dentist-view/message/messa
     DentistDashComponent,
     PatientViewComponent,
     PaymentComponent,
-    MessageComponent
+    MessageComponent,
+    UserManagementComponent
   ],
   imports: [
     BrowserModule,

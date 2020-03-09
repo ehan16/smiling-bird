@@ -28,7 +28,20 @@ export class LoginComponent implements OnInit {
     // this.loginForm.reset();
 
     // Buscar cual usuario es y redirigir
+  }
 
+  forgotPassword() {
+    if (!this.loginForm.value.username.valid){
+      window.alert('Escriba su email primero');
+    } else {
+      this.auth.sendPasswordResetEmail(this.loginForm.value.email).then(
+        res => {
+          console.log(res);
+          window.alert('Por favor revise su correo');
+        }, error => {
+          window.alert(error);
+        });
+    }
   }
 
   // forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {

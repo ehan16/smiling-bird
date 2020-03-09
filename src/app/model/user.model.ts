@@ -10,17 +10,17 @@ export class User {
   public birth: NgbDate;
   public gender: string;
   public enable: boolean;
-  public appointments: Appointment[]; //Para el historial medico se filtran los completados y asi
+  public appointments: Appointment[] = []; //Para el historial medico se filtran los completados y asi
 
   public debt: number;
 
   // public patients: User[] = [];
   public shift: number[];
 
-  constructor(user: string, name: string) {
+  constructor(user: string, name: string, identification: number) {
     this.name = name;
     this.user = user;
-    this.identification = 0;
+    this.identification = identification;
     this.gender = 'hombre';
     this.type = 'patient';
     this.enable = true;

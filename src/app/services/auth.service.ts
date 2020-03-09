@@ -66,4 +66,8 @@ export  class  AuthService {
     return (user !== null) ? true : false;
   }
 
+  sendPasswordResetEmail(email) {
+    return this.afAuth.auth.sendPasswordResetEmail(email, {url: 'http://localhost:4200/auth'});
+  }
+
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,7 +13,7 @@ export class SignUpComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -30,6 +32,21 @@ export class SignUpComponent implements OnInit {
         res => {
           console.log(res);
           window.alert('Su cuenta ha sido exitosamente creada');
+          console.log(res.user.uid);
+
+          // const email = this.registerForm.value.email;
+          // const name = this.registerForm.value.name;
+          // const identification = this.registerForm.value.cedula;
+          // const user = new User(email, name, identification);
+
+          const user = {
+            name: this.registerForm.value.name,
+            user: this.registerForm.value.email,
+            identification: this.registerForm.value.cedula
+          };
+
+          this.userService.createUser(user, res.user.uid);
+
         }, error => {
           console.log(error);
           window.alert(error);
