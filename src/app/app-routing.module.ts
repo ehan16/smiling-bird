@@ -18,6 +18,7 @@ import { AdminDashComponent } from './components/admin/admin-view/admin-dash/adm
 import { UserEditComponent } from './components/shared/user-edit/user-edit.component';
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
+import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -27,9 +28,11 @@ const appRoutes: Routes = [
   {path: 'patient/:id', component: PatientViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
+    
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'payment', component: PaymentComponent},
   ]},
+  {path: 'appointments', component: AppointmentsComponent},
   {path: 'dentist/:id', component: DentistViewComponent, children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},

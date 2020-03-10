@@ -54,7 +54,8 @@
               <p>Horario: {{ user.shift[0] }} - {{ user.shift[1] }}</p>
               <p>Lunes a Viernes</p>
               <div class="text-center">
-                <button class="btn btn-warning"><i class="fas fa-calendar-check"></i>Solicitar cita</button>
+                <button class="btn btn-warning" [routerLink]="['/appointments', currentUser]">
+                  <i class="fas fa-calendar-check"></i>Solicitar cita</button>
               </div>
             </div>
           </div>

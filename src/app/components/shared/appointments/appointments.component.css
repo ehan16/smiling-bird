@@ -1,0 +1,54 @@
+.table-wrapper {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    padding: 10vw;
+    min-height: 50vh;
+  }
+  
+  tr:hover {
+    background-color: rgb(167, 167, 167);
+  }
+  
+  i:hover {
+    color: rgb(9, 39, 139);
+  }
+  
+  .card-color {
+    background: #ffc76eb5;
+  }
+  
+  .card-color:hover {
+    background: #ffb641b5;
+  }
+  
+  .acc-content {
+    margin: 0;
+    background: #fff8c39e;
+  }
+  
+  .avatar {
+    text-align: center;
+    padding-top: 20px;
+  }
+  
+  .btn-user {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    text-align: left;
+  }
+  
+  @media (max-width: 650px) {
+    .table-wrapper {
+      min-height: 60vh;
+    }
+  }
+  
+  @media (max-width: 760px) {
+    .list {
+      margin:auto;
+      width: fit-content;
+    }
+  }
+  
