@@ -22,7 +22,7 @@
 }
 
 .jumbotron {
-  background-color: #03779b;
+  background-color: rgba(62,197,218,1);
   text-align: center;
   color: white;
 }
@@ -30,14 +30,14 @@
 .name {
   padding: 20px 0px;
   display: block;
-  background-color: #03779b;
+  background-color: rgba(62,197,218,1);
   text-align: center;
   color: white;
   height: fit-content;
 }
 
 .testimonial {
-  background-color: #03779b;
+  background-color: rgba(62,197,218,1);
   height: 55vh;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .treatment:hover {
-  background-color: rgb(190, 190, 190);
+  background-color: rgb(171, 238, 246);
   border-radius: 5px;
 }
 
