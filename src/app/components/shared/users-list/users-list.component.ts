@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-list',
@@ -11,8 +12,9 @@ export class UsersListComponent implements OnInit {
 
   userList: User[] = [];
   currentUser: User;
+  searchName;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
@@ -34,6 +36,22 @@ export class UsersListComponent implements OnInit {
     } else {
       this.userList = this.userService.userList;
     }
+  }
+
+  onReserveAppointment(dentist: User) {
+
+  }
+
+  seeMedicalHistory(patient: User) {
+
+  }
+
+  sendMessage(patient: User) {
+
+  }
+
+  editUser(user: User) {
+
   }
 
 }

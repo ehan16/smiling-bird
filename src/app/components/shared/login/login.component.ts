@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {  } from '@angular/fire';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -25,13 +26,11 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     console.log(this.loginForm);
     this.auth.signInWithEmail(this.loginForm.value.username, this.loginForm.value.password);
-    // this.loginForm.reset();
-
-    // Buscar cual usuario es y redirigir
+    this.userService.logUser(this.auth.id);
   }
 
   forgotPassword() {
-    if (!this.loginForm.value.username.valid){
+    if (!this.loginForm.value.username.valid) {
       window.alert('Escriba su email primero');
     } else {
       this.auth.sendPasswordResetEmail(this.loginForm.value.email).then(
@@ -43,18 +42,5 @@ export class LoginComponent implements OnInit {
         });
     }
   }
-
-  // forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
-  //   const promise = new Promise<any>((resolve, reject) => {
-  //     setTimeout(() => {
-  //       if (this.forbiddenEmails(.indexOf(control.value)) !== -1) {
-  //         resolve({'emailIsForbidden': true});
-  //       } else {
-  //         resolve(null);
-  //       }
-  //     }, 1500);
-  //   });
-  //   return promise;
-  // }
 
 }

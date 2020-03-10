@@ -7,25 +7,29 @@ export class User {
   public user: string;
   public identification: number;
   public type: string;
-  public birth: NgbDate;
+  public birth: {
+    year: number,
+    month: number,
+    day: number
+  };
   public gender: string;
   public enable: boolean;
-  public appointments: Appointment[] = []; //Para el historial medico se filtran los completados y asi
+  public appointment = []; //Para el historial medico se filtran los completados y asi
 
   public debt: number;
 
-  // public patients: User[] = [];
+  // public patients = [];
   public shift: number[];
 
-  constructor(user: string, name: string, identification: number) {
-    this.name = name;
-    this.user = user;
-    this.identification = identification;
-    this.gender = 'hombre';
-    this.type = 'patient';
-    this.enable = true;
-    this.debt = 0;
-    this.birth = new NgbDate(2020, 1, 17);
-    this.shift = [8, 14];
-  }
+  // constructor(user: string, name: string, identification: number) {
+  //   this.name = name;
+  //   this.user = user;
+  //   this.identification = identification;
+  //   this.gender = 'hombre';
+  //   this.type = 'patient';
+  //   this.enable = true;
+  //   this.debt = 0;
+  //   // this.birth = new NgbDate(2020, 1, 17);
+  //   this.shift = [8, 14];
+  // }
 }

@@ -34,7 +34,8 @@ import { DentistDashComponent } from './components/doctor/dentist-view/dentist-d
 import { PatientViewComponent } from './components/patient/patient-view/patient-view.component';
 import { PaymentComponent } from './components/patient/patient-view/payment/payment.component';
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
-import { UserManagementComponent } from './components/login/user-management/user-management.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { UserManagementComponent } from './components/login/user-management/user
     PatientViewComponent,
     PaymentComponent,
     MessageComponent,
-    UserManagementComponent
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -75,7 +76,7 @@ import { UserManagementComponent } from './components/login/user-management/user
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
-  providers: [UserService],
+  providers: [UserService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

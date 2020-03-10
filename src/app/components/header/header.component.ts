@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-header',
@@ -9,31 +11,35 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   currentUser: User;
-  logged = true;
+  notLogged = false;
   show = false;
 
   toggleCollapse() {
     this.show = !this.show;
   }
 
-  constructor(private router: Router, private userService: UserService) { }
-
-  ngOnInit() {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    protected auth: AuthService
+  ) {
     this.currentUser = this.userService.currentUser;
   }
 
+  ngOnInit() {}
+
   goToHome() {
-    if (this.currentUser.type === 'patient'){
-      this.router.navigate(['/patient', this.currentUser.user]);
-    } else if (this.currentUser.type === 'dentist') {
-      this.router.navigate(['/dentist', this.currentUser.user]);
-    } else if (this.currentUser.type === 'admin') {
-      this.router.navigate(['/admin']);
+    if (this.auth.isAuthenticated) {
+      if (this.currentUser.type === 'patient') {
+        this.router.navigate(['/patient', this.currentUser.identification]);
+      } else if (this.currentUser.type === 'dentist') {
+        this.router.navigate(['/dentist', this.currentUser.identification]);
+      } else if (this.currentUser.type === 'admin') {
+        this.router.navigate(['/admin']);
+      }
     } else {
       this.router.navigate(['/home']);
     }
   }
-
 }

@@ -38,7 +38,7 @@
 
 .testimonial {
   background-color: #03779b;
-  height: 55vh;
+  height: 50vh;
 }
 
 .carousel-caption {
@@ -72,6 +72,7 @@
 
   .testimonial {
     font-size: 0.9rem;
+    height: 55vh;
   }
 
 }

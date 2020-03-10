@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/model/user.model';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Appointment } from 'src/app/model/appointment.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,7 +16,7 @@ export class SignUpComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor(private auth: AuthService, private userService: UserService) { }
+  constructor(private auth: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -34,18 +37,25 @@ export class SignUpComponent implements OnInit {
           window.alert('Su cuenta ha sido exitosamente creada');
           console.log(res.user.uid);
 
-          // const email = this.registerForm.value.email;
-          // const name = this.registerForm.value.name;
-          // const identification = this.registerForm.value.cedula;
-          // const user = new User(email, name, identification);
-
           const user = {
             name: this.registerForm.value.name,
             user: this.registerForm.value.email,
-            identification: this.registerForm.value.cedula
+            identification: this.registerForm.value.cedula,
+            gender: 'hombre',
+            type: 'patient',
+            birth: {
+              year: 2020,
+              month: 1,
+              day: 12
+            },
+            enable: true,
+            appointment: [],
+            debt: 0,
+            shift: [ 0, 0 ],
           };
 
           this.userService.createUser(user, res.user.uid);
+          this.userService.logUser(res.user.uid);
 
         }, error => {
           console.log(error);
