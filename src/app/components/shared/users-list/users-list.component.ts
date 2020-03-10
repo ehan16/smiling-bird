@@ -14,21 +14,11 @@ export class UsersListComponent implements OnInit {
   currentUser: User;
   searchName;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {
+    this.currentUser = this.userService.currentUser;
+  }
 
   ngOnInit() {
-    this.currentUser = this.userService.currentUser;
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-    this.userList.push(this.currentUser);
-
     if (this.currentUser.type === 'patient') {
       // this.userList = this.userList.filter(user => user.type === 'dentist');
     } else if (this.currentUser.type === 'dentist') {

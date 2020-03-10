@@ -12,8 +12,6 @@
 	</div>
 	<div class="container-menu collapse main-theme" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >
     <ng-template *ngIf="auth.isAuthenticated">
-      fasda
-      <button class="btnList">Hola</button>
       <button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'dentist-list']" *ngIf="currentUser.type === 'patient'">Odontólogos</button>
 			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'medical-record']" *ngIf="currentUser.type === 'patient'">Historial</button>
 			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'payment']" *ngIf="currentUser.type === 'patient'">Pago</button>

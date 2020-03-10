@@ -18,7 +18,7 @@
     </span>
     <span *ngIf="currentUser.type === 'dentist'">
       <h6 class="text-uppercase font-weight-bold">Horario:</h6>
-      <p>{{ currentUser.shift }}</p>
+      <p>{{ currentUser.shift[0] }} - {{ currentUser.shift[1] }}</p>
     </span>
   </div>
 </div>

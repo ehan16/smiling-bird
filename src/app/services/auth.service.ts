@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FirebaseAuth } from '@angular/fire';
 import * as firebase from 'firebase';
 
 @Injectable({

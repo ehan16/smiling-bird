@@ -17,10 +17,11 @@ export class ProfileEditComponent implements OnInit {
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+    this.currentUser = this.userService.currentUser;
+  }
 
   ngOnInit() {
-    this.currentUser = this.userService.currentUser;
 
     this.editForm = new FormGroup({
       name: new FormControl(this.currentUser.name, Validators.required),

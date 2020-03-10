@@ -24,6 +24,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   onEditMode() {
     this.editMode = !this.editMode;
 
+    console.log('home current user ', this.currentUser);
+    console.log('service current user ', this.userService.currentUser);
+    console.log('service current user by getter', this.userService.getCurrentUser());
+
     if (this.editMode) {
       this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile', 'edit']);
     } else {
