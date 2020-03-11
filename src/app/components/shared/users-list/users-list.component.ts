@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users-list',
@@ -11,6 +12,7 @@ export class UsersListComponent implements OnInit {
 
   userList: User[] = [];
   currentUser: User;
+  newAppointment: FormGroup;
 
   constructor(private userService: UserService) { }
 
@@ -34,6 +36,23 @@ export class UsersListComponent implements OnInit {
     } else {
       this.userList = this.userService.userList;
     }
+
+    this.newAppointment = new FormGroup({
+      name: new FormControl(this.currentUser.name, Validators.required),
+      user: new FormControl(this.currentUser.user, [Validators.required, Validators.email]),
+      identification: new FormControl(this.currentUser.identification, Validators.required),
+      appointmentDate: new FormControl(this.currentUser.birth , Validators.required),
+      gender: new FormControl(this.currentUser.gender, Validators.required),
+      // shift: new FormControl
+    });
   }
+
+  addAppointment(){
+    console.log(this.newAppointment);
+  }
+
+
+
+   
 
 }

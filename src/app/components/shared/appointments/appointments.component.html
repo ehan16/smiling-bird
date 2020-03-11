@@ -21,7 +21,7 @@
             <th scope="col">Email</th>
             <th scope="col">Fecha</th>
             <th scope="col">Tiempo de visita</th>
-            <th scope="col">Dentista</th>
+            <th *ngIf="currentUser === 'dentist'"scope="col">Dentista</th>
             <th scope="col">Acción</th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@
             <td>email@loquesea.com</td>
             <td>18 Dec 2018</td>
             <td>10:15 - 10:30</td>
-            <td>Pana</td>
+            <td *ngIf="currentUser === 'dentist'">Pana</td>
             <td>
                 <button class="btn-info rounded m-1"><i class="fas fa-pencil-alt"></i></button>
                 <button class="btn-danger rounded m-1"><i class="fas fa-trash-alt"></i></button>
@@ -41,9 +41,11 @@
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <td>{{ currentUser.name }}</td>
+            <td>currentUser.email</td>
+            <td>currentUser.date</td>
+            <td>currentUser.shift</td>
+            <td>dentista escogido</td>
           </tr>
           <tr>
             <th scope="row">3</th>

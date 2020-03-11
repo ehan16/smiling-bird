@@ -10,6 +10,7 @@ import { User } from 'src/app/model/user.model';
 export class AppointmentsComponent implements OnInit {
 
   currentUser: User;
+  
 
   constructor(
     private userService: UserService
@@ -18,7 +19,7 @@ export class AppointmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(this.currentUser);
   }
 
 }

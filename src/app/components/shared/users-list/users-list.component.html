@@ -1,10 +1,6 @@
 <div class="row m-0 pale-yellow">
   <div class="banner">
-    <img
-      src="../../../../assets/background/teeth_smile.png"
-      alt="banner"
-      width="100%"
-    />
+    <img src="../../../../assets/background/teeth_smile.png" alt="banner" width="100%" />
     <div class="subtitle font-title">
       <p *ngIf="currentUser.type === 'patient'">Odontólogos</p>
       <p></p>
@@ -16,32 +12,18 @@
   </div>
 
   <div class="col-12 py-5 table-wrapper">
-    <div
-      class="w-100"
-      id="accordion"
-      *ngIf="currentUser.type === 'patient'; else listView"
-    >
+    <div class="w-100" id="accordion" *ngIf="currentUser.type === 'patient'; else listView">
       <div class="card" *ngFor="let user of userList; let i = index">
         <div class="card-header card-color" id="{{ 'heading' + i }}">
           <h5 class="mb-0">
-            <button
-              class="btn btn-user"
-              data-toggle="collapse"
-              [attr.data-target]="'#user' + i"
-              [attr.aria-expanded]="false"
-              [attr.aria-controls]="'user' + i"
-            >
+            <button class="btn btn-user" data-toggle="collapse" [attr.data-target]="'#user' + i"
+              [attr.aria-expanded]="false" [attr.aria-controls]="'user' + i">
               {{ user.name }}
             </button>
           </h5>
         </div>
 
-        <div
-          id="{{ 'user' + i }}"
-          class="collapse"
-          [attr.aria-labelledby]="'user' + i"
-          data-parent="#accordion"
-        >
+        <div id="{{ 'user' + i }}" class="collapse" [attr.aria-labelledby]="'user' + i" data-parent="#accordion">
           <div class="row acc-content">
             <div class="col-sm-4 avatar">
               <img src="../../../../assets/extra/avatar.png" alt="avatar">
@@ -53,9 +35,66 @@
               <p>{{ user.type | titlecase }}</p>
               <p>Horario: {{ user.shift[0] }} - {{ user.shift[1] }}</p>
               <p>Lunes a Viernes</p>
+
               <div class="text-center">
-                <button class="btn btn-warning" [routerLink]="['/appointments', currentUser]">
-                  <i class="fas fa-calendar-check"></i>Solicitar cita</button>
+                <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#appointmentModal">
+                  <i class="fas fa-calendar-check"></i> Solicitar cita
+                </button>
+
+                <!-- Modal nueva cita-->
+                <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog"
+                  aria-labelledby="appointmentModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="appointmentModalLabel">Solicitar nueva cita</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+
+                      <div class="modal-body">
+                        <form [formGroup]="newAppointment" (ngSubmit)="addAppointment()">
+
+                          <div class="form-group">
+                            <label for="appointmentDentist" class="font-weight-bold d-block">Odontólogo: </label>
+                            <span> {{ user.name }}</span>
+                          </div>
+
+
+                          <div class="form-group">
+                            <label for="appointmentDate" class="font-weight-bold d-block">Fecha de la cita</label>
+
+                            <div class="input-group">
+                              <input class="form-control" placeholder="yyyy-mm-dd" formControlName="appointmentDate"
+                                id="appointmentDate" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate"
+                                [minDate]="minDate" [(ngModel)]=date />
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                  type="button"></button>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                          <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fin modal -->
               </div>
             </div>
           </div>
@@ -81,15 +120,9 @@
             <td>{{ user.user }}</td>
             <td class="text-capitalize">{{ user.type }}</td>
             <td class="text-center">
-              <a *ngIf="currentUser.type === 'dentist'" class="mx-2"
-                ><i class="fas fa-book"></i
-              ></a>
-              <a *ngIf="currentUser.type === 'dentist'" class="mx-2"
-                ><i class="fas fa-envelope"></i
-              ></a>
-              <a *ngIf="currentUser.type === 'patient'" class="mx-2"
-                ><i class="fas fa-user-edit"></i
-              ></a>
+              <a *ngIf="currentUser.type === 'dentist'" class="mx-2"><i class="fas fa-book"></i></a>
+              <a *ngIf="currentUser.type === 'dentist'" class="mx-2"><i class="fas fa-envelope"></i></a>
+              <a *ngIf="currentUser.type === 'patient'" class="mx-2"><i class="fas fa-user-edit"></i></a>
             </td>
           </tr>
         </tbody>
