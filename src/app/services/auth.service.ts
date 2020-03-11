@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { UserService } from './user.service';
 
 @Injectable({
     providedIn:  'root'
@@ -14,8 +12,7 @@ export  class  AuthService {
   id: any;
 
   constructor(private afAuth: AngularFireAuth,
-              private router: Router,
-              private userService: UserService) {
+              private router: Router) {
 
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -84,4 +81,14 @@ export  class  AuthService {
     return this.id;
   }
 
+  VerifyEmail(user) {
+    let use = this.afAuth.auth.currentUser;
+
+    use.sendEmailVerification().then(function () {
+      // aqui lo manda
+    }).catch(function (error) {
+      // por si algo pasa
+    });
+
+  }
 }

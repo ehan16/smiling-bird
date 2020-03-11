@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -53,6 +54,8 @@ export class SignUpComponent implements OnInit {
 
           this.userService.createUser(user, res.user.uid);
           this.userService.logUser(res.user.uid);
+          this.auth.VerifyEmail(res.user);
+          
 
         }, error => {
           console.log(error);
@@ -62,4 +65,7 @@ export class SignUpComponent implements OnInit {
       window.alert('Las dos contraseñas no coinciden');
     }
   }
+ 
+
+
 }
