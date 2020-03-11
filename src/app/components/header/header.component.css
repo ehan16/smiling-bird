@@ -35,11 +35,11 @@ button,
 }
 
 header {
-  background: #005772;
+  background: radial-gradient(ellipse at center, rgba(164,210,229,1) 0%, rgba(26,162,203,1) 100%);
   width: 100%;
   position: absolute;
   z-index: 999;
-  box-shadow: 0 8px 6px -6px #000;
+  box-shadow: 0 8px 6px -6px rgb(14, 79, 98);
 }
 
 .sticky_nav {
@@ -48,7 +48,7 @@ header {
   position: fixed;
   display: flex;
   z-index: 100;
-  box-shadow: 0 6px 4px -4px #333333;
+  /*box-shadow: 0 6px 4px -4px rgb(94, 199, 138);*/
 }
 
 @media (max-width: 683px) {

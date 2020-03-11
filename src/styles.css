@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,7 +16,7 @@ body {
 
 
 p, label, h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Serif', serif
 }
 
 .font-title {
@@ -35,7 +37,7 @@ input.ng-invalid.ng-touched {
 }
 
 .main-theme {
-  background: #007396;
+  background: rgba(142,220,235,1);
 }
 
 .address {

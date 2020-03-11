@@ -1,0 +1,7 @@
+  .mythead{
+      background-color: rgb(80, 185, 218);
+  }
+
+  tbody > tr:hover {
+    background-color: rgb(175, 221, 235);
+  }

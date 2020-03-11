@@ -19,6 +19,7 @@ import { UserEditComponent } from './components/shared/user-edit/user-edit.compo
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
+import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
   {path: 'patient/:id', component: PatientViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
+
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'payment', component: PaymentComponent},
     // {path: 'profile', component: ProfileComponent, children: [
@@ -37,6 +39,7 @@ const appRoutes: Routes = [
     //   {path: 'edit', component: ProfileEditComponent}
     // ]}
   ]},
+  {path: 'appointments', component: AppointmentsComponent},
   {path: 'dentist/:id', component: DentistViewComponent, children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
