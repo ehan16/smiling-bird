@@ -32,7 +32,10 @@
         formControlName="identification"
       />
       <span
-        *ngIf="!editForm.get('identification').valid && editForm.get('identification').touched"
+        *ngIf="
+          !editForm.get('identification').valid &&
+          editForm.get('identification').touched
+        "
         class="help-block"
       >
         <span *ngIf="editForm.get('identification').errors['required']"
@@ -95,15 +98,26 @@
     </div>
 
     <span *ngIf="currentUser.type === 'dentist'">
-      <div class="form-group">
-        <label for="shift" class="text-uppercase font-weight-bold"
-          >Horario</label
-        >
-        <input
-          id="user"
-          formControlName="user"
-          class="form-control form-field"
-        />
+      <label for="shift" class="text-uppercase font-weight-bold">Horario</label>
+      <div class="d-flex">
+        <div class="form-group d-flex w-25">
+          <label for="entrance" class="text-uppercase font-weight-bold my-2 mr-2">Entrada</label>
+          <input
+            type="number"
+            id="entrance"
+            formControlName="user"
+            class="form-control form-field my-2 w-50 mr-2"
+          />
+        </div>
+        <div class="form-group d-flex w-25">
+          <label for="exit" class="text-uppercase font-weight-bold my-2 mr-2">Salida</label>
+          <input
+            type="number"
+            id="exit"
+            formControlName="user"
+            class="form-control form-field my-2 w-50"
+          />
+        </div>
       </div>
     </span>
 

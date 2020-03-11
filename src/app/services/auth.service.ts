@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { UserService } from './user.service';
 
 @Injectable({
     providedIn:  'root'
@@ -14,7 +15,7 @@ export  class  AuthService {
 
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
-              private afs: AngularFirestore) {
+              private userService: UserService) {
 
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -23,9 +24,11 @@ export  class  AuthService {
         console.log('user', this.user, 'uid', this.id);
         // localStorage.setItem('user', JSON.stringify(this.user));
         // JSON.parse(localStorage.getItem('user'));
+        // this.userService.logUser(this.id);
       } else {
         // localStorage.setItem('user', null);
         // JSON.parse(localStorage.getItem('user'));
+        // this.userService.currentUser = null;
       }
     });
   }
