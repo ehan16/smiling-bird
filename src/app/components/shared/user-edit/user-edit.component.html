@@ -1,1 +1,160 @@
-<p>user-edit works!</p>
+<div class="offset-sm-2 col-8 offset-sm-2 p-5 wrapper">
+  <div class="col-md-5 p-5">
+    <!-- Aqui va la imagen del usuario -->
+    <img src="../../../../assets/extra/avatar.png" alt="avatar" />
+    <h4>{{ editedUser.name }}</h4>
+    <h5>{{ editedUser.type | titlecase }}</h5>
+  </div>
+  <div class="col-md-7 p-5">
+    <h5 class="font-weight-bold my-3 bg-light">Detalles de la cuenta</h5>
+    <hr />
+    <form [formGroup]="editForm" (ngSubmit)="onEdit()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="name" class="font-weight-bold">Nombre</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control form-field"
+          />
+          <span
+            *ngIf="!editForm.get('name').valid && editForm.get('name').touched"
+            class="help-block"
+          >
+            <span *ngIf="editForm.get('name').errors['required']"
+              >El campo es obligatorio</span
+            >
+          </span>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="identification" class="font-weight-bold">Cédula</label>
+          <input
+            type="number"
+            id="identification"
+            class="form-control form-field"
+            formControlName="identification"
+          />
+          <span
+            *ngIf="
+              !editForm.get('identification').valid &&
+              editForm.get('identification').touched
+            "
+            class="help-block"
+          >
+            <span *ngIf="editForm.get('identification').errors['required']"
+              >El campo es obligatorio</span
+            >
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="user" class="font-weight-bold">Correo</label>
+          <input
+            type="text"
+            id="user"
+            formControlName="user"
+            class="form-control form-field"
+          />
+          <span
+            *ngIf="!editForm.get('name').valid && editForm.get('name').touched"
+            class="help-block"
+          >
+            <span *ngIf="editForm.get('name').errors['required']"
+              >El campo es obligatorio</span
+            >
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <label for="birthDate" class="font-weight-bold d-block"
+            >Nacimiento</label
+          >
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              formControlName="birthDate"
+              id="birthDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              [maxDate]="maxDate"
+              [minDate]="minDate"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              ><i class="fas fa-calendar-alt"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+        <label for="gender" class="text-uppercase font-weight-bold"
+          >Género</label
+        >
+        <select
+          id="gender"
+          formControlName="gender"
+          class="form-control form-field"
+        >
+          <option value="mujer">Mujer</option>
+          <option value="hombre">Hombre</option>
+        </select>
+      </div>
+
+      <span *ngIf="currentUser.type === 'dentist'">
+        <label for="shift" class="text-uppercase font-weight-bold"
+          >Horario</label
+        >
+        <div class="d-flex">
+          <div class="form-group d-flex w-25">
+            <label
+              for="entrance"
+              class="text-uppercase font-weight-bold my-2 mr-2"
+              >Entrada</label
+            >
+            <input
+              type="number"
+              id="entrance"
+              formControlName="start"
+              class="form-control form-field my-2 w-50 mr-2"
+              [(ngModel)]="minHour"
+            />
+          </div>
+          <div class="form-group d-flex w-25">
+            <label for="exit" class="text-uppercase font-weight-bold my-2 mr-2"
+              >Salida</label
+            >
+            <input
+              type="number"
+              id="exit"
+              formControlName="end"
+              [(ngModel)]="maxHour"
+              class="form-control form-field my-2 w-50"
+            />
+          </div>
+        </div>
+      </span>
+
+      <button
+        class="btn btn-warning btn-block my-4"
+        type="submit"
+        [disabled]="!editForm.valid"
+      >
+        Guardar
+      </button>
+    </form>
+  </div>
+</div>
