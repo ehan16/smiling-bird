@@ -78,4 +78,14 @@ export  class  AuthService {
       });
   }
 
+  VerifyEmail(user) {
+    var use = this.afAuth.auth.currentUser;
+
+    use.sendEmailVerification().then(function () {
+      // aqui lo manda
+    }).catch(function (error) {
+      // por si algo pasa
+    });
+
+  }
 }

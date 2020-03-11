@@ -7,6 +7,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Appointment } from 'src/app/model/appointment.model';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -56,6 +57,8 @@ export class SignUpComponent implements OnInit {
 
           this.userService.createUser(user, res.user.uid);
           this.userService.logUser(res.user.uid);
+          this.auth.VerifyEmail(res.user);
+          
 
         }, error => {
           console.log(error);
@@ -65,4 +68,7 @@ export class SignUpComponent implements OnInit {
       window.alert('Las dos contraseñas no coinciden');
     }
   }
+ 
+
+
 }
