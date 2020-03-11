@@ -80,4 +80,8 @@ export  class  AuthService {
       });
   }
 
+  getCurrentUID() {
+    return this.id;
+  }
+
 }

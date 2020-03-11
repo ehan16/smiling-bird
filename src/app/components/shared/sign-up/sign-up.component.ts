@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
             enable: true,
             appointment: [],
             debt: 0,
-            shift: [ 0, 0 ],
+            shift: [ 10, 14 ],
           };
 
           this.userService.createUser(user, res.user.uid);

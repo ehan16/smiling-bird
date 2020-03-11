@@ -21,7 +21,6 @@ export class FirestoreService {
     return this.firestore.collection(collection).doc(documentId).snapshotChanges();
   }
 
-
   public getAll(collection: string) {
     return this.firestore.collection(collection).snapshotChanges();
   }
@@ -29,4 +28,9 @@ export class FirestoreService {
   public update(documentId: string, data: any, collection: string) {
     return this.firestore.collection(collection).doc(documentId).set({ data } , { merge: true});
   }
+
+  public setValue(documentId: string, data: any, collection: string) {
+    this.firestore.collection(collection).doc(documentId).set(data);
+  }
+
 }

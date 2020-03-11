@@ -46,18 +46,7 @@
 
     <div class="form-group">
       <label for="user" class="text-uppercase font-weight-bold">Correo</label>
-      <input id="user" formControlName="user" class="form-control form-field" />
-      <span
-        *ngIf="!editForm.get('user').valid && editForm.get('user').touched"
-        class="help-block"
-      >
-        <span *ngIf="editForm.get('name').errors['required']"
-          >El campo es obligatorio</span
-        >
-        <span *ngIf="editForm.get('user').errors['email']"
-          >El dato introducido es incorrecto</span
-        >
-      </span>
+      <input id="user" value="{{ currentUser.user }}" class="form-control form-field" disabled/>
     </div>
 
     <div class="form-group">
@@ -101,27 +90,33 @@
       <label for="shift" class="text-uppercase font-weight-bold">Horario</label>
       <div class="d-flex">
         <div class="form-group d-flex w-25">
-          <label for="entrance" class="text-uppercase font-weight-bold my-2 mr-2">Entrada</label>
+          <label
+            for="entrance"
+            class="text-uppercase font-weight-bold my-2 mr-2"
+            >Entrada</label
+          >
           <input
             type="number"
             id="entrance"
-            formControlName="user"
+            formControlName="start"
             class="form-control form-field my-2 w-50 mr-2"
+            [(ngModel)]="minHour"
           />
         </div>
         <div class="form-group d-flex w-25">
-          <label for="exit" class="text-uppercase font-weight-bold my-2 mr-2">Salida</label>
+          <label for="exit" class="text-uppercase font-weight-bold my-2 mr-2"
+            >Salida</label
+          >
           <input
             type="number"
             id="exit"
-            formControlName="user"
+            formControlName="end"
+            [(ngModel)]="maxHour"
             class="form-control form-field my-2 w-50"
           />
         </div>
       </div>
-    </span>
 
-    <span *ngIf="currentUser.type === 'dentist'">
       <div class="form-group">
         <label for="payment-methods" class="text-uppercase font-weight-bold"
           >Métodos de pago</label
@@ -133,6 +128,7 @@
         />
       </div>
     </span>
+
     <button
       class="btn btn-warning btn-block my-4"
       type="submit"
