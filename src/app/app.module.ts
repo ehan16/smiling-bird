@@ -36,6 +36,7 @@ import { PaymentComponent } from './components/patient/patient-view/payment/paym
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AuthService } from './services/auth.service';
+import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AuthService } from './services/auth.service';
     PatientViewComponent,
     PaymentComponent,
     MessageComponent,
-    FilterPipe
+    FilterPipe,
+    VisitorViewComponent
   ],
   imports: [
     BrowserModule,

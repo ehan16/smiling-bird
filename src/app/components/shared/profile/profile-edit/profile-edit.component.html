@@ -61,13 +61,6 @@
       <label for="birthDate" class="text-uppercase font-weight-bold d-block"
         >Año de nacimiento</label
       >
-      <!-- <input [max]="maxDate" type="date" id="birthDate" formControlName="birthDate"/> -->
-      <!-- <input class="form-control" placeholder="yyyy-mm-dd" formControlName="birthDate" ngbDatepicker #d="ngbDatepicker"> -->
-      <!-- <input class="form-control" placeholder="yyyy-mm-dd" formControlName="birthDate"
-             id="birthDate" ngbDatepicker #d="ngbDatepicker">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-      </div> -->
       <div class="input-group">
         <input
           class="form-control"
@@ -78,7 +71,6 @@
           #d="ngbDatepicker"
           [maxDate]="maxDate"
           [minDate]="minDate"
-          [(ngModel)]=date
         />
         <div class="input-group-append">
           <button

@@ -18,29 +18,44 @@ import { AdminDashComponent } from './components/admin/admin-view/admin-dash/adm
 import { UserEditComponent } from './components/shared/user-edit/user-edit.component';
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
+import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignUpComponent},
+  {path: '', pathMatch: 'full', redirectTo: '/visitor'},
+  {path: 'visitor', component: VisitorViewComponent, children: [
+    {path: '', component: HomeComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'signup', component: SignUpComponent}
+  ]},
   {path: 'patient/:id', component: PatientViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'payment', component: PaymentComponent},
+    // {path: 'profile', component: ProfileComponent, children: [
+    //   {path: '', component: ProfileDetailComponent},
+    //   {path: 'edit', component: ProfileEditComponent}
+    // ]}
   ]},
   {path: 'dentist/:id', component: DentistViewComponent, children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
     {path: 'patient/:id/medical-record', component: MedicalHistoryComponent},
     {path: 'patient/:id/consult/:number', component: ConsultDetailComponent},
-    {path: 'patient/:id/message', component: MessageComponent}
+    {path: 'patient/:id/message', component: MessageComponent},
+    // {path: 'profile', component: ProfileComponent, children: [
+    //   {path: '', component: ProfileDetailComponent},
+    //   {path: 'edit', component: ProfileEditComponent}
+    // ]}
   ]},
   {path: 'admin/:id', component: AdminViewComponent, children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
-    {path: 'user-edit/:id', component: UserEditComponent}
+    {path: 'user-edit/:id', component: UserEditComponent},
+    // {path: 'profile', component: ProfileComponent, children: [
+    //   {path: '', component: ProfileDetailComponent},
+    //   {path: 'edit', component: ProfileEditComponent}
+    // ]}
   ]},
   {path: ':userType/:id/profile', component: ProfileComponent, children: [
     {path: '', component: ProfileDetailComponent},

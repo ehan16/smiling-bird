@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { User } from 'src/app/model/user.model';
+import { User } from 'src/app/models/user.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
 
@@ -22,6 +22,8 @@ export class ProfileEditComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const birth: NgbDate = new NgbDate(this.currentUser.birth.year, this.currentUser.birth.month, this.currentUser.birth.day);
 
     this.editForm = new FormGroup({
       name: new FormControl(this.currentUser.name, Validators.required),

@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/model/user.model';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { Appointment } from 'src/app/model/appointment.model';
 import { Router } from '@angular/router';
 
 @Component({

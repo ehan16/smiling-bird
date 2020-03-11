@@ -1,27 +1,93 @@
 <header class="text-center">
-  <img src="../../assets/logo/logo2.png" alt="Smiling Bird logo" height="100rem">
+  <img
+    src="../../assets/logo/logo2.png"
+    alt="Smiling Bird logo"
+    height="100rem"
+  />
 </header>
 <nav class="main-theme sticky_nav" #stickyNav>
-	<div class="container_left">
-		<a class="home" routerLinkActive="active" (click)="goToHome()">
+  <div class="container_left">
+    <a class="home" routerLinkActive="active" (click)="goToHome()">
       <li class="fas fa-home"></li>
     </a>
-    <button id="btnMenu" (click)="toggleCollapse()" class="navbar-toggler navbar-toggler-right">
+    <button
+      id="btnMenu"
+      (click)="toggleCollapse()"
+      class="navbar-toggler navbar-toggler-right"
+    >
       <li class="fas fa-bars"></li>
-		</button>
-	</div>
-	<div class="container-menu collapse main-theme" [class.show]="show" [ngClass]="show ? 'opened' : 'none'" >
-    <ng-template *ngIf="auth.isAuthenticated">
-      <button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'dentist-list']" *ngIf="currentUser.type === 'patient'">Odontólogos</button>
-			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'medical-record']" *ngIf="currentUser.type === 'patient'">Historial</button>
-			<button class="btnList" routerLinkActive="active" [routerLink]="['/patient', currentUser.user, 'payment']" *ngIf="currentUser.type === 'patient'">Pago</button>
-      <button class="btnList" routerLinkActive="active" [routerLink]="['/dentist', currentUser.user, 'patient-list']" *ngIf="currentUser.type === 'dentist'">Pacientes</button>
-      <button class="btnList" routerLinkActive="active" [routerLink]="['/dentist', currentUser.user, 'report']" *ngIf="currentUser.type === 'dentist'">Reportes</button>
-      <button class="btnList" routerLinkActive="active" [routerLink]="['/admin','user-list']" *ngIf="currentUser.type === 'admin'">Usuarios</button>
-    </ng-template>
-    <button class="btnList main-theme" routerLink="/login" *ngIf="!auth.isAuthenticated">Iniciar sesión</button>
-    <ng-template *ngIf="auth.isAuthenticated"><button class="btnList" [routerLink]="[currentUser.type, currentUser.user, 'profile']">{{ currentUser.name }}</button></ng-template>
+    </button>
+  </div>
+  <div
+    class="container-menu collapse main-theme"
+    [class.show]="show"
+    [ngClass]="show ? 'opened' : 'none'"
+  >
+    <div *ngIf="currentUser">
+      <button
+        class="btnList"
+        routerLinkActive="active"
+        [routerLink]="['/patient', currentUser.user, 'dentist-list']"
+        *ngIf="currentUser.type === 'patient'"
+      >
+        Odontólogos
+      </button>
+      <button
+        class="btnList"
+        routerLinkActive="active"
+        [routerLink]="['/patient', currentUser.user, 'medical-record']"
+        *ngIf="currentUser.type === 'patient'"
+      >
+        Historial
+      </button>
+      <button
+        class="btnList"
+        routerLinkActive="active"
+        [routerLink]="['/patient', currentUser.user, 'payment']"
+        *ngIf="currentUser.type === 'patient'"
+      >
+        Pago
+      </button>
+      <button
+        class="btnList"
+        routerLinkActive="active"
+        [routerLink]="['/dentist', currentUser.user, 'patient-list']"
+        *ngIf="currentUser.type === 'dentist'"
+      >
+        Pacientes
+      </button>
+      <button
+        class="btnList"
+        routerLinkActive="active"
+        [routerLink]="['/dentist', currentUser.user, 'report']"
+        *ngIf="currentUser.type === 'dentist'"
+      >
+        Reportes
+      </button>
+      <button
+        class="btnList"
+        routerLinkActive="active"
+        [routerLink]="['/admin', 'user-list']"
+        *ngIf="currentUser.type === 'admin'"
+      >
+        Usuarios
+      </button>
     </div>
-    <span class="nav-right">
-    </span>
+  </div>
+  <span class="nav-right">
+    <button
+      class="btnList main-theme"
+      routerLink="/visitor/login"
+      *ngIf="!currentUser"
+    >
+      Iniciar sesión
+    </button>
+    <button
+      class="btnList"
+      *ngIf="currentUser"
+      (click)="goToProfile()"
+    >
+      {{ currentUser.name }}
+    </button>
+  </span>
 </nav>

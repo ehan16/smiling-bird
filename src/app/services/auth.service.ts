@@ -21,11 +21,11 @@ export  class  AuthService {
         this.user = user;
         this.id = user.uid;
         console.log('user', this.user, 'uid', this.id);
-        localStorage.setItem('user', JSON.stringify(this.user));
-        JSON.parse(localStorage.getItem('user'));
+        // localStorage.setItem('user', JSON.stringify(this.user));
+        // JSON.parse(localStorage.getItem('user'));
       } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
+        // localStorage.setItem('user', null);
+        // JSON.parse(localStorage.getItem('user'));
       }
     });
   }
@@ -45,7 +45,7 @@ export  class  AuthService {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(
       (result) => {
         console.log('Log in successful');
-        this.router.navigate(['/home']);
+        // this.router.navigate(['/home']);
       }
     ).catch(
       (error) => {
@@ -63,10 +63,10 @@ export  class  AuthService {
     });
   }
 
-  get isAuthenticated(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null) ? true : false;
-  }
+  // get isAuthenticated(): boolean {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   return (user !== null) ? true : false;
+  // }
 
   sendPasswordResetEmail(email) {
     return this.afAuth.auth.sendPasswordResetEmail(email).then(
