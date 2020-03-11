@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-appointments',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppointmentsComponent implements OnInit {
 
-  constructor() { }
+  currentUser: User;
+
+  constructor(
+    private userService: UserService
+  ) { 
+    this.currentUser = this.userService.currentUser;
+  }
 
   ngOnInit() {
+
   }
 
 }
