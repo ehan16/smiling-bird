@@ -13,5 +13,5 @@ export class Appointment {
   public dentist: User;
   public completed: boolean;
   public accepted: boolean;
-  public treatments: Treatment[];
+  public treatments = [];
 }

@@ -59,7 +59,7 @@ export  class  AuthService {
 
   signOut() {
     return this.afAuth.auth.signOut().then(() => {
-      localStorage.removeItem('user');
+      // localStorage.removeItem('user');
       console.log('Signed out');
       window.alert('Ha cerrado sesion');
       this.router.navigate(['/']);

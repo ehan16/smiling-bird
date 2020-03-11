@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
 
   logOut() {
   this.auth.signOut();
+  this.userService.currentUser = null;
   }
 
 }

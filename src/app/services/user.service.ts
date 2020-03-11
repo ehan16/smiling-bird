@@ -14,7 +14,19 @@ export class UserService {
     private firestore: FirestoreService,
     private af: AngularFirestore,
     private router: Router
-  ) {}
+  ) {
+    this.firestore.getAll('users').subscribe(
+      data => {
+        this.userList = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          } as User;
+        });
+      }
+    );
+
+  }
 
   createUser(data: any, id: string) {
     this.af

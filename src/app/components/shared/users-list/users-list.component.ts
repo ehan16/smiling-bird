@@ -16,11 +16,14 @@ export class UsersListComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) {
     this.currentUser = this.userService.currentUser;
+    this.userList = this.userService.userList;
+    console.log(this.userList);
   }
 
   ngOnInit() {
+
     if (this.currentUser.type === 'patient') {
-      // this.userList = this.userList.filter(user => user.type === 'dentist');
+      this.userList = this.userList.filter(user => user.type === 'dentist');
     } else if (this.currentUser.type === 'dentist') {
       this.userList = this.userList.filter(user => user.type === 'patient');
     } else {
