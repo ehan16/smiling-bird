@@ -1,18 +1,11 @@
 <div class="row m-0 pale-yellow">
-<<<<<<< HEAD
   <div class="banner font-title">
-=======
-  <div class="banner">
-    <img src="../../../../assets/background/teeth_smile.png" alt="banner" width="100%" />
-    <div class="subtitle font-title">
->>>>>>> appointments-list
       <p *ngIf="currentUser.type === 'patient'">Odontólogos</p>
       <p *ngIf="currentUser.type === 'dentist'">Pacientes</p>
       <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
   </div>
 
   <div class="col-12 py-5 table-wrapper">
-<<<<<<< HEAD
 
     <div class="w-100 my-4 px-4">
       <input class="form-control w-100 form-shadow" type="text" [(ngModel)]="searchName" autocomplete="off" placeholder="Busca por nombre">
@@ -24,10 +17,6 @@
       *ngIf="currentUser.type === 'patient'; else listView"
     >
       <div class="card" *ngFor="let user of userList | filter: 'name' : searchName; let i = index">
-=======
-    <div class="w-100" id="accordion" *ngIf="currentUser.type === 'patient'; else listView">
-      <div class="card" *ngFor="let user of userList; let i = index">
->>>>>>> appointments-list
         <div class="card-header card-color" id="{{ 'heading' + i }}">
           <h5 class="mb-0">
             <button class="btn btn-user" data-toggle="collapse" [attr.data-target]="'#user' + i"
