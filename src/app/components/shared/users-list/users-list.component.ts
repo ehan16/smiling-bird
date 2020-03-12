@@ -3,7 +3,6 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -46,7 +45,7 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  addAppointment(){
+  addAppointment() {
     console.log(this.newAppointment);
   }
 

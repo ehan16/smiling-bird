@@ -20,15 +20,15 @@
         <tbody *ngFor="let appointment of appointmentList; let i = index">
           <tr>
             <th scope="row">{{ i }}</th>
-            <td>{{ appointment.patient.name }}</td>
-            <td>{{ appointment.patient.user }}</td>
+            <td>{{ getUserData(appointment.patient).name }}</td>
+            <td>{{ getUserData(appointment.patient).user }}</td>
             <td>
               {{ appointment.date.day }}/{{ appointment.date.month }}/{{
                 appointment.date.year
               }}
             </td>
             <td>{{ appointment.hour }} - {{ appointment.hour + 1 }}</td>
-            <td>{{ appointment.dentist.name }}</td>
+            <td>{{ getUserData(appointment.dentist).name }}</td>
             <td>
               <button *ngIf="!appointment.accepted;else accepted" class="btn-success rounded m-1" (click)="acceptAppointment()">
                 <i class="fas fa-check"></i>
@@ -87,7 +87,7 @@
                         <label class="font-weight-bold d-block"
                           >Paciente:
                         </label>
-                        <span> {{ appointment.patient.name }}</span>
+                        <span> {{ getUserData(appointment.patient).name }}</span>
                       </div>
                     </div>
                     <hr />

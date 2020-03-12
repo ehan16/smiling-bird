@@ -31,7 +31,6 @@ const appRoutes: Routes = [
   {path: 'patient/:id', component: PatientViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
-
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'payment', component: PaymentComponent},
     // {path: 'profile', component: ProfileComponent, children: [
@@ -43,9 +42,9 @@ const appRoutes: Routes = [
   {path: 'dentist/:id', component: DentistViewComponent, children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
-    {path: 'patient/:id/medical-record', component: MedicalHistoryComponent},
-    {path: 'patient/:id/consult/:number', component: ConsultDetailComponent},
-    {path: 'patient/:id/message', component: MessageComponent},
+    {path: 'patient/:patientId/medical-record', component: MedicalHistoryComponent},
+    {path: 'patient/:patientId/consult/:number', component: ConsultDetailComponent},
+    {path: 'patient/:patientId/message', component: MessageComponent},
     // {path: 'profile', component: ProfileComponent, children: [
     //   {path: '', component: ProfileDetailComponent},
     //   {path: 'edit', component: ProfileEditComponent}

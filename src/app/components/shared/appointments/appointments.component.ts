@@ -56,4 +56,8 @@ export class AppointmentsComponent implements OnInit {
     this.end = end;
   }
 
+  getUserData(userId): User {
+    return this.userService.getUserData(userId);
+  }
+
 }
