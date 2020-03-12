@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -10,7 +13,10 @@ export class PaymentComponent implements OnInit {
   showSuccess: boolean;
   public payPalConfig?: IPayPalConfig;
 
-  constructor(){
+  currentUser: User;
+
+  constructor(private userService: UserService){
+    this.currentUser = this.userService.currentUser;
   }
 
   ngOnInit(): void {

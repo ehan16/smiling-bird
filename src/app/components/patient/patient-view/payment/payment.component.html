@@ -6,7 +6,7 @@
 </div>
 <div class="row m-lg-4 my-4">
   <!-- col izq -->
-  <div class="col-4 text-center p-3 rounded bg-warning">
+  <div class="col-4 text-center p-3 rounded card-color">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
     <p>Nombre: </p>
     <p>Estado de Cuenta: </p>
@@ -26,24 +26,24 @@
 
         <div id="{{ 'dentist' + i }}" class="collapse" [attr.aria-labelledby]="'dentist' + i" data-parent="#accordion">
           <div class="row acc-content">
-            <div class="col-sm-4 avatar">
-              <img src="../../../../assets/extra/avatar.png" alt="avatar">
-            </div>
-            <div class="col-sm-7 card-body ">
-              <p>Nombre: {{ user.name }}</p>
-              <p>Cédula: {{ user.identification }}</p>
-              <p>Correo: {{ user.user }}</p>
-              <p>{{ user.type | titlecase }}</p>
-              <p>Horario: {{ user.shift[0] }} - {{ user.shift[1] }}</p>
-              <p>Lunes a Viernes</p>
+            <!-- contenido -->
+            <div class="row">
+              <div class="col-6">
 
-              <div class="text-center">
-                <button class="btn btn-warning" type="button">
-                  <i class="fas fa-calendar-check"></i> Solicitar cita
-                </button>
               </div>
+              <div class="col-6">
 
+              </div>
             </div>
+            <div class="row">
+              <div class="col-6">
+
+              </div>
+              <div class="col-6">
+                
+              </div>
+            </div>
+            <!-- fin contenido -->
           </div>
         </div>
     </div>
