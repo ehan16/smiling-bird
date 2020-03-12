@@ -1,22 +1,20 @@
-<div class="row m-0 pale-yellow">
+<div class="row m-0">
   <div class="banner font-title">
-      <p *ngIf="currentUser.type === 'patient'">Odontólogos</p>
-      <p *ngIf="currentUser.type === 'dentist'">Pacientes</p>
-      <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
+    <p *ngIf="currentUser.type === 'patient'">Odontólogos</p>
+    <p *ngIf="currentUser.type === 'dentist'">Pacientes</p>
+    <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
   </div>
 
-  <div class="col-12 py-5 table-wrapper">
+  <app-appointments *ngIf="currentUser.type === 'patient'"></app-appointments>
 
+  <div class="col-12 py-5 table-wrapper">
     <div class="w-100 my-4 px-4">
-      <input class="form-control w-100 form-shadow" type="text" [(ngModel)]="searchName" autocomplete="off" placeholder="Busca por nombre">
+      <input class="form-control w-100 form-shadow" type="text" [(ngModel)]="searchName" autocomplete="off"
+        placeholder="Busca por nombre" />
     </div>
 
-    <div
-      class="w-100"
-      id="accordion"
-      *ngIf="currentUser.type === 'patient'; else listView"
-    >
-      <div class="card" *ngFor="let user of userList | filter: 'name' : searchName; let i = index">
+    <div class="w-100" id="accordion" *ngIf="currentUser.type === 'patient'; else listView">
+      <div class="card" *ngFor="let user of userList | filter: 'name':searchName; let i = index">
         <div class="card-header card-color" id="{{ 'heading' + i }}">
           <h5 class="mb-0">
             <button class="btn btn-user" data-toggle="collapse" [attr.data-target]="'#user' + i"
@@ -29,7 +27,7 @@
         <div id="{{ 'user' + i }}" class="collapse" [attr.aria-labelledby]="'user' + i" data-parent="#accordion">
           <div class="row acc-content">
             <div class="col-sm-4 avatar">
-              <img src="../../../../assets/extra/avatar.png" alt="avatar">
+              <img src="../../../../assets/extra/avatar.png" alt="avatar" />
             </div>
             <div class="col-sm-7 card-body ">
               <p>Nombre: {{ user.name }}</p>
@@ -40,64 +38,69 @@
               <p>Lunes a Viernes</p>
 
               <div class="text-center">
-                <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#appointmentModal">
-                  <i class="fas fa-calendar-check"></i> Solicitar cita
+                <button class="btn btn-warning" type="button" data-toggle="modal"
+                  [attr.data-target]="'#appointment' + i" (click)="getDentistShift(user.shift[0], user.shift[1])">
+                  <i class="fas fa-calendar-check mr-3"></i>Solicitar cita
                 </button>
 
                 <!-- Modal nueva cita-->
-                <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog"
-                  aria-labelledby="appointmentModalLabel" aria-hidden="true">
+                <div class="modal fade" id="{{ 'appointment' + i }}" tabindex="-1" role="dialog"
+                  [attr.aria-labelledby]="'appointmentModal' + i" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-
                       <div class="modal-header">
-                        <h4 class="modal-title" id="appointmentModalLabel">Solicitar nueva cita</h4>
+                        <h4 class="modal-title" id="{{ 'appointmentModal' + i }}">
+                          Solicitar nueva cita
+                        </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
 
-                      <div class="modal-body">
+                      <div class="modal-body text-center">
                         <form [formGroup]="newAppointment" (ngSubmit)="addAppointment()">
-
                           <div class="form-group">
-                            <label for="appointmentDentist" class="font-weight-bold d-block">Odontólogo: </label>
-                            <span> {{ user.name }}</span>
+                            <div *ngIf="currentUser.type === 'patient'">
+                              <label class="font-weight-bold d-block">Odontólogo:
+                              </label>
+                              <span> {{ user.name }}</span>
+                              <label class="font-weight-bold d-block mt-3">Horario:</label>
+                              <span>{{ user.shift[0] }} - {{ user.shift[1] }}</span>
+                            </div>
                           </div>
-
-
-                          <div class="form-group">
-                            <label for="appointmentDate" class="font-weight-bold d-block">Fecha de la cita</label>
-
+                          <hr>
+                          <div class="form-group dateInput">
+                            <label for="appointmentDate" class="font-weight-bold">Fecha</label>
                             <div class="input-group">
                               <input class="form-control" placeholder="yyyy-mm-dd" formControlName="appointmentDate"
-                                id="appointmentDate" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate"
-                                [minDate]="minDate" [(ngModel)]=date />
+                                id="appointmentDate" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" />
                               <div class="input-group-append">
-                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
-                                  type="button"></button>
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
+                                    class="fas fa-calendar-alt"></i></button>
                               </div>
                             </div>
                           </div>
 
-
-
-
                           <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <label for="hour" class="d-block">Hora de la cita</label>
+                            <input type="text" class="w-100" formControlName="hour">
                           </div>
                         </form>
                       </div>
 
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      <div class="modal-footer mt-3">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                          Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                          Aceptar
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- Fin modal -->
+
               </div>
             </div>
           </div>
@@ -117,25 +120,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of userList | filter: 'name' : searchName">
+          <tr *ngFor="let user of userList | filter: 'name':searchName">
             <th scope="row">{{ user.name }}</th>
             <td>{{ user.identification }}</td>
             <td>{{ user.user }}</td>
             <td class="text-capitalize">{{ user.type }}</td>
             <td class="text-center">
-              <a *ngIf="currentUser.type === 'dentist'" class="mx-2" (click)="seeMedicalHistory(user)"
-                ><i class="fas fa-book"></i
-              ></a>
-              <a *ngIf="currentUser.type === 'dentist'" class="mx-2" (click)="sendMessage(user)"
-                ><i class="fas fa-envelope"></i
-              ></a>
-              <a *ngIf="currentUser.type === 'patient'" class="mx-2" (click)="editUser(user)"
-                ><i class="fas fa-user-edit"></i
-              ></a>
+              <a *ngIf="currentUser.type === 'dentist'" class="mx-2" (click)="seeMedicalHistory(user)"><i
+                  class="fas fa-book"></i></a>
+              <a *ngIf="currentUser.type === 'dentist'" class="mx-2" (click)="sendMessage(user)"><i
+                  class="fas fa-envelope"></i></a>
+              <a *ngIf="currentUser.type === 'patient'" class="mx-2" (click)="editUser(user.id)"><i
+                  class="fas fa-user-edit"></i></a>
             </td>
           </tr>
         </tbody>
       </table>
     </ng-template>
+
   </div>
 </div>

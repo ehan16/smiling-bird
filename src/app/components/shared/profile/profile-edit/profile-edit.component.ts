@@ -60,7 +60,8 @@ export class ProfileEditComponent implements OnInit {
       shift: [this.editForm.value.start, this.editForm.value.end],
       enable: this.currentUser.enable,
       appointment: this.currentUser.appointment,
-      debt: this.currentUser.debt
+      debt: this.currentUser.debt,
+      comission: this.currentUser.comission
     };
     this.firestore.setValue(this.auth.getCurrentUID(), user, 'users');
   }

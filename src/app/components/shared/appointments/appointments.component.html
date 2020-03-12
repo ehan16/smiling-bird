@@ -1,18 +1,10 @@
-<div class="row m-0 pale-yellow">
-  <div class="banner">
-    <img src="../../../../assets/background/other_smile.png" alt="banner" width="100%" />
-    <div class="subtitle font-title">
-      <p *ngIf="currentUser.type === 'patient'">Lista de Citas</p>
-      <p></p>
-      <p *ngIf="currentUser.type === 'dentist'">Dashboard del Odontologo</p>
-      <p></p>
-        <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
-        <p></p>
+<div class="row m-0">
+  <div class="col-12 p-3">
+    <div class="text-center mb-3 center" *ngIf="this.appointmentList; else showList">
+      <h5>¡No tiene citas pendientes!</h5>
     </div>
-  </div>
 
-  <div class="col-12 p-5">
-    <div class="w-100">
+    <ng-template #showList>
       <table class="table table-hover table-responsive-sm text-center">
         <thead class="mythead">
           <tr>
@@ -20,39 +12,136 @@
             <th scope="col">Nombre</th>
             <th scope="col">Email</th>
             <th scope="col">Fecha</th>
-            <th scope="col">Tiempo de visita</th>
-            <th *ngIf="currentUser === 'dentist'"scope="col">Dentista</th>
+            <th scope="col">Hora</th>
+            <th scope="col">Dentista</th>
             <th scope="col">Acción</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngFor="let appointment of appointmentList; let i = index">
           <tr>
-            <th scope="row">1</th>
-            <td>Prueba</td>
-            <td>email@loquesea.com</td>
-            <td>18 Dec 2018</td>
-            <td>10:15 - 10:30</td>
-            <td *ngIf="currentUser === 'dentist'">Pana</td>
+            <th scope="row">{{ i }}</th>
+            <td>{{ getUserData(appointment.patient).name }}</td>
+            <td>{{ getUserData(appointment.patient).user }}</td>
             <td>
-                <button class="btn-info rounded m-1"><i class="fas fa-pencil-alt"></i></button>
-                <button class="btn-danger rounded m-1"><i class="fas fa-trash-alt"></i></button>
-
+              {{ appointment.date.day }}/{{ appointment.date.month }}/{{
+                appointment.date.year
+              }}
+            </td>
+            <td>{{ appointment.hour }} - {{ appointment.hour + 1 }}</td>
+            <td>{{ getUserData(appointment.dentist).name }}</td>
+            <td>
+              <button *ngIf="!appointment.accepted;else accepted" class="btn-success rounded m-1" (click)="acceptAppointment()">
+                <i class="fas fa-check"></i>
+              </button>
+              <ng-template #accepted>
+                <button *ngIf="currentUser.type === 'dentist'" class="btn-secondary rounded m-1" (click)="startAppointment()">
+                  <i class="fas fa-book"></i>
+                </button>
+                <button
+                  class="btn-info rounded m-1"
+                  type="button"
+                  data-toggle="modal"
+                  [attr.data-target]="'#appointment' + i"
+                >
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+              </ng-template>
+              <button class="btn-danger rounded m-1" (click)="deleteAppointment()">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>{{ currentUser.name }}</td>
-            <td>currentUser.email</td>
-            <td>currentUser.date</td>
-            <td>currentUser.shift</td>
-            <td>dentista escogido</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+
+          <!-- Modal nueva cita-->
+          <div
+            class="modal fade"
+            id="{{ 'appointment' + i }}"
+            tabindex="-1"
+            role="dialog"
+            [attr.aria-labelledby]="'appointmentModal' + i"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="{{ 'appointmentModal' + i }}">
+                    Modificar cita
+                  </h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body text-center">
+                  <form
+                    [formGroup]="appointmentForm"
+                    (ngSubmit)="modifyAppointment()"
+                  >
+                    <div class="form-group">
+                      <div>
+                        <label class="font-weight-bold d-block"
+                          >Paciente:
+                        </label>
+                        <span> {{ getUserData(appointment.patient).name }}</span>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="form-group dateInput">
+                      <label for="appointmentDate" class="font-weight-bold"
+                        >Fecha</label
+                      >
+                      <div class="input-group">
+                        <input
+                          class="form-control"
+                          placeholder="yyyy-mm-dd"
+                          formControlName="appointmentDate"
+                          id="appointmentDate"
+                          ngbDatepicker
+                          #d="ngbDatepicker"
+                          [minDate]="minDate"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn-outline-secondary calendar"
+                            (click)="d.toggle()"
+                            type="button"
+                          >
+                            <i class="fas fa-calendar-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="hour" class="d-block">Hora de la cita</label>
+                      <input type="text" class="w-100" formControlName="hour" />
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer mt-3">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    Aceptar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Fin modal -->
         </tbody>
       </table>
-    </div>
+    </ng-template>
   </div>
+</div>

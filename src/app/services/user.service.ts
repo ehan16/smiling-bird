@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 export class UserService {
 
   currentUser: User;
+  currentUserId: string;
   userList: User[];
 
   constructor(
@@ -26,6 +27,8 @@ export class UserService {
       }
     );
 
+    console.log(this.userList);
+
   }
 
   createUser(data: any, id: string) {
@@ -38,11 +41,20 @@ export class UserService {
   logUser(userId) {
     this.firestore.getValue(userId, 'users').subscribe((user: User) => {
       this.currentUser = user;
+      this.currentUserId = userId;
       console.log('current user: ', this.currentUser);
       this.router.navigate([
         this.currentUser.type,
         this.currentUser.identification
       ]);
+    });
+  }
+
+  getUserData(userId): any {
+    this.firestore.getValue(userId, 'users').subscribe((user: User) => {
+      console.log('user: ', user);
+      const userData = user;
+      return userData;
     });
   }
 

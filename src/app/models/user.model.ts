@@ -17,6 +17,7 @@ export class User {
   public appointment = []; //Para el historial medico se filtran los completados y asi
 
   public debt: number;
+  public comission: number;
 
   // public patients = [];
   public shift: number[];

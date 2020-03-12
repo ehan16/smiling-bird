@@ -9,8 +9,10 @@ export class Appointment {
     day: number
   };
   public  hour: number;
-  public patient: User;
-  public dentist: User;
+  // public patient: User;
+  public patient: string;
+  // public dentist: User;
+  public dentist: string;
   public completed: boolean;
   public accepted: boolean;
   public treatments = [];
