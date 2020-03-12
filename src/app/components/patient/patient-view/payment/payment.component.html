@@ -1,6 +1,50 @@
 <!-- <ngx-paypal [config]="payPalConfig"></ngx-paypal> -->
-<div class="container-fluid">
-    <div class="banner">
+<div class="row m-0 pale-yellow">
+  <div class="banner font-title">
+    <p>Pagos</p>
+  </div>
+</div>
+<div class="row m-lg-4 my-4">
+  <!-- col izq -->
+  <div class="col-4 text-center p-3 rounded bg-warning">
+    <img src="../../../../assets/extra/avatar.png" alt="avatar">
+    <p>Nombre: </p>
+    <p>Estado de Cuenta: </p>
+  </div>
+  <!-- col der -->
+  <div class="col-8 p-3 rounded-sm">
+    <div class="w-100" id="accordion">
+      <div class="card" *ngFor="let dentist of dentists; let i = index">
+        <div class="card-header card-color" id="{{ 'heading' + i }}">
+          <h5 class="mb-0">
+            <button class="btn btn-dentist" data-toggle="collapse" [attr.data-target]="'#dentist' + i"
+              [attr.aria-expanded]="false" [attr.aria-controls]="'dentist' + i">
+              {{ dentist.name }}
+            </button>
+          </h5>
+        </div>
 
+        <div id="{{ 'dentist' + i }}" class="collapse" [attr.aria-labelledby]="'dentist' + i" data-parent="#accordion">
+          <div class="row acc-content">
+            <div class="col-sm-4 avatar">
+              <img src="../../../../assets/extra/avatar.png" alt="avatar">
+            </div>
+            <div class="col-sm-7 card-body ">
+              <p>Nombre: {{ user.name }}</p>
+              <p>Cédula: {{ user.identification }}</p>
+              <p>Correo: {{ user.user }}</p>
+              <p>{{ user.type | titlecase }}</p>
+              <p>Horario: {{ user.shift[0] }} - {{ user.shift[1] }}</p>
+              <p>Lunes a Viernes</p>
+
+              <div class="text-center">
+                <button class="btn btn-warning" type="button">
+                  <i class="fas fa-calendar-check"></i> Solicitar cita
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
     </div>
 </div>
