@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Appointment } from '../models/appointment.model';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { first } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -13,24 +14,18 @@ export class AppointmentService {
     private firestore: FirestoreService,
     private af: AngularFirestore
   ) {
-    this.firestore.getAll('appointments').subscribe(data => {
-      this.appointmentsList = data.map(e => {
-        console.log('data', e);
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        } as Appointment;
-;      });
-    });
-
-    console.log('appointment list', this.appointmentsList);
   }
 
   createAppointment(data: any, id: string) {
     this.af
-      .collection('appointments')
-      .doc(id)
-      .set(data);
+    .collection('appointments')
+    .doc(id)
+    .set(data);
+  }
+
+  getAll() {
+    // tslint:disable-next-line: no-unused-expression
+    return this.firestore.getAll('appointments').pipe( first() ).toPromise();
   }
 
   getAppointmentData(appointmentId): any {

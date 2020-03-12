@@ -67,7 +67,7 @@
       <button
         class="btnList"
         routerLinkActive="active"
-        [routerLink]="['/admin', 'user-list']"
+        [routerLink]="['/admin', currentUser.user ,'user-list']"
         *ngIf="currentUser.type === 'admin'"
       >
         Usuarios

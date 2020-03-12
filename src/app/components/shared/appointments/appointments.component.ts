@@ -14,7 +14,7 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 export class AppointmentsComponent implements OnInit {
 
   currentUser: User;
-  appointmentList: Appointment[];
+  appointmentList: Appointment[] = [];
   appointmentForm: FormGroup;
   minDate; start: number; end: number;
 
@@ -23,7 +23,6 @@ export class AppointmentsComponent implements OnInit {
     private appointmentService: AppointmentService
   ) {
     this.currentUser = this.userService.currentUser;
-    this.appointmentList = this.appointmentService.appointmentsList;
 
     // if (this.currentUser.type === 'patient') {
     //   this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
@@ -35,16 +34,6 @@ export class AppointmentsComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.route.params.subscribe(
-    //   (param: Params) => {
-    //     this.Id = param['editedId'];
-    //     this.firestore.getValue(this.editedUserId, 'users').subscribe((user: User) => {
-    //       this.editedUser = user;
-    //       console.log('edited user: ', this.editedUser);
-    //     });
-    //   }
-
-
     const today = new Date();
     this.minDate = new NgbDate(today.getFullYear(), today.getMonth(), today.getDate());
 
@@ -52,6 +41,24 @@ export class AppointmentsComponent implements OnInit {
       appointmentDate: new FormControl(this.minDate , Validators.required),
       hour: new FormControl('9', [Validators.required, Validators.min(this.start), Validators.max(this.end)])
     });
+
+    this.appointmentService.getAll()
+    .then( r => {
+      console.log(r);
+
+      r.map(e => {
+          console.log(e.payload.doc.data());
+
+          const aux = {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          } as Appointment;
+
+          this.appointmentList.push(aux);
+
+        });
+        console.log(this.appointmentList);
+    })
 
   }
 

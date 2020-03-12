@@ -3,7 +3,6 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -11,35 +10,38 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit {
-  editForm: FormGroup;
+  editForm: FormGroup = new FormGroup({});
   currentUser: User;
   editedUser: User;
   editedUserId: string;
 
   constructor(
     private firestore: FirestoreService,
-    private route: ActivatedRoute,
-    private auth: AuthService
-  ) {}
-
-  ngOnInit() {
+    private route: ActivatedRoute
+  ) {
     this.route.params.subscribe(
       (param: Params) => {
         this.editedUserId = param['editedId'];
         this.firestore.getValue(this.editedUserId, 'users').subscribe((user: User) => {
           this.editedUser = user;
+
+          this.editForm.patchValue(user)
           console.log('edited user: ', this.editedUser);
         });
       }
     );
+  }
+
+  ngOnInit() {
 
     this.editForm = new FormGroup ({
-      name: new FormControl(this.editedUser.name, [Validators.required]),
-      identification: new FormControl(this.editedUser.identification, [Validators.required, Validators.min(0)]),
-      gender: new FormControl(this.editedUser.gender, Validators.required),
-      type: new FormControl(this.editedUser.type, Validators.required),
-      comission: new FormControl(this.editedUser.comission, Validators.required)
+      name: new FormControl('', [Validators.required]),
+      identification: new FormControl('', [Validators.required, Validators.min(0)]),
+      gender: new FormControl('', Validators.required),
+      type: new FormControl('', Validators.required),
+      comission: new FormControl('', Validators.required)
     });
+
   }
 
 

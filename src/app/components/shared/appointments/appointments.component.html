@@ -1,10 +1,12 @@
 <div class="row m-0">
   <div class="col-12 p-3">
-    <div class="text-center mb-3 center" *ngIf="this.appointmentList; else showList">
+    <h1> {{ appointmentList | json }} </h1>
+
+    <div class="text-center mb-3 center" *ngIf="appointmentList.length < 1 ">
       <h5>¡No tiene citas pendientes!</h5>
     </div>
 
-    <ng-template #showList>
+    <ng-container *ngIf="appointmentList.length > 0 ">
       <table class="table table-hover table-responsive-sm text-center">
         <thead class="mythead">
           <tr>
@@ -20,15 +22,15 @@
         <tbody *ngFor="let appointment of appointmentList; let i = index">
           <tr>
             <th scope="row">{{ i }}</th>
-            <td>{{ getUserData(appointment.patient).name }}</td>
-            <td>{{ getUserData(appointment.patient).user }}</td>
+            <td>{{ getUserData(appointment?.patient)?.name }}</td>
+            <td>{{ getUserData(appointment?.patient)?.user }}</td>
             <td>
-              {{ appointment.date.day }}/{{ appointment.date.month }}/{{
-                appointment.date.year
+              {{ appointment?.date?.day }}/{{ appointment?.date?.month }}/{{
+                appointment?.date?.year
               }}
             </td>
-            <td>{{ appointment.hour }} - {{ appointment.hour + 1 }}</td>
-            <td>{{ getUserData(appointment.dentist).name }}</td>
+            <td>{{ appointment?.hour }} - {{ appointment?.hour + 1 }}</td>
+            <td>{{ getUserData(appointment.dentist)?.name }}</td>
             <td>
               <button *ngIf="!appointment.accepted;else accepted" class="btn-success rounded m-1" (click)="acceptAppointment()">
                 <i class="fas fa-check"></i>
@@ -142,6 +144,6 @@
           <!-- Fin modal -->
         </tbody>
       </table>
-    </ng-template>
+    </ng-container>
   </div>
 </div>
