@@ -5,7 +5,9 @@
     <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
   </div>
 
-  <app-appointments *ngIf="currentUser.type === 'patient'"></app-appointments>
+  <div class="w-100 p-4">
+    <app-appointments *ngIf="currentUser.type === 'patient'"></app-appointments>
+  </div>
 
   <div class="col-12 py-5 table-wrapper">
     <div class="w-100 my-4 px-4">
@@ -139,7 +141,7 @@
 
                           <div class="form-group">
                             <label for="hour" class="d-block">Hora de la cita</label>
-                            <input type="text" class="w-100" formControlName="hour">
+                            <input type="text" class="w-25" formControlName="hour">
                           </div>
                         </form>
                       </div>

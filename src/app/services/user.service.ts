@@ -24,8 +24,7 @@ export class UserService {
             ...e.payload.doc.data()
           } as User;
         });
-      }
-    );
+      });
 
     console.log(this.userList);
 

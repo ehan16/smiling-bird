@@ -24,12 +24,6 @@ export class UsersListComponent implements OnInit {
     this.currentUser = this.userService.currentUser;
     this.userList = this.userService.userList;
     console.log(this.userList);
-  }
-
-  ngOnInit() {
-
-    const today = new Date();
-    this.minDate = new NgbDate(today.getFullYear(), today.getMonth(), today.getDate());
 
     if (this.currentUser.type === 'patient') {
       this.userList = this.userList.filter(user => user.type === 'dentist');
@@ -38,6 +32,14 @@ export class UsersListComponent implements OnInit {
     } else {
       this.userList = this.userService.userList;
     }
+
+  }
+
+  ngOnInit() {
+
+    const today = new Date();
+    this.minDate = new NgbDate(today.getFullYear(), today.getMonth(), today.getDate());
+
 
     this.newAppointment = new FormGroup({
       appointmentDate: new FormControl(this.minDate , Validators.required),
