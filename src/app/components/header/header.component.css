@@ -35,7 +35,7 @@ button,
 }
 
 header {
-  background: radial-gradient(ellipse at center, rgba(164,210,229,1) 0%, rgba(26,162,203,1) 100%);
+  background: radial-gradient(ellipse at center, rgb(88, 209, 232) 0%, rgb(21, 182, 212) 100%);
   width: 100%;
   position: absolute;
   z-index: 999;

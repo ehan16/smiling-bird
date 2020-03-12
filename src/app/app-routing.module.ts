@@ -54,7 +54,7 @@ const appRoutes: Routes = [
   {path: 'admin/:id', component: AdminViewComponent, children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
-    {path: 'user-edit/:id', component: UserEditComponent},
+    {path: 'user-edit/:editedId', component: UserEditComponent},
     // {path: 'profile', component: ProfileComponent, children: [
     //   {path: '', component: ProfileDetailComponent},
     //   {path: 'edit', component: ProfileEditComponent}

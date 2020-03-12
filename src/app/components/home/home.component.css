@@ -30,14 +30,14 @@
 .name {
   padding: 20px 0px;
   display: block;
-  background-color: rgba(62,197,218,1);
+  background-color: rgb(26, 169, 191);
   text-align: center;
   color: white;
   height: fit-content;
 }
 
 .testimonial {
-  background-color: rgba(62,197,218,1);
+  background-color: rgb(26, 169, 191);
   height: 50vh;
 }
 

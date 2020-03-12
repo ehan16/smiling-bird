@@ -26,6 +26,8 @@ export class UserService {
       }
     );
 
+    console.log(this.userList);
+
   }
 
   createUser(data: any, id: string) {

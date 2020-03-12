@@ -1,4 +1,9 @@
-.wrapper {
+.form-wrapper {
   min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
 
+.wrapper {
+  height: fit-content;
 }

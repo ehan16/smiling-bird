@@ -5,3 +5,7 @@
   tbody > tr:hover {
     background-color: rgb(175, 221, 235);
   }
+
+  .center {
+    width: 100vw;
+  }

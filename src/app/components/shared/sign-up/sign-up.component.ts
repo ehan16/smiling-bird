@@ -50,12 +50,12 @@ export class SignUpComponent implements OnInit {
             appointment: [],
             debt: 0,
             shift: [ 10, 14 ],
+            comission: 0
           };
 
           this.userService.createUser(user, res.user.uid);
           this.userService.logUser(res.user.uid);
           this.auth.VerifyEmail(res.user);
-          
 
         }, error => {
           console.log(error);
@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
       window.alert('Las dos contraseñas no coinciden');
     }
   }
- 
+
 
 
 }

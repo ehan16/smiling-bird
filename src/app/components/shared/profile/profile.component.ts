@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
+    console.log(this.currentUser);
   }
 
   onEditMode() {
