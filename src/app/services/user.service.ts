@@ -3,10 +3,10 @@ import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class UserService {
-
   currentUser: User;
   currentUserId: string;
   userList: User[];
@@ -14,20 +14,19 @@ export class UserService {
   constructor(
     private firestore: FirestoreService,
     private af: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {
-    this.firestore.getAll('users').subscribe(
-      data => {
-        this.userList = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data()
-          } as User;
-        });
+    this.firestore.getAll('users').subscribe(data => {
+      this.userList = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as User;
       });
+    });
 
     console.log(this.userList);
-
   }
 
   createUser(data: any, id: string) {
@@ -42,16 +41,13 @@ export class UserService {
       this.currentUser = user;
       this.currentUserId = userId;
       console.log('current user: ', this.currentUser);
-      this.router.navigate([
-        this.currentUser.type,
-        this.currentUser.identification
-      ]);
+      this.router.navigate([this.currentUser.type, this.currentUserId]);
     });
   }
 
-  getUserData(userId): any {
-    this.firestore.getValue(userId, 'users').subscribe((user: User) => {
-      console.log('user: ', user);
+  getUserData(): any {
+    this.firestore.getValue(this.auth.id , 'users').subscribe((user: User) => {
+      console.log('user returned: ', user);
       const userData = user;
       return userData;
     });

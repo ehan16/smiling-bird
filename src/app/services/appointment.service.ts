@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Appointment } from '../models/appointment.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { first } from 'rxjs/operators'
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
+
   appointmentsList: Appointment[];
 
   constructor(
     private firestore: FirestoreService,
     private af: AngularFirestore
-  ) {
-  }
+  ) { }
 
   createAppointment(data: any, id: string) {
     this.af
@@ -48,4 +48,9 @@ export class AppointmentService {
       'appointments'
     );
   }
+
+  acceptAppointment(id) {
+    this.firestore.update(id, { accepted: true }, 'appointments');
+  }
+
 }

@@ -54,7 +54,7 @@ export class SignUpComponent implements OnInit {
           };
 
           this.userService.createUser(user, res.user.uid);
-          this.userService.logUser(res.user.uid);
+          this.router.navigate(['/visitor', 'login']);
           this.auth.VerifyEmail(res.user);
 
         }, error => {

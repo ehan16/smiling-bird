@@ -16,7 +16,6 @@ import { ProfileComponent } from './components/shared/profile/profile.component'
 import { ProfileEditComponent } from './components/shared/profile/profile-edit/profile-edit.component';
 import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
 import { AppointmentEditComponent } from './components/shared/appointments/appointment-edit/appointment-edit.component';
-import { AppointmentDetailComponent } from './components/shared/appointments/appointment-detail/appointment-detail.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { UserEditComponent } from './components/shared/user-edit/user-edit.component';
 import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
@@ -48,7 +47,6 @@ import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-
     ProfileEditComponent,
     AppointmentsComponent,
     AppointmentEditComponent,
-    AppointmentDetailComponent,
     UsersListComponent,
     UserEditComponent,
     ConsultEditComponent,

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit {
 
   currentUser: User;
+  currentId: string;
   show = false;
 
   toggleCollapse() {
@@ -21,9 +23,10 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    protected auth: AuthService
+    protected auth: AuthService,
   ) {
     this.currentUser = this.userService.currentUser;
+    this.currentId = this.userService.currentUserId;
   }
 
   ngOnInit() {
@@ -37,11 +40,11 @@ export class HeaderComponent implements OnInit {
   goToHome() {
     if (this.currentUser) {
       if (this.currentUser.type === 'patient') {
-        this.router.navigate(['/patient', this.currentUser.identification]);
+        this.router.navigate(['/patient', this.currentId]);
       } else if (this.currentUser.type === 'dentist') {
-        this.router.navigate(['/dentist', this.currentUser.identification]);
+        this.router.navigate(['/dentist', this.currentId]);
       } else if (this.currentUser.type === 'admin') {
-        this.router.navigate(['/admin', this.currentUser.identification]);
+        this.router.navigate(['/admin', this.currentId]);
       }
     } else {
       this.router.navigate(['/visitor']);

@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['edit'], {relativeTo: this.route});
     } else {
       // this.router.navigate(['../'], {relativeTo: this.route});
-      this.router.navigate([this.currentUser.type, this.currentUser.user, 'profile']);
+      this.router.navigate([this.currentUser.type, this.auth.id, 'profile']);
     }
 
   }

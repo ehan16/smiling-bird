@@ -1,6 +1,5 @@
 <div class="row m-0">
   <div class="col-12 p-3">
-    <h1> {{ appointmentList | json }} </h1>
 
     <div class="text-center mb-3 center" *ngIf="appointmentList.length < 1 ">
       <h5>¡No tiene citas pendientes!</h5>
@@ -22,20 +21,23 @@
         <tbody *ngFor="let appointment of appointmentList; let i = index">
           <tr>
             <th scope="row">{{ i }}</th>
-            <td>{{ getUserData(appointment?.patient)?.name }}</td>
-            <td>{{ getUserData(appointment?.patient)?.user }}</td>
+            <!-- <td>{{ getUserData(appointment?.patient)?.name }}</td>
+            <td>{{ getUserData(appointment?.patient)?.user }}</td> -->
             <td>
               {{ appointment?.date?.day }}/{{ appointment?.date?.month }}/{{
                 appointment?.date?.year
               }}
             </td>
             <td>{{ appointment?.hour }} - {{ appointment?.hour + 1 }}</td>
-            <td>{{ getUserData(appointment.dentist)?.name }}</td>
+            <!-- <td>{{ getUserData(appointment.dentist)?.name }}</td> -->
             <td>
-              <button *ngIf="!appointment.accepted;else accepted" class="btn-success rounded m-1" (click)="acceptAppointment()">
-                <i class="fas fa-check"></i>
-              </button>
-              <ng-template #accepted>
+              <ng-container *ngIf="!appointment.accepted;else accepted">
+                <button *ngIf="currentUser.type === 'dentist'" class="btn-success rounded m-1" (click)="acceptAppointment()">
+                  <i class="fas fa-check"></i>
+                </button>
+                <p *ngIf="currentUser.type === 'patient'">En espera</p>
+              </ng-container>
+              <ng-container #accepted>
                 <button *ngIf="currentUser.type === 'dentist'" class="btn-secondary rounded m-1" (click)="startAppointment()">
                   <i class="fas fa-book"></i>
                 </button>
@@ -47,7 +49,7 @@
                 >
                   <i class="fas fa-pencil-alt"></i>
                 </button>
-              </ng-template>
+              </ng-container>
               <button class="btn-danger rounded m-1" (click)="deleteAppointment()">
                 <i class="fas fa-trash-alt"></i>
               </button>
@@ -89,7 +91,7 @@
                         <label class="font-weight-bold d-block"
                           >Paciente:
                         </label>
-                        <span> {{ getUserData(appointment.patient).name }}</span>
+                        <!-- <span> {{ getUserData(appointment.patient).name }}</span> -->
                       </div>
                     </div>
                     <hr />

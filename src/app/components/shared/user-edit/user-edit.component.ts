@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -17,7 +18,9 @@ export class UserEditComponent implements OnInit {
 
   constructor(
     private firestore: FirestoreService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService
   ) {
     this.route.params.subscribe(
       (param: Params) => {
@@ -62,12 +65,13 @@ export class UserEditComponent implements OnInit {
         day: da
       },
       shift: [this.editedUser.shift[0], this.editedUser.shift[1]],
-      enable: this.currentUser.enable,
+      enable: this.editedUser.enable,
       appointment: this.editedUser.appointment,
       debt: this.editedUser.debt,
       comission: this.editForm.value.comission
     };
     this.firestore.setValue(this.editedUserId, user, 'users');
+    this.router.navigate(['/admin', this.userService.currentUserId, 'user-list']);
   }
 
   resetPassword() {}
