@@ -87,9 +87,9 @@ export  class  AuthService {
   VerifyEmail(user) {
     let use = this.afAuth.auth.currentUser;
 
-    use.sendEmailVerification().then(function () {
+    use.sendEmailVerification().then( () => {
       // aqui lo manda
-    }).catch(function (error) {
+    }).catch((error) => {
       // por si algo pasa
     });
 

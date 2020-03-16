@@ -16,11 +16,8 @@ export class AppointmentService {
     private af: AngularFirestore
   ) { }
 
-  createAppointment(data: any, id: string) {
-    this.af
-    .collection('appointments')
-    .doc(id)
-    .set(data);
+  createAppointment(data: any) {
+    this.firestore.create(data, 'appointments');
   }
 
   getAll() {
@@ -33,20 +30,30 @@ export class AppointmentService {
       .getValue(appointmentId, 'appointments')
       .subscribe((appointment: Appointment) => {
         console.log('appointment: ', appointment);
-        const appointmentData = appointment;
-        return appointmentData;
+        return appointment;
       });
+  }
+
+  deleteAppointment(id) {
+    return this.af.collection('appointments').doc(id).delete();
   }
 
   updateAppointment(newDay: any, newHour: number, appointmentId) {
     this.firestore.update(
       appointmentId,
-      {
-        day: newDay,
-        hour: newHour
-      },
+      [
+        { day: newDay },
+        { hour: newHour}
+
+      ],
       'appointments'
     );
+    // this.af.collection('appointments').doc(appointmentId).set({day: newDay,
+    //   hour: newHour}, { merge: true });
+  }
+
+  startAppointment(id) {
+    this.firestore.update(id, { completed: true }, 'appointments');
   }
 
   acceptAppointment(id) {

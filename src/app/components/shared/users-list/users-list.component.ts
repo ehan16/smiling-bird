@@ -42,7 +42,7 @@ export class UsersListComponent implements OnInit {
 
 
     this.newAppointment = new FormGroup({
-      appointmentDate: new FormControl(this.minDate , Validators.required),
+      date: new FormControl(this.minDate , [Validators.required, this.invalidDate.bind(this)]),
       hour: new FormControl('9', [Validators.required, Validators.min(this.start), Validators.max(this.end)])
     });
   }
@@ -66,6 +66,20 @@ export class UsersListComponent implements OnInit {
   getDentistShift(start: number, end: number) {
     this.start = start;
     this.end = end;
+  }
+
+  invalidDate(control: FormControl): { [s: string]: boolean } {
+    const date = control.value.year + '-' + control.value.month + '-' + control.value.day;
+    // console.log('date is ', date);
+    const newDate = new Date(date);
+    // console.log('In DATE format is ', newDate);
+    const day = newDate.getDay(); // Returns 6 if Sat and 0 if Sun
+    // console.log('day is ', day);
+    if (day === 6 || day === 0) {
+      return { invalidDate: true };
+    } else {
+      return null;
+    }
   }
 
 }

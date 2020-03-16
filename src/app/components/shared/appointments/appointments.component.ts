@@ -13,14 +13,13 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit {
+
   currentUser: User;
   appointmentList: Appointment[] = [];
   appointmentForm: FormGroup;
   minDate;
   start: number;
   end: number;
-  datePicked;
-  isDisabled = (date: NgbDate, current: { month: number }) => date.day === 13;
 
   constructor(
     private userService: UserService,
@@ -39,11 +38,11 @@ export class AppointmentsComponent implements OnInit {
     );
 
     this.appointmentForm = new FormGroup({
-      appointmentDate: new FormControl(this.minDate, [
+      date: new FormControl(this.minDate, [
         Validators.required,
         this.invalidDate.bind(this)
       ]),
-      hour: new FormControl('9', [
+      hour: new FormControl('', [
         Validators.required,
         Validators.min(this.start),
         Validators.max(this.end)
@@ -63,7 +62,7 @@ export class AppointmentsComponent implements OnInit {
 
         this.appointmentList.push(aux);
       });
-      console.log(this.appointmentList);
+      console.log('appointment list is ', this.appointmentList);
     });
 
     // if (this.currentUser.type === 'patient') {
@@ -81,27 +80,37 @@ export class AppointmentsComponent implements OnInit {
     const day = newDate.getDay(); // Returns 6 if Sat and 0 if Sun
     // console.log('day is ', day);
     if (day === 6 || day === 0) {
-      return { 'invalidDate': true };
+      return { invalidDate: true };
     } else {
       return null;
     }
   }
 
   acceptAppointment(appointmentId) {
-    // this.appointmentService.acceptAppointment(appointmentId);
+    this.appointmentService.acceptAppointment(appointmentId);
   }
 
-  modifyAppointment() {
+  modifyAppointment(id) {
     console.log(this.appointmentForm);
+    this.appointmentService.updateAppointment(this.appointmentForm.value.date, this.appointmentForm.value.hour, id);
   }
 
-  deleteAppointment() {}
+  deleteAppointment(id) {
+    console.log(id);
+    this.appointmentService.deleteAppointment(id);
+  }
 
-  startAppointment() {}
+  startAppointment(id) {
+    this.appointmentService.startAppointment(id);
+  }
 
   getDentistShift(start: number, end: number) {
     this.start = start;
     this.end = end;
+  }
+
+  patchValues(appointment: Appointment) {
+    this.appointmentForm.patchValue(appointment);
   }
 
   // getUserData(userId): User {

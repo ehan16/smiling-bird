@@ -28,7 +28,7 @@ export class UserEditComponent implements OnInit {
         this.firestore.getValue(this.editedUserId, 'users').subscribe((user: User) => {
           this.editedUser = user;
 
-          this.editForm.patchValue(user)
+          this.editForm.patchValue(user);
           console.log('edited user: ', this.editedUser);
         });
       }

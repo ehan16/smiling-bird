@@ -116,15 +116,15 @@
                           <hr>
                           <div class="form-group dateInput">
                             <label
-                              for="appointmentDate"
+                              for="date"
                               class="font-weight-bold"
                               >Fecha</label>
                             <div class="input-group">
                               <input
                                 class="form-control"
                                 placeholder="yyyy-mm-dd"
-                                formControlName="appointmentDate"
-                                id="appointmentDate"
+                                formControlName="date"
+                                id="date"
                                 ngbDatepicker
                                 #d="ngbDatepicker"
                                 [minDate]="minDate"
@@ -138,6 +138,13 @@
                               </div>
                             </div>
                           </div>
+                          <span
+                          *ngIf="!newAppointment.get('date').valid && newAppointment.get('date').touched"
+                          class="help-block"
+                          >
+                            <span *ngIf="newAppointment.get('date').errors['required']">El campo es obligatorio</span>
+                            <span *ngIf="newAppointment.get('date').errors['invalidDate']">Día no laboral</span>
+                        </span>
 
                           <div class="form-group">
                             <label for="hour" class="d-block">Hora de la cita</label>
@@ -154,7 +161,7 @@
                         >
                           Cerrar
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" (click)="addAppointment()">
                           Aceptar
                         </button>
                       </div>
