@@ -31,13 +31,13 @@
             <td>{{ appointment?.hour }} - {{ appointment?.hour + 1 }}</td>
             <!-- <td>{{ getUserData(appointment.dentist)?.name }}</td> -->
             <td>
-              <ng-container *ngIf="!appointment.accepted;else accepted">
+              <ng-container *ngIf="!appointment.accepted">
                 <button *ngIf="currentUser.type === 'dentist'" class="btn-success rounded m-1" (click)="acceptAppointment()">
                   <i class="fas fa-check"></i>
                 </button>
                 <p *ngIf="currentUser.type === 'patient'">En espera</p>
               </ng-container>
-              <ng-container #accepted>
+              <ng-container *ngIf="appointment.accepted">
                 <button *ngIf="currentUser.type === 'dentist'" class="btn-secondary rounded m-1" (click)="startAppointment()">
                   <i class="fas fa-book"></i>
                 </button>
@@ -108,6 +108,7 @@
                           ngbDatepicker
                           #d="ngbDatepicker"
                           [minDate]="minDate"
+                          [(ngModel)] = datePicked
                         />
                         <div class="input-group-append">
                           <button
@@ -123,7 +124,7 @@
 
                     <div class="form-group">
                       <label for="hour" class="d-block">Hora de la cita</label>
-                      <input type="text" class="w-100" formControlName="hour" />
+                      <input type="text" class="w-50" formControlName="hour" />
                     </div>
                   </form>
                 </div>
@@ -136,7 +137,7 @@
                   >
                     Cerrar
                   </button>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary" (click)="modifyAppointment()">
                     Aceptar
                   </button>
                 </div>

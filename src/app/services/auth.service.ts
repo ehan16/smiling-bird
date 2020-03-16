@@ -28,6 +28,7 @@ export  class  AuthService {
         JSON.parse(localStorage.getItem('user'));
       }
     });
+
   }
 
   doRegister(email, password) {

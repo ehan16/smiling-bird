@@ -9,3 +9,11 @@
   .center {
     width: 100vw;
   }
+
+  .invalid {
+    border: 1px solid red;
+  }
+
+  span {
+    font-size: 0.7rem;
+  }

@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { UserService } from "src/app/services/user.service";
-import { User } from "src/app/models/user.model";
-import { Appointment } from "src/app/models/appointment.model";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { NgbDate } from "@ng-bootstrap/ng-bootstrap";
-import { AppointmentService } from "src/app/services/appointment.service";
-import { FirestoreService } from "src/app/services/firestore.service";
+import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
+import { Appointment } from 'src/app/models/appointment.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
-  selector: "app-appointments",
-  templateUrl: "./appointments.component.html",
-  styleUrls: ["./appointments.component.css"]
+  selector: 'app-appointments',
+  templateUrl: './appointments.component.html',
+  styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit {
   currentUser: User;
@@ -19,6 +19,8 @@ export class AppointmentsComponent implements OnInit {
   minDate;
   start: number;
   end: number;
+  datePicked;
+  isDisabled = (date: NgbDate, current: { month: number }) => date.day === 13;
 
   constructor(
     private userService: UserService,
@@ -37,8 +39,11 @@ export class AppointmentsComponent implements OnInit {
     );
 
     this.appointmentForm = new FormGroup({
-      appointmentDate: new FormControl(this.minDate, Validators.required),
-      hour: new FormControl("9", [
+      appointmentDate: new FormControl(this.minDate, [
+        Validators.required,
+        this.invalidDate.bind(this)
+      ]),
+      hour: new FormControl('9', [
         Validators.required,
         Validators.min(this.start),
         Validators.max(this.end)
@@ -66,14 +71,29 @@ export class AppointmentsComponent implements OnInit {
     // } else {
     //   this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
     // }
+  }
 
+  invalidDate(control: FormControl): { [s: string]: boolean } {
+    const date = control.value.year + '-' + control.value.month + '-' + control.value.day;
+    // console.log('date is ', date);
+    const newDate = new Date(date);
+    // console.log('In DATE format is ', newDate);
+    const day = newDate.getDay(); // Returns 6 if Sat and 0 if Sun
+    // console.log('day is ', day);
+    if (day === 6 || day === 0) {
+      return { 'invalidDate': true };
+    } else {
+      return null;
+    }
   }
 
   acceptAppointment(appointmentId) {
-    this.appointmentService.acceptAppointment(appointmentId);
+    // this.appointmentService.acceptAppointment(appointmentId);
   }
 
-  modifyAppointment() {}
+  modifyAppointment() {
+    console.log(this.appointmentForm);
+  }
 
   deleteAppointment() {}
 
