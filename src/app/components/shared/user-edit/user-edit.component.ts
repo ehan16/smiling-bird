@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit {
+
   editForm: FormGroup = new FormGroup({});
   currentUser: User;
   editedUser: User;
@@ -20,7 +22,8 @@ export class UserEditComponent implements OnInit {
     private firestore: FirestoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private auth: AuthService
   ) {
     this.route.params.subscribe(
       (param: Params) => {
@@ -46,7 +49,6 @@ export class UserEditComponent implements OnInit {
     });
 
   }
-
 
   onEdit() {
     console.log(this.editForm);
@@ -74,7 +76,16 @@ export class UserEditComponent implements OnInit {
     this.router.navigate(['/admin', this.userService.currentUserId, 'user-list']);
   }
 
-  resetPassword() {}
+  restorePassword() {
+    this.auth.sendPasswordResetEmail(this.editedUser.user).then(
+      res => {
+        window.alert('El correo de restablecimiento de contraseña ha sido enviado.');
+      },
+      error => {
+        window.alert(error);
+      }
+    );
+  }
 
   enableUser() {
 

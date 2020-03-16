@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {} from '@angular/fire';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,10 +20,6 @@ export class LoginComponent implements OnInit {
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required)
     });
-
-    this.emailForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email])
-    });
   }
 
   onSubmit() {
@@ -35,16 +29,4 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
 
-  forgotPassword() {
-    console.log('alo');
-    this.auth.sendPasswordResetEmail(this.emailForm.value.email).then(
-      res => {
-        console.log(res);
-        window.alert('Por favor revise su correo');
-      },
-      error => {
-        window.alert(error);
-      }
-    );
-  }
 }
