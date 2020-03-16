@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPassword() {
+    console.log('alo');
     this.auth.sendPasswordResetEmail(this.emailForm.value.email).then(
       res => {
         console.log(res);

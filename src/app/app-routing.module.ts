@@ -20,13 +20,15 @@ import { MessageComponent } from './components/doctor/dentist-view/message/messa
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
 import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
+import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
   {path: 'visitor', component: VisitorViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'signup', component: SignUpComponent}
+    {path: 'signup', component: SignUpComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent}
   ]},
   {path: 'patient/:id', component: PatientViewComponent, children: [
     {path: '', component: HomeComponent},

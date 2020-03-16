@@ -36,6 +36,7 @@ import { MessageComponent } from './components/doctor/dentist-view/message/messa
 import { FilterPipe } from './pipes/filter.pipe';
 import { AuthService } from './services/auth.service';
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
+import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-
     PaymentComponent,
     MessageComponent,
     FilterPipe,
-    VisitorViewComponent
+    VisitorViewComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
