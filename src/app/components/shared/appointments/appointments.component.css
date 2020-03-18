@@ -20,3 +20,18 @@
     text-align: left;
     margin-top: 2px;
   }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .wrapper {
+    padding: 2vw
+  }
+
+  @media (max-width: 1000px) {
+    .wrapper {
+      padding: 6vw;
+    }
+  }

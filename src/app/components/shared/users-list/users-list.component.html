@@ -101,7 +101,7 @@
                       </div>
 
                       <div class="modal-body text-center">
-                        <form [formGroup]="newAppointment" (ngSubmit)="addAppointment()">
+                        <form [formGroup]="newAppointment" (ngSubmit)="addAppointment(user.id)">
                           <div class="form-group">
                             <div *ngIf="currentUser.type === 'patient'">
                               <label
@@ -161,7 +161,7 @@
                         >
                           Cerrar
                         </button>
-                        <button type="submit" class="btn btn-primary" (click)="addAppointment()">
+                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)">
                           Aceptar
                         </button>
                       </div>
@@ -178,6 +178,11 @@
     </div>
 
     <ng-template #listView>
+
+      <div class="row" *ngIf="currentUser.type === 'admin'">
+        <button class="btn btn-success m-4" (click)="newUser()">Agregar usuario</button>
+      </div>
+
       <table class="table table-responsive-md list">
         <thead>
           <tr class="bg-info">
@@ -198,13 +203,13 @@
               <a
                 *ngIf="currentUser.type === 'dentist'"
                 class="mx-2"
-                (click)="seeMedicalHistory(user)"
+                (click)="seeMedicalHistory(user.id)"
                 ><i class="fas fa-book"></i
               ></a>
               <a
                 *ngIf="currentUser.type === 'dentist'"
                 class="mx-2"
-                (click)="sendMessage(user)"
+                (click)="sendMessage(user, user.id)"
                 ><i class="fas fa-envelope"></i
               ></a>
               <a

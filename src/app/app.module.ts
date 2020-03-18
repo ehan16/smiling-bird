@@ -9,20 +9,19 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
 import { ProfileComponent } from './components/shared/profile/profile.component';
 import { ProfileEditComponent } from './components/shared/profile/profile-edit/profile-edit.component';
 import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
-import { AppointmentEditComponent } from './components/shared/appointments/appointment-edit/appointment-edit.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { UserEditComponent } from './components/shared/user-edit/user-edit.component';
 import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
 import { LoginComponent } from './components/shared/login/login.component';
 import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/shared/home/home.component';
 import { ProfileDetailComponent } from './components/shared/profile/profile-detail/profile-detail.component';
 
 import { UserService } from './services/user.service';
@@ -37,6 +36,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { AuthService } from './services/auth.service';
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
 import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
+import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,6 @@ import { ForgotPasswordComponent } from './components/shared/login/forgot-passwo
     ProfileComponent,
     ProfileEditComponent,
     AppointmentsComponent,
-    AppointmentEditComponent,
     UsersListComponent,
     UserEditComponent,
     ConsultEditComponent,
@@ -65,7 +64,8 @@ import { ForgotPasswordComponent } from './components/shared/login/forgot-passwo
     MessageComponent,
     FilterPipe,
     VisitorViewComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { AppointmentService } from 'src/app/services/appointment.service';
 
 @Component({
   selector: 'app-users-list',
@@ -20,7 +21,12 @@ export class UsersListComponent implements OnInit {
   start: number;
   end: number;
 
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private appointmentService: AppointmentService
+  ) {
     this.currentUser = this.userService.currentUser;
     this.userList = this.userService.userList;
     console.log(this.userList);
@@ -32,35 +38,65 @@ export class UsersListComponent implements OnInit {
     } else {
       this.userList = this.userService.userList;
     }
-
   }
 
   ngOnInit() {
-
     const today = new Date();
-    this.minDate = new NgbDate(today.getFullYear(), today.getMonth(), today.getDate());
-
+    this.minDate = new NgbDate(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
 
     this.newAppointment = new FormGroup({
-      date: new FormControl(this.minDate , [Validators.required, this.invalidDate.bind(this)]),
-      hour: new FormControl('9', [Validators.required, Validators.min(this.start), Validators.max(this.end)])
+      date: new FormControl(this.minDate, [
+        Validators.required,
+        this.invalidDate.bind(this)
+      ]),
+      hour: new FormControl('9', [
+        Validators.required,
+        Validators.min(this.start),
+        Validators.max(this.end)
+      ])
     });
   }
 
-  addAppointment() {
+  addAppointment(dentistId) {
     console.log(this.newAppointment);
+    const app = {
+      date: {
+        year: this.newAppointment.value.date.year,
+        month: this.newAppointment.value.date.month,
+        day: this.newAppointment.value.date.day
+      },
+      hour: this.newAppointment.value.hour,
+      completed: false,
+      accepted: false,
+      treatments: [],
+      patient: this.userService.currentUserId,
+      dentist: dentistId
+    };
+
+    this.appointmentService.createAppointment(app);
+    this.router.navigate([''], {relativeTo: this.route});
   }
 
-  seeMedicalHistory(patient: User) {
-
+  seeMedicalHistory(patientId) {
+    this.router.navigate(['../', 'patient', patientId], { relativeTo: this.route });
   }
 
-  sendMessage(patient: User) {
+  sendMessage(patient: User, patientId) {
 
   }
 
   editUser(userId) {
-    this.router.navigate(['../', 'user-edit', userId], {relativeTo: this.route});
+    this.router.navigate(['../', 'user-edit', userId], {
+      relativeTo: this.route
+    });
+  }
+
+  newUser() {
+    this.router.navigate(['../', 'new-user'], { relativeTo: this.route });
   }
 
   getDentistShift(start: number, end: number) {
@@ -69,7 +105,8 @@ export class UsersListComponent implements OnInit {
   }
 
   invalidDate(control: FormControl): { [s: string]: boolean } {
-    const date = control.value.year + '-' + control.value.month + '-' + control.value.day;
+    const date =
+      control.value.year + '-' + control.value.month + '-' + control.value.day;
     // console.log('date is ', date);
     const newDate = new Date(date);
     // console.log('In DATE format is ', newDate);
@@ -81,5 +118,4 @@ export class UsersListComponent implements OnInit {
       return null;
     }
   }
-
 }

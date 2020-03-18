@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './components/shared/login/login.component';
 import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/shared/home/home.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
 import { ProfileComponent } from './components/shared/profile/profile.component';
@@ -21,6 +21,7 @@ import { ConsultDetailComponent } from './components/shared/medical-history/cons
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
 import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
 import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
+import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
@@ -35,10 +36,6 @@ const appRoutes: Routes = [
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'payment', component: PaymentComponent},
-    // {path: 'profile', component: ProfileComponent, children: [
-    //   {path: '', component: ProfileDetailComponent},
-    //   {path: 'edit', component: ProfileEditComponent}
-    // ]}
   ]},
   {path: 'appointments', component: AppointmentsComponent},
   {path: 'dentist/:id', component: DentistViewComponent, children: [
@@ -47,19 +44,12 @@ const appRoutes: Routes = [
     {path: 'patient/:patientId/medical-record', component: MedicalHistoryComponent},
     {path: 'patient/:patientId/consult/:number', component: ConsultDetailComponent},
     {path: 'patient/:patientId/message', component: MessageComponent},
-    // {path: 'profile', component: ProfileComponent, children: [
-    //   {path: '', component: ProfileDetailComponent},
-    //   {path: 'edit', component: ProfileEditComponent}
-    // ]}
   ]},
   {path: 'admin/:id', component: AdminViewComponent, children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
     {path: 'user-edit/:editedId', component: UserEditComponent},
-    // {path: 'profile', component: ProfileComponent, children: [
-    //   {path: '', component: ProfileDetailComponent},
-    //   {path: 'edit', component: ProfileEditComponent}
-    // ]}
+    {path: 'new-user', component: NewUserComponent}
   ]},
   {path: ':userType/:id/profile', component: ProfileComponent, children: [
     {path: '', component: ProfileDetailComponent},

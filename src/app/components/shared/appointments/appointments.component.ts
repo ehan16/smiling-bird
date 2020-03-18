@@ -24,7 +24,6 @@ export class AppointmentsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private appointmentService: AppointmentService,
-    private firebaseService: FirestoreService
   ) {
     this.currentUser = this.userService.currentUser;
   }
@@ -113,7 +112,21 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentForm.patchValue(appointment);
   }
 
+  getUser(id): any {
+    const user = this.userService.userList.find(user => user.id === id);
+    return user;
+  }
+
+  getUserName(id): string {
+    return this.getUser(id).name;
+  }
+
+  getUserEmail(id): string {
+    return this.getUser(id).user;
+  }
+
   // getUserData(userId): User {
   //   return this.userService.getUserData(userId);
   // }
+
 }

@@ -7,13 +7,8 @@ export class Appointment {
     day: number
   };
   public  hour: number;
-  // public patient: User;
-  public patient: string;
-  public patientName: string;
-  public patientUser: string;
-  // public dentist: User;
-  public dentist: string;
-  public dentistName: string;
+  public patient: string; // id del paciente
+  public dentist: string; // id del dentista
   public completed: boolean;
   public accepted: boolean;
   public treatments = [];
