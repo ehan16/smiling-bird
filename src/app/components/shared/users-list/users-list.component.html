@@ -161,7 +161,7 @@
                         >
                           Cerrar
                         </button>
-                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)">
+                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)" [disabled]="!newAppointment.valid">
                           Aceptar
                         </button>
                       </div>
@@ -179,8 +179,8 @@
 
     <ng-template #listView>
 
-      <div class="row" *ngIf="currentUser.type === 'admin'">
-        <button class="btn btn-success m-4" (click)="newUser()">Agregar usuario</button>
+      <div class="row">
+        <button class="btn btn-success m-4" (click)="newUser()">Agregar {{ currentUser.type === 'admin' ? 'usuario' : 'paciente' }}</button>
       </div>
 
       <table class="table table-responsive-md list">

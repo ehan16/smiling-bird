@@ -15,6 +15,6 @@ export class User {
   public debt: number;
   public comission: number;
   public shift: number[];
-  public id: any;
+ public id: any;
 
 }

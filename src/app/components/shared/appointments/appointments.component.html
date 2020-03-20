@@ -38,7 +38,7 @@
                   <button
                     *ngIf="currentUser.type === 'dentist'"
                     class="btn-success rounded m-1"
-                    (click)="acceptAppointment()"
+                    (click)="acceptAppointment(appointment.id)"
                   >
                     <i class="fas fa-check"></i>
                   </button>
@@ -48,7 +48,7 @@
                   <button
                     *ngIf="currentUser.type === 'dentist'"
                     class="btn-secondary rounded m-1"
-                    (click)="startAppointment()"
+                    (click)="startAppointment(appointment, appointment.id)"
                   >
                     <i class="fas fa-book"></i>
                   </button>
@@ -168,6 +168,7 @@
                       type="submit"
                       class="btn btn-primary"
                       (click)="modifyAppointment(appointment.id)"
+                      [disabled]="!appointmentForm.valid"
                     >
                       Aceptar
                     </button>

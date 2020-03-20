@@ -45,7 +45,7 @@ export class UserService {
     });
   }
 
-  getUserData(): any {
+  getCurrentUserData(): any {
     this.firestore.getValue(this.auth.id , 'users').subscribe((user: User) => {
       console.log('user returned: ', user);
       const userData = user;
@@ -53,7 +53,18 @@ export class UserService {
     });
   }
 
-  getCurrentUser(): User {
+  getAll() {
+    return this.firestore.getAll('users');
+  }
+
+  getUser(id) {
+    this.firestore.getValue(id , 'users').subscribe((user: User) => {
+      return user;
+    });
+  }
+
+  getCurrentUser() {
     return this.currentUser;
   }
+
 }

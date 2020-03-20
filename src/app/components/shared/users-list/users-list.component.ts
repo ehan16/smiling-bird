@@ -13,9 +13,9 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 })
 export class UsersListComponent implements OnInit {
 
-  userList: User[] = [];
+  userList = [];
   currentUser: User;
-  searchName;
+  searchName: string;
   newAppointment: FormGroup;
   minDate;
   start: number;
@@ -28,16 +28,6 @@ export class UsersListComponent implements OnInit {
     private appointmentService: AppointmentService
   ) {
     this.currentUser = this.userService.currentUser;
-    this.userList = this.userService.userList;
-    console.log(this.userList);
-
-    if (this.currentUser.type === 'patient') {
-      this.userList = this.userList.filter(user => user.type === 'dentist');
-    } else if (this.currentUser.type === 'dentist') {
-      this.userList = this.userList.filter(user => user.type === 'patient');
-    } else {
-      this.userList = this.userService.userList;
-    }
   }
 
   ngOnInit() {
@@ -47,6 +37,23 @@ export class UsersListComponent implements OnInit {
       today.getMonth(),
       today.getDate()
     );
+
+    this.userService.getAll().subscribe(data => {
+      this.userList = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as User;
+      });
+    });
+
+    if (this.currentUser.type === 'patient') {
+      this.userList = this.userList.filter(user => user.type === 'dentist');
+    } else if (this.currentUser.type === 'dentist') {
+      this.userList = this.userList.filter(user => user.type === 'patient');
+    } else {
+      this.userList = this.userService.userList;
+    }
 
     this.newAppointment = new FormGroup({
       date: new FormControl(this.minDate, [
@@ -78,16 +85,16 @@ export class UsersListComponent implements OnInit {
     };
 
     this.appointmentService.createAppointment(app);
-    this.router.navigate([''], {relativeTo: this.route});
+
   }
 
   seeMedicalHistory(patientId) {
-    this.router.navigate(['../', 'patient', patientId], { relativeTo: this.route });
+    this.router.navigate(['../', 'patient', patientId, 'medical-record'], {
+      relativeTo: this.route
+    });
   }
 
-  sendMessage(patient: User, patientId) {
-
-  }
+  sendMessage(patient: User, patientId) {}
 
   editUser(userId) {
     this.router.navigate(['../', 'user-edit', userId], {
@@ -96,7 +103,11 @@ export class UsersListComponent implements OnInit {
   }
 
   newUser() {
-    this.router.navigate(['../', 'new-user'], { relativeTo: this.route });
+    if (this.currentUser.type === 'admin') {
+      this.router.navigate(['../', 'new-user'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['new-patient'], { relativeTo: this.route });
+    }
   }
 
   getDentistShift(start: number, end: number) {
@@ -107,11 +118,8 @@ export class UsersListComponent implements OnInit {
   invalidDate(control: FormControl): { [s: string]: boolean } {
     const date =
       control.value.year + '-' + control.value.month + '-' + control.value.day;
-    // console.log('date is ', date);
     const newDate = new Date(date);
-    // console.log('In DATE format is ', newDate);
     const day = newDate.getDay(); // Returns 6 if Sat and 0 if Sun
-    // console.log('day is ', day);
     if (day === 6 || day === 0) {
       return { invalidDate: true };
     } else {

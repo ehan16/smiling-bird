@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-user',
@@ -15,13 +16,13 @@ export class NewUserComponent implements OnInit {
   currentUser: User;
   createForm: FormGroup;
   newType = 'patient';
-  maxHour: number;
-  minHour: number;
+  maxHour: number = 13;
+  minHour: number = 9;
   todayDate = new Date();
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 70, this.todayDate.getMonth() + 1, this.todayDate.getDate());
 
-  constructor(private userService: UserService, private auth: AuthService) {
+  constructor(private userService: UserService, private auth: AuthService, private router: Router, private route: ActivatedRoute) {
     this.currentUser = this.userService.currentUser;
   }
 
@@ -37,8 +38,8 @@ export class NewUserComponent implements OnInit {
       type: new FormControl('patient'),
       date: new FormControl('', Validators.required),
       comission: new FormControl(0, Validators.required),
-      start: new FormControl(9, [Validators.required, Validators.min(8), Validators.max(this.maxHour)]),
-      end: new FormControl(13, [Validators.required, Validators.max(16), Validators.min(this.minHour)]),
+      start: new FormControl(this.minHour, [Validators.required, Validators.min(8), Validators.max(this.maxHour)]),
+      end: new FormControl(this.maxHour, [Validators.required, Validators.max(16), Validators.min(this.minHour)]),
     });
 
   }
@@ -70,8 +71,12 @@ export class NewUserComponent implements OnInit {
           };
 
           this.userService.createUser(user, res.user.uid);
-          // this.router.navigate(['/visitor', 'login']);
-          // this.auth.VerifyEmail(res.user);
+
+          if (this.currentUser.type === 'dentist') {
+            this.router.navigate(['/dentist', this.currentUser.id, 'patient', res.user.uid, 'medical-record']);
+          } else {
+            this.router.navigate(['../', 'user-list'], { relativeTo: this.route });
+          }
 
         }, error => {
           console.log(error);

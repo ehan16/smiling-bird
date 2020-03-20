@@ -5,6 +5,7 @@ import { Appointment } from 'src/app/models/appointment.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -15,7 +16,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class AppointmentsComponent implements OnInit {
 
   currentUser: User;
-  appointmentList: Appointment[] = [];
+  appointmentList = [];
   appointmentForm: FormGroup;
   minDate;
   start: number;
@@ -24,6 +25,9 @@ export class AppointmentsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private appointmentService: AppointmentService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private firestore: FirestoreService
   ) {
     this.currentUser = this.userService.currentUser;
   }
@@ -48,36 +52,47 @@ export class AppointmentsComponent implements OnInit {
       ])
     });
 
-    this.appointmentService.getAll().then(r => {
-      console.log(r);
+    // this.appointmentService.getAll().then(r => {
+    //   console.log(r);
 
-      r.map(e => {
-        console.log(e.payload.doc.data());
+    //   r.map(e => {
+    //     console.log(e.payload.doc.data());
 
-        const aux = {
+    //     const aux = {
+    //       id: e.payload.doc.id,
+    //       ...e.payload.doc.data()
+    //     } as Appointment;
+
+    //     this.appointmentList.push(aux);
+    //   });
+    //   console.log('appointment list is ', this.appointmentList);
+    // });
+
+    this.firestore.getAll('appointments').subscribe(data => {
+      this.appointmentList = data.map(e => {
+        return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Appointment;
-
-        this.appointmentList.push(aux);
       });
-      console.log('appointment list is ', this.appointmentList);
     });
 
-    // if (this.currentUser.type === 'patient') {
-    //   this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
-    // } else {
-    //   this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
-    // }
+    console.log(this.appointmentList);
+    this.appointmentService.appointmentsList = this.appointmentList;
+
+    if (this.currentUser.type === 'patient') {
+      this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
+      this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+    } else {
+      this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
+      this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+    }
   }
 
   invalidDate(control: FormControl): { [s: string]: boolean } {
     const date = control.value.year + '-' + control.value.month + '-' + control.value.day;
-    // console.log('date is ', date);
     const newDate = new Date(date);
-    // console.log('In DATE format is ', newDate);
     const day = newDate.getDay(); // Returns 6 if Sat and 0 if Sun
-    // console.log('day is ', day);
     if (day === 6 || day === 0) {
       return { invalidDate: true };
     } else {
@@ -99,8 +114,9 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentService.deleteAppointment(id);
   }
 
-  startAppointment(id) {
+  startAppointment(appointment, id) {
     this.appointmentService.startAppointment(id);
+    this.router.navigate(['/patient', appointment.patient, 'consult', id], { relativeTo: this.route });
   }
 
   getDentistShift(start: number, end: number) {

@@ -22,6 +22,7 @@ import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-
 import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
 import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
 import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
+import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
@@ -35,14 +36,17 @@ const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
+    {path: 'consult/:consultId', component: ConsultDetailComponent},
     {path: 'payment', component: PaymentComponent},
   ]},
   {path: 'appointments', component: AppointmentsComponent},
   {path: 'dentist/:id', component: DentistViewComponent, children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
+    {path: 'patient-list/new-patient', component: NewUserComponent},
     {path: 'patient/:patientId/medical-record', component: MedicalHistoryComponent},
-    {path: 'patient/:patientId/consult/:number', component: ConsultDetailComponent},
+    {path: 'patient/:patientId/consult/:consultId', component: ConsultDetailComponent},
+    {path: 'patient/:patientId/consult/:consultId/edit', component: ConsultEditComponent},
     {path: 'patient/:patientId/message', component: MessageComponent},
   ]},
   {path: 'admin/:id', component: AdminViewComponent, children: [
@@ -55,7 +59,7 @@ const appRoutes: Routes = [
     {path: '', component: ProfileDetailComponent},
     {path: 'edit', component: ProfileEditComponent}
   ]},
-  {path: '**', redirectTo: '/home'}
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

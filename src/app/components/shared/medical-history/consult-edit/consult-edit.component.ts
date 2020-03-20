@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-consult-edit',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsultEditComponent implements OnInit {
 
+  consultForm: FormGroup;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onEdit() {
+
   }
 
 }

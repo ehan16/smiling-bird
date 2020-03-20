@@ -29,7 +29,7 @@ export class AppointmentService {
     this.firestore
       .getValue(appointmentId, 'appointments')
       .subscribe((appointment: Appointment) => {
-        console.log('appointment: ', appointment);
+        // console.log('appointment: ', appointment);
         return appointment;
       });
   }
@@ -48,8 +48,6 @@ export class AppointmentService {
       ],
       'appointments'
     );
-    // this.af.collection('appointments').doc(appointmentId).set({day: newDay,
-    //   hour: newHour}, { merge: true });
   }
 
   startAppointment(id) {

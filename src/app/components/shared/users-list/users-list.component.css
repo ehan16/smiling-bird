@@ -1,7 +1,4 @@
 .table-wrapper {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   padding: 10vw;
   min-height: 60vh;
 }
@@ -37,12 +34,6 @@ i:hover {
   width: 100%;
   background-color: transparent;
   text-align: left;
-}
-
-@media (max-width: 650px) {
-  .table-wrapper {
-    min-height: 60vh;
-  }
 }
 
 @media (max-width: 760px) {
