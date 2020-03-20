@@ -5,8 +5,9 @@
     <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
   </div>
 
-  <div class="w-100 p-4">
+  <div class="w-100 px-4 pt-4">
     <app-appointments *ngIf="currentUser.type === 'patient'"></app-appointments>
+    <hr class="pt-4">
   </div>
 
   <div class="col-12 py-5 table-wrapper">

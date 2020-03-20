@@ -1,1 +1,61 @@
-<p>consult-edit works!</p>
+<div class="row m-9">
+
+<form [formGroup]="consultForm" (ngSubmit)="onEdit()">
+
+  <div class="row">
+    <div class="offset-4 col-sm-4">
+        <!-- FECHA -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="offset-4 col-sm-4">
+      <input type="number" formControlName="hour" class="form-control form-field">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12" formArrayName="treatments">
+      <div
+      class="row"
+      *ngFor="let accountForm of consultForm.get('treatments'); let i = index"
+      [formGroupName]="i"
+      >
+
+      <div class="col-sm-8">
+        <input type="text" class="form-control form-field" formControlName="description">
+      </div>
+
+      <div class="col-sm-4">
+        <input type="number" class="form-control form-field" formControlName="price">
+      </div>
+
+      <div class="col-sm-10">
+        <input type="file"  accept=" .png, .jpg" (change)="onUpload($event)">
+      </div>
+
+      <div class="col-sm-2">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDelete(i)"><i class="fas fa-trash"></i></button>
+      </div>
+
+      </div>
+
+      <hr>
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="onAdd()"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+
+    </div>
+  </div>
+
+</form>
+
+</div>
