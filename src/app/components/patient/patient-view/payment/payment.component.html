@@ -7,7 +7,7 @@
 <div class="row m-lg-4 my-4">
 
   <!-- col izq -->
-  <div class="col-4 text-center p-3 rounded card-color">
+  <div class="col-4 text-center p-3 rounded-sm card-color">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
     <h5>Nombre: </h5> <span>{{currentUser.name}}</span>
     <h5>Estado de Cuenta: </h5> <span>{{currentUser.debt}}</span>
@@ -17,11 +17,11 @@
     <!-- paypal -->
   <div *ngIf="!paidFor">
 
-    <h1>El costo de la cita es de - ${{ product.price }}</h1>
+    <h5>El costo de la cita es de - ${{ product.price }}</h5>
   </div>
   
   <div *ngIf=paidFor>
-    <h1>Has pagado al Odontologo</h1>
+    <h5>Has pagado al Odontologo</h5>
   </div>
 
   <div [hidden]="paidFor" #paypal></div>

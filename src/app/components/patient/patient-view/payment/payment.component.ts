@@ -6,22 +6,23 @@ import { UserService } from 'src/app/services/user.service';
 import { Appointment } from 'src/app/models/appointment.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
-  declare var paypal;
+declare var paypal;
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
+
 export class PaymentComponent implements OnInit {
-  @ViewChild('paypal', { static: true}) paypalElement: ElementRef;
+  @ViewChild('paypal', { static: true }) paypalElement: ElementRef;
 
   showSuccess: boolean;
 
   currentUser: User;
   dentistIdList = [];
 
-  constructor(private userService: UserService, private firestoreService: FirestoreService){
+  constructor(private userService: UserService, private firestoreService: FirestoreService) {
     this.currentUser = this.userService.currentUser;
   }
 
@@ -34,6 +35,7 @@ export class PaymentComponent implements OnInit {
   paidFor = false;
 
   ngOnInit(): void {
+    console.log(this.currentUser);
     this.firestoreService.getAll('appointments').subscribe(data => {
       let appointmentList = data.map(e => {
         return {
@@ -41,21 +43,21 @@ export class PaymentComponent implements OnInit {
           ...e.payload.doc.data()
         } as Appointment;
       });
-      
+
       appointmentList = appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
 
-      for(let appointment of appointmentList){
-        if(!this.dentistIdList.includes(appointment.dentist)){
+      for (let appointment of appointmentList) {
+        if (!this.dentistIdList.includes(appointment.dentist)) {
           this.dentistIdList.push(appointment.dentist);
         }
-          
+
       }
+      console.log(this.dentistIdList);
       console.log(appointmentList);
+
     });
 
-
-    paypal
-      .Buttons({
+    paypal.Buttons({
         createOrder: (data, actions) => {
           return actions.order.create({
             purchase_units: [
@@ -78,6 +80,8 @@ export class PaymentComponent implements OnInit {
           console.log(err);
         }
       })
+
       .render(this.paypalElement.nativeElement);
+    
   }
 }
