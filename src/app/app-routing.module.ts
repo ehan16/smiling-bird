@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     {path: 'signup', component: SignUpComponent},
     {path: 'forgot-password', component: ForgotPasswordComponent}
   ]},
-  {path: 'patient/:id', component: PatientViewComponent, canActivate: [AdminAuthGuard], children: [
+  {path: 'patient/:id', component: PatientViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},

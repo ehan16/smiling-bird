@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { Appointment } from 'src/app/models/appointment.model';
 
 @Component({
   selector: 'app-users-list',
@@ -12,14 +13,21 @@ import { AppointmentService } from 'src/app/services/appointment.service';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-
   userList = [];
   currentUser: User;
   searchName: string;
   newAppointment: FormGroup;
-  minDate;
-  start: number;
-  end: number;
+  start = 8;
+  end = 16;
+  auxAppointments = [];
+  activeAppointment = true;
+  dentistId: string;
+  today = new Date();
+  minDate = new NgbDate(
+    this.today.getFullYear(),
+    this.today.getMonth(),
+    this.today.getDate()
+  );
 
   constructor(
     private userService: UserService,
@@ -31,12 +39,6 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit() {
-    const today = new Date();
-    this.minDate = new NgbDate(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    );
 
     this.userService.getAll().subscribe(data => {
       this.userList = data.map(e => {
@@ -45,47 +47,76 @@ export class UsersListComponent implements OnInit {
           ...e.payload.doc.data()
         } as User;
       });
+
+      if (this.currentUser.type === 'patient') {
+        this.userList = this.userList.filter(user => user.type === 'dentist');
+      } else if (this.currentUser.type === 'dentist') {
+        this.userList = this.userList.filter(user => user.type === 'patient');
+      } else {
+        this.userList = this.userService.userList;
+      }
     });
 
-    if (this.currentUser.type === 'patient') {
-      this.userList = this.userList.filter(user => user.type === 'dentist');
-    } else if (this.currentUser.type === 'dentist') {
-      this.userList = this.userList.filter(user => user.type === 'patient');
-    } else {
-      this.userList = this.userService.userList;
-    }
+    this.appointmentService.getAll().subscribe(data => {
+      let appointmentList = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as Appointment;
+      });
+
+      this.auxAppointments = appointmentList;
+
+      appointmentList = appointmentList.filter(
+        appointment => appointment.patient === this.userService.currentUserId
+      );
+      appointmentList = appointmentList.filter(
+        appointment => appointment.completed === false
+      );
+
+      this.activeAppointment = appointmentList.length >= 1;
+    });
 
     this.newAppointment = new FormGroup({
       date: new FormControl(this.minDate, [
         Validators.required,
         this.invalidDate.bind(this)
       ]),
-      hour: new FormControl('9', [
+      hour: new FormControl('', [
         Validators.required,
-        Validators.min(this.start),
-        Validators.max(this.end)
+        this.invalidHour.bind(this)
       ])
     });
   }
 
   addAppointment(dentistId) {
-    console.log(this.newAppointment);
-    const app = {
-      date: {
-        year: this.newAppointment.value.date.year,
-        month: this.newAppointment.value.date.month,
-        day: this.newAppointment.value.date.day
-      },
-      hour: this.newAppointment.value.hour,
-      completed: false,
-      accepted: false,
-      treatments: [],
-      patient: this.userService.currentUserId,
-      dentist: dentistId
-    };
+    const selectedHour = this.newAppointment.value.hour;
+    const selectedYear = this.newAppointment.value.date.year;
+    const selectedMonth = this.newAppointment.value.date.month;
+    const selectedDay = this.newAppointment.value.date.day;
 
-    this.appointmentService.createAppointment(app);
+    if (this.occupiedHour(selectedHour, selectedYear, selectedMonth, selectedDay)) {
 
+      window.alert('La fecha y hora seleccionada se encuentra ocupada');
+
+    } else {
+      console.log(this.newAppointment);
+      const app = {
+        date: {
+          year: selectedYear,
+          month: selectedMonth,
+          day: selectedDay
+        },
+        hour: selectedHour,
+        completed: false,
+        accepted: false,
+        treatments: [],
+        patient: this.userService.currentUserId,
+        dentist: dentistId
+      };
+
+      this.appointmentService.createAppointment(app);
+    }
   }
 
   seeMedicalHistory(patientId) {
@@ -110,11 +141,6 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  getDentistShift(start: number, end: number) {
-    this.start = start;
-    this.end = end;
-  }
-
   invalidDate(control: FormControl): { [s: string]: boolean } {
     const date =
       control.value.year + '-' + control.value.month + '-' + control.value.day;
@@ -125,5 +151,45 @@ export class UsersListComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  invalidHour(control: FormControl): { [s: string]: boolean } {
+    if (control.value < this.start || this.end < control.value) {
+      return { invalidHour: true };
+    } else {
+      return null;
+    }
+  }
+
+  occupiedHour(
+    hour: number,
+    year: number,
+    month: number,
+    day: number
+  ): boolean {
+    let occupied = false;
+    const dentistAppointments = this.auxAppointments.filter(
+      appointment => appointment.dentist === this.dentistId
+    );
+
+    dentistAppointments.forEach(appointment => {
+      if (
+        year === appointment.date.year &&
+        month === appointment.date.month &&
+        day === appointment.date.day
+      ) {
+        if (hour === appointment.hour) {
+          occupied = true;
+        }
+      }
+    });
+
+    return occupied;
+  }
+
+  getDentistShift(start: number, end: number, id: string) {
+    this.start = start;
+    this.end = end;
+    this.dentistId = id;
   }
 }

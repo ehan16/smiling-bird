@@ -53,6 +53,12 @@ export class UserService {
     });
   }
 
+  getUserData(id): any {
+    this.firestore.getValue(id , 'users').subscribe((user: User) => {
+      return user;
+    });
+  }
+
   getAll() {
     return this.firestore.getAll('users');
   }

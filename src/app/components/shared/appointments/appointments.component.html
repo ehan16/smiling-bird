@@ -1,5 +1,5 @@
 <div class="row m-0">
-  <div class="col-12 p-3">
+  <div class="col-12">
     <div class="text-center mb-3 center" *ngIf="appointmentList.length < 1">
       <h5>¡No tiene citas pendientes!</h5>
     </div>
@@ -31,7 +31,7 @@
                   appointment?.date?.year
                 }}
               </td>
-              <td>{{ appointment?.hour }} - {{ appointment?.hour + 1 }}</td>
+              <td>{{ appointment?.hour }}</td>
               <td>{{ getUserName(appointment?.dentist) }}</td>
               <td class="icons">
                 <ng-container *ngIf="!appointment.accepted">
@@ -42,7 +42,7 @@
                   >
                     <i class="fas fa-check"></i>
                   </button>
-                  <p *ngIf="currentUser.type === 'patient'">En espera</p>
+                  <p *ngIf="currentUser.type === 'patient'" class="px-3">En espera</p>
                 </ng-container>
                 <ng-container *ngIf="appointment.accepted">
                   <button
@@ -106,20 +106,17 @@
                           <label class="font-weight-bold d-block"
                             >Paciente:
                           </label>
-                          <!-- <span> {{ getUserData(appointment.patient).name }}</span> -->
+                          <span> {{ getUserName(appointment?.patient) }}</span>
                         </div>
                       </div>
                       <hr />
                       <div class="form-group dateInput">
-                        <label for="date" class="font-weight-bold"
-                          >Fecha</label
-                        >
+                        <label for="date" class="font-weight-bold">Fecha</label>
                         <div class="input-group">
                           <input
-                            class="form-control"
+                            class="form-control form-field"
                             placeholder="yyyy-mm-dd"
                             formControlName="date"
-                            id="date"
                             ngbDatepicker
                             #d="ngbDatepicker"
                             [minDate]="minDate"
@@ -133,25 +130,20 @@
                               <i class="fas fa-calendar-alt"></i>
                             </button>
                           </div>
-                          <span
-                            *ngIf="
-                              !appointmentForm.get('date').valid &&
-                              appointmentForm.get('date').touched
-                            "
-                            class="help-block"
-                          >
+                          <span *ngIf="!appointmentForm.get('date').valid && appointmentForm.get('date').touched" class="help-block error">
                             <span *ngIf="appointmentForm.get('date').errors['required']">El campo es obligatorio</span>
-                            <span
-                              *ngIf="appointmentForm.get('date').errors['invalidDate']"
-                              >Día no laboral</span
-                            >
+                            <span *ngIf="appointmentForm.get('date').errors['invalidDate']">Día no laboral</span>
                           </span>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label for="hour" class="d-block">Hora de la cita</label>
-                        <input type="text" class="w-50" formControlName="hour" />
+                        <input type="text" class="w-50" formControlName="hour" class="form-control form-field"/>
+                        <span *ngIf="!appointmentForm.get('hour').valid && appointmentForm.get('hour').touched" class="help-block error">
+                          <span *ngIf="appointmentForm.get('hour').errors['required']">El campo es obligatorio</span>
+                          <span *ngIf="appointmentForm.get('hour').errors['invalidHour']">Hora no laboral</span>
+                        </span>
                       </div>
                     </form>
                   </div>
@@ -167,8 +159,9 @@
                     <button
                       type="submit"
                       class="btn btn-primary"
-                      (click)="modifyAppointment(appointment.id)"
+                      (click)="modifyAppointment(appointment.id, appointment.dentist)"
                       [disabled]="!appointmentForm.valid"
+                      data-dismiss="modal"
                     >
                       Aceptar
                     </button>

@@ -14,11 +14,17 @@
     border: 1px solid red;
   }
 
-  span {
+  /* span {
     font-size: 0.7rem;
     width: 100%;
     text-align: left;
     margin-top: 2px;
+  } */
+
+  .error {
+    width: 100%;
+    font-size: 0.7rem;
+    text-align: left;
   }
 
   .icons {
@@ -27,11 +33,11 @@
   }
 
   .wrapper {
-    padding: 2vw
+    padding: 4vw 2vw 0vw 2vw;
   }
 
   @media (max-width: 1000px) {
     .wrapper {
-      padding: 6vw;
+      padding: 6vw 4vw 0vw 4vw;
     }
   }

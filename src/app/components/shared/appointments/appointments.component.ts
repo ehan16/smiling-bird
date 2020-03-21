@@ -19,8 +19,8 @@ export class AppointmentsComponent implements OnInit {
   appointmentList = [];
   appointmentForm: FormGroup;
   minDate;
-  start: number;
-  end: number;
+  start = 8;
+  end = 16;
 
   constructor(
     private userService: UserService,
@@ -75,18 +75,22 @@ export class AppointmentsComponent implements OnInit {
           ...e.payload.doc.data()
         } as Appointment;
       });
+
+      console.log(this.appointmentList);
+      this.appointmentService.appointmentsList = this.appointmentList;
+
+      if (this.currentUser.type === 'patient') {
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+      } else {
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+      }
+
+      console.log('Filtered list is ', this.appointmentList);
+
     });
 
-    console.log(this.appointmentList);
-    this.appointmentService.appointmentsList = this.appointmentList;
-
-    if (this.currentUser.type === 'patient') {
-      this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
-      this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
-    } else {
-      this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
-      this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
-    }
   }
 
   invalidDate(control: FormControl): { [s: string]: boolean } {

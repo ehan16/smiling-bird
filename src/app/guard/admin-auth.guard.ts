@@ -14,8 +14,11 @@ import { UserService } from '../services/user.service';
   providedIn: 'root'
 })
 export class AdminAuthGuard implements CanActivate {
-
-  constructor(private auth: AuthService, private router: Router, private userService: UserService) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -25,12 +28,20 @@ export class AdminAuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.auth.isAuthenticated !== true || this.userService.currentUser.type !== 'admin') {
+
+
+    let type = '';
+
+    if ( this.auth.isAuthenticated === true ) {
+      const user = this.userService.getUserData(this.auth.id);
+      type = user.type;
+    }
+
+    if ( this.auth.isAuthenticated !== true || type !== 'admin' ) {
       console.log('Access Denied');
       this.router.navigate(['/visitor']);
     }
 
     return true;
-
   }
 }

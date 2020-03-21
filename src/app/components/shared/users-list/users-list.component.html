@@ -5,12 +5,12 @@
     <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
   </div>
 
-  <div class="w-100 px-4 pt-4">
+  <div class="w-100 px-4 mt-4">
     <app-appointments *ngIf="currentUser.type === 'patient'"></app-appointments>
-    <hr class="pt-4">
+    <hr>
   </div>
 
-  <div class="col-12 py-5 table-wrapper">
+  <div class="col-12 table-wrapper">
     <div class="w-100 my-4 px-4">
       <input
         class="form-control w-100 form-shadow"
@@ -68,7 +68,8 @@
                   type="button"
                   data-toggle="modal"
                   [attr.data-target]="'#appointment' + i"
-                  (click)="getDentistShift(user.shift[0], user.shift[1])"
+                  (click)="getDentistShift(user.shift[0], user.shift[1], user.id)"
+                  [disabled]="activeAppointment"
                 >
                   <i class="fas fa-calendar-check mr-3"></i>Solicitar cita
                 </button>
@@ -122,10 +123,9 @@
                               >Fecha</label>
                             <div class="input-group">
                               <input
-                                class="form-control"
+                                class="form-control form-field"
                                 placeholder="yyyy-mm-dd"
                                 formControlName="date"
-                                id="date"
                                 ngbDatepicker
                                 #d="ngbDatepicker"
                                 [minDate]="minDate"
@@ -138,19 +138,21 @@
                                 ><i class="fas fa-calendar-alt"></i></button>
                               </div>
                             </div>
+                            <span *ngIf="!newAppointment.get('date').valid && newAppointment.get('date').touched" class="help-block error">
+                              <span *ngIf="newAppointment.get('date').errors['required']">El campo es obligatorio</span>
+                              <span *ngIf="newAppointment.get('date').errors['invalidDate']">Día no laboral</span>
+                            </span>
                           </div>
-                          <span
-                          *ngIf="!newAppointment.get('date').valid && newAppointment.get('date').touched"
-                          class="help-block"
-                          >
-                            <span *ngIf="newAppointment.get('date').errors['required']">El campo es obligatorio</span>
-                            <span *ngIf="newAppointment.get('date').errors['invalidDate']">Día no laboral</span>
-                        </span>
 
                           <div class="form-group">
                             <label for="hour" class="d-block">Hora de la cita</label>
-                            <input type="text" class="w-25" formControlName="hour">
+                            <input type="text" class="w-25" formControlName="hour" class="form-control form-field">
+                            <span *ngIf="!newAppointment.get('hour').valid && newAppointment.get('hour').touched" class="help-block error">
+                              <span *ngIf="newAppointment.get('hour').errors['required']">El campo es obligatorio</span>
+                              <span *ngIf="newAppointment.get('hour').errors['invalidHour']">Hora no laboral</span>
+                            </span>
                           </div>
+
                         </form>
                       </div>
 
@@ -162,7 +164,7 @@
                         >
                           Cerrar
                         </button>
-                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)" [disabled]="!newAppointment.valid">
+                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)" [disabled]="!newAppointment.valid" data-dismiss="modal">
                           Aceptar
                         </button>
                       </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { log } from 'util';
 
 @Component({
   selector: 'app-consult-edit',
@@ -25,15 +26,21 @@ export class ConsultEditComponent implements OnInit {
   }
 
   onEdit() {
-
+    console.log(this.consultForm);
   }
 
   onDelete(index) {
-
+    (this.consultForm.get('ingredients') as FormArray).removeAt(index);
   }
 
   onAdd() {
-
+    console.log('Ya');
+    (this.consultForm.get('treatments') as FormArray).push(
+      new FormGroup({
+        description: new FormControl('', Validators.required),
+        price: new FormControl(0, [Validators.required, Validators.min(1)]),
+      })
+    );
   }
 
   onUpload(event: Event) {

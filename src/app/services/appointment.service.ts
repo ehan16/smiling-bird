@@ -20,7 +20,7 @@ export class AppointmentService {
     this.firestore.create(data, 'appointments');
   }
 
-  getAll() {
+  getAllPromise() {
     // tslint:disable-next-line: no-unused-expression
     return this.firestore.getAll('appointments').pipe( first() ).toPromise();
   }
@@ -56,6 +56,10 @@ export class AppointmentService {
 
   acceptAppointment(id) {
     this.firestore.update(id, { accepted: true }, 'appointments');
+  }
+
+  getAll() {
+    return this.firestore.getAll('appointments');
   }
 
 }
