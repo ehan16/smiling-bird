@@ -1,18 +1,33 @@
-<!-- <ngx-paypal [config]="payPalConfig"></ngx-paypal> -->
 <div class="row m-0 pale-yellow">
   <div class="banner font-title">
     <p>Pagos</p>
   </div>
 </div>
+
 <div class="row m-lg-4 my-4">
+
   <!-- col izq -->
   <div class="col-4 text-center p-3 rounded card-color">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
-    <p>Nombre: </p>
-    <p>Estado de Cuenta: </p>
+    <h5>Nombre: </h5> <span>{{currentUser.name}}</span>
+    <h5>Estado de Cuenta: </h5> <span>{{currentUser.debt}}</span>
   </div>
   <!-- col der -->
   <div class="col-8 p-3 rounded-sm">
+    <!-- paypal -->
+  <div *ngIf="!paidFor">
+
+    <h1>El costo de la cita es de - ${{ product.price }}</h1>
+  </div>
+  
+  <div *ngIf=paidFor>
+    <h1>Has pagado al Odontologo</h1>
+  </div>
+
+  <div [hidden]="paidFor" #paypal></div>
+  <!-- paypal-end -->
+    
+
     <div class="w-100" id="accordion">
       <div class="card" *ngFor="let dentist of dentists; let i = index">
         <div class="card-header card-color" id="{{ 'heading' + i }}">
@@ -40,11 +55,13 @@
 
               </div>
               <div class="col-6">
-                
+
               </div>
             </div>
             <!-- fin contenido -->
           </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
