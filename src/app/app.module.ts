@@ -35,6 +35,7 @@ import { MessageComponent } from './components/doctor/dentist-view/message/messa
 import { FilterPipe } from './pipes/filter.pipe';
 import { AuthService } from './services/auth.service';
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
 import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
 
@@ -76,7 +77,8 @@ import { NewUserComponent } from './components/shared/users-list/new-user/new-us
     NgbDatepickerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgxPayPalModule
   ],
   providers: [UserService, AuthService],
   bootstrap: [AppComponent]

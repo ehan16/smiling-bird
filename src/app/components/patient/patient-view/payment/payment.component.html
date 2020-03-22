@@ -1,1 +1,67 @@
-<p>payment works!</p>
+<div class="row m-0 pale-yellow">
+  <div class="banner font-title">
+    <p>Pagos</p>
+  </div>
+</div>
+
+<div class="row m-lg-4 my-4">
+
+  <!-- col izq -->
+  <div class="col-4 text-center p-3 rounded-sm card-color">
+    <img src="../../../../assets/extra/avatar.png" alt="avatar">
+    <h5>Nombre: </h5> <span>{{currentUser.name}}</span>
+    <h5>Estado de Cuenta: </h5> <span>{{currentUser.debt}}</span>
+  </div>
+  <!-- col der -->
+  <div class="col-8 p-3 rounded-sm">
+    <!-- paypal -->
+  <div *ngIf="!paidFor">
+
+    <h5>El costo de la cita es de - ${{ product.price }}</h5>
+  </div>
+  
+  <div *ngIf=paidFor>
+    <h5>Has pagado al Odontologo</h5>
+  </div>
+
+  <div [hidden]="paidFor" #paypal></div>
+  <!-- paypal-end -->
+    
+
+    <div class="w-100" id="accordion">
+      <div class="card" *ngFor="let dentist of dentists; let i = index">
+        <div class="card-header card-color" id="{{ 'heading' + i }}">
+          <h5 class="mb-0">
+            <button class="btn btn-dentist" data-toggle="collapse" [attr.data-target]="'#dentist' + i"
+              [attr.aria-expanded]="false" [attr.aria-controls]="'dentist' + i">
+              {{ dentist.name }}
+            </button>
+          </h5>
+        </div>
+
+        <div id="{{ 'dentist' + i }}" class="collapse" [attr.aria-labelledby]="'dentist' + i" data-parent="#accordion">
+          <div class="row acc-content">
+            <!-- contenido -->
+            <div class="row">
+              <div class="col-6">
+
+              </div>
+              <div class="col-6">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+
+              </div>
+              <div class="col-6">
+
+              </div>
+            </div>
+            <!-- fin contenido -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
