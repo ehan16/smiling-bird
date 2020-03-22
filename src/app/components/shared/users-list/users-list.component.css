@@ -1,13 +1,16 @@
 .table-wrapper {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-  padding: 10vw;
+  padding: 0vw 6vw 6vw 6vw;
   min-height: 60vh;
 }
 
 tr:hover {
   background-color: rgb(167, 167, 167);
+}
+
+.error {
+  width: 100%;
+  font-size: 0.7rem;
+  text-align: left;
 }
 
 i:hover {
@@ -37,12 +40,6 @@ i:hover {
   width: 100%;
   background-color: transparent;
   text-align: left;
-}
-
-@media (max-width: 650px) {
-  .table-wrapper {
-    min-height: 60vh;
-  }
 }
 
 @media (max-width: 760px) {

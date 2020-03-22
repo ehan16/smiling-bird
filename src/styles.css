@@ -53,6 +53,7 @@ input.ng-invalid.ng-touched {
   background-image: url(./assets/background/Teeth_smile-min.png);
   color: #131313;
   font-size: 4rem;
+  text-align: center;
 }
 
 @media (max-width: 640px) {
@@ -67,7 +68,7 @@ input.ng-invalid.ng-touched {
   }
 
   .content{
-    padding: 7.5vh 0 0 0;
+    padding: 6.6vh 0 0 0;
   }
 
 }

@@ -1,0 +1,16 @@
+.table-wrapper {
+  padding: 10px;
+  margin: 5%;
+  min-height: 60vh;
+}
+
+tr:hover {
+  background-color: rgb(167, 167, 167);
+}
+
+/* @media (max-width: 760px) {
+  .list {
+    margin:auto;
+    width: fit-content;
+  }
+} */

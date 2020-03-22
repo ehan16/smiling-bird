@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn:  'root'
@@ -9,6 +10,7 @@ import * as firebase from 'firebase';
 export  class  AuthService {
 
   user: any;
+  userData: User;
   id: any;
 
   constructor(private afAuth: AngularFireAuth,
@@ -19,15 +21,14 @@ export  class  AuthService {
         this.user = user;
         this.id = user.uid;
         console.log('user', this.user, 'uid', this.id);
-        // localStorage.setItem('user', JSON.stringify(this.user));
-        // JSON.parse(localStorage.getItem('user'));
-        // this.userService.logUser(this.id);
+        localStorage.setItem('user', JSON.stringify(this.user));
+        JSON.parse(localStorage.getItem('user'));
       } else {
-        // localStorage.setItem('user', null);
-        // JSON.parse(localStorage.getItem('user'));
-        // this.userService.currentUser = null;
+        localStorage.setItem('user', null);
+        JSON.parse(localStorage.getItem('user'));
       }
     });
+
   }
 
   doRegister(email, password) {
@@ -56,17 +57,19 @@ export  class  AuthService {
 
   signOut() {
     return this.afAuth.auth.signOut().then(() => {
-      // localStorage.removeItem('user');
+
+      localStorage.removeItem('user');
       console.log('Signed out');
       window.alert('Ha cerrado sesion');
-      this.router.navigate(['/']);
+      this.router.navigate(['/visitor']);
+
     });
   }
 
-  // get isAuthenticated(): boolean {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   return (user !== null) ? true : false;
-  // }
+  get isAuthenticated(): boolean {
+     const user = JSON.parse(localStorage.getItem('user'));
+     return (user !== null) ? true : false;
+  }
 
   sendPasswordResetEmail(email) {
     return this.afAuth.auth.sendPasswordResetEmail(email).then(
@@ -84,9 +87,9 @@ export  class  AuthService {
   VerifyEmail(user) {
     let use = this.afAuth.auth.currentUser;
 
-    use.sendEmailVerification().then(function () {
+    use.sendEmailVerification().then( () => {
       // aqui lo manda
-    }).catch(function (error) {
+    }).catch((error) => {
       // por si algo pasa
     });
 

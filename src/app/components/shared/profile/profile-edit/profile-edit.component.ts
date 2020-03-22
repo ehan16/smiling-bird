@@ -64,6 +64,7 @@ export class ProfileEditComponent implements OnInit {
       comission: this.currentUser.comission
     };
     this.firestore.setValue(this.auth.getCurrentUID(), user, 'users');
+    this.editForm.reset();
   }
 
 }

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './components/shared/login/login.component';
 import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/shared/home/home.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
 import { ProfileComponent } from './components/shared/profile/profile.component';
@@ -19,51 +19,47 @@ import { UserEditComponent } from './components/shared/user-edit/user-edit.compo
 import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
 import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
 import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
-import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
+import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
+import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
+import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
+import { AuthGuard } from './guard/auth.guard';
+import { AdminAuthGuard } from './guard/admin-auth.guard';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
   {path: 'visitor', component: VisitorViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'signup', component: SignUpComponent}
+    {path: 'signup', component: SignUpComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent}
   ]},
-  {path: 'patient/:id', component: PatientViewComponent, children: [
+  {path: 'patient/:id', component: PatientViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
+    {path: 'consult/:consultId', component: ConsultDetailComponent},
     {path: 'payment', component: PaymentComponent},
-    // {path: 'profile', component: ProfileComponent, children: [
-    //   {path: '', component: ProfileDetailComponent},
-    //   {path: 'edit', component: ProfileEditComponent}
-    // ]}
   ]},
-  {path: 'appointments', component: AppointmentsComponent},
-  {path: 'dentist/:id', component: DentistViewComponent, children: [
+  {path: 'dentist/:id', component: DentistViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
+    {path: 'patient-list/new-patient', component: NewUserComponent},
     {path: 'patient/:patientId/medical-record', component: MedicalHistoryComponent},
-    {path: 'patient/:patientId/consult/:number', component: ConsultDetailComponent},
+    {path: 'patient/:patientId/consult/:consultId', component: ConsultDetailComponent},
+    {path: 'patient/:patientId/consult/:consultId/edit', component: ConsultEditComponent},
     {path: 'patient/:patientId/message', component: MessageComponent},
-    // {path: 'profile', component: ProfileComponent, children: [
-    //   {path: '', component: ProfileDetailComponent},
-    //   {path: 'edit', component: ProfileEditComponent}
-    // ]}
   ]},
-  {path: 'admin/:id', component: AdminViewComponent, children: [
+  {path: 'admin/:id', component: AdminViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
     {path: 'user-edit/:editedId', component: UserEditComponent},
-    // {path: 'profile', component: ProfileComponent, children: [
-    //   {path: '', component: ProfileDetailComponent},
-    //   {path: 'edit', component: ProfileEditComponent}
-    // ]}
+    {path: 'new-user', component: NewUserComponent}
   ]},
-  {path: ':userType/:id/profile', component: ProfileComponent, children: [
+  {path: ':userType/:id/profile', component: ProfileComponent, canActivate: [AuthGuard], children: [
     {path: '', component: ProfileDetailComponent},
     {path: 'edit', component: ProfileEditComponent}
   ]},
-  {path: '**', redirectTo: '/home'}
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

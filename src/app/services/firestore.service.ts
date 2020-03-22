@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class FirestoreService {
   }
 
   public update(documentId: string, data: any, collection: string) {
-    return this.firestore.collection(collection).doc(documentId).set({ data } , { merge: true});
+    return this.firestore.collection(collection).doc(documentId).set(data , { merge: true});
   }
 
   public setValue(documentId: string, data: any, collection: string) {

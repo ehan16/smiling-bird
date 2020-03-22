@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Appointment } from '../models/appointment.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { analytics } from 'firebase';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,38 +11,55 @@ export class AppointmentService {
 
   appointmentsList: Appointment[];
 
-  constructor(private firestore: FirestoreService, private af: AngularFirestore) {
-    this.firestore.getAll('appointments').subscribe(
-      data => {
-        this.appointmentsList = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data()
-          } as Appointment;
-        });
-      }
-    );
+  constructor(
+    private firestore: FirestoreService,
+    private af: AngularFirestore
+  ) { }
 
-    console.log(this.appointmentsList);
-   }
+  createAppointment(data: any) {
+    this.firestore.create(data, 'appointments');
+  }
 
-   createAppointment(data: any, id: string) {
-    this.af.collection('appointments').doc(id).set(data);
+  getAllPromise() {
+    // tslint:disable-next-line: no-unused-expression
+    return this.firestore.getAll('appointments').pipe( first() ).toPromise();
   }
 
   getAppointmentData(appointmentId): any {
-    this.firestore.getValue(appointmentId, 'appointments').subscribe((appointment: Appointment) => {
-      console.log('appointment: ', appointment);
-      const appointmentData = appointment;
-      return appointmentData;
-    });
+    this.firestore
+      .getValue(appointmentId, 'appointments')
+      .subscribe((appointment: Appointment) => {
+        // console.log('appointment: ', appointment);
+        return appointment;
+      });
+  }
+
+  deleteAppointment(id) {
+    return this.af.collection('appointments').doc(id).delete();
   }
 
   updateAppointment(newDay: any, newHour: number, appointmentId) {
-    this.firestore.update(appointmentId, {
-      day: newDay,
-      hour: newHour
-    }, 'appointments');
+    this.firestore.update(
+      appointmentId,
+      [
+        { day: newDay },
+        { hour: newHour}
+
+      ],
+      'appointments'
+    );
+  }
+
+  startAppointment(id) {
+    this.firestore.update(id, { completed: true }, 'appointments');
+  }
+
+  acceptAppointment(id) {
+    this.firestore.update(id, { accepted: true }, 'appointments');
+  }
+
+  getAll() {
+    return this.firestore.getAll('appointments');
   }
 
 }

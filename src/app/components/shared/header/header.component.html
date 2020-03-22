@@ -7,7 +7,7 @@
 </header>
 <nav class="main-theme sticky_nav" #stickyNav>
   <div class="container_left">
-    <a class="home" routerLinkActive="active" (click)="goToHome()">
+    <a class="home" (click)="goToHome()">
       <li class="fas fa-home"></li>
     </a>
     <button
@@ -26,48 +26,42 @@
     <div *ngIf="currentUser">
       <button
         class="btnList"
-        routerLinkActive="active"
-        [routerLink]="['/patient', currentUser.user, 'dentist-list']"
+        [routerLink]="['/patient', currentId, 'dentist-list']"
         *ngIf="currentUser.type === 'patient'"
       >
         Odontólogos
       </button>
       <button
         class="btnList"
-        routerLinkActive="active"
-        [routerLink]="['/patient', currentUser.user, 'medical-record']"
+        [routerLink]="['/patient', currentId, 'medical-record']"
         *ngIf="currentUser.type === 'patient'"
       >
         Historial
       </button>
       <button
         class="btnList"
-        routerLinkActive="active"
-        [routerLink]="['/patient', currentUser.user, 'payment']"
+        [routerLink]="['/patient', currentId, 'payment']"
         *ngIf="currentUser.type === 'patient'"
       >
         Pago
       </button>
       <button
         class="btnList"
-        routerLinkActive="active"
-        [routerLink]="['/dentist', currentUser.user, 'patient-list']"
+        [routerLink]="['/dentist', currentId, 'patient-list']"
         *ngIf="currentUser.type === 'dentist'"
       >
         Pacientes
       </button>
       <button
         class="btnList"
-        routerLinkActive="active"
-        [routerLink]="['/dentist', currentUser.user, 'report']"
+        [routerLink]="['/dentist', currentId, 'report']"
         *ngIf="currentUser.type === 'dentist'"
       >
         Reportes
       </button>
       <button
         class="btnList"
-        routerLinkActive="active"
-        [routerLink]="['/admin', 'user-list']"
+        [routerLink]="['/admin', currentId ,'user-list']"
         *ngIf="currentUser.type === 'admin'"
       >
         Usuarios
