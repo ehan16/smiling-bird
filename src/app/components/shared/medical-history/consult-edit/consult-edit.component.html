@@ -51,7 +51,7 @@
         <div
           class="row"
           *ngFor="
-            let accountForm of consultForm.get('treatments');
+            let control of consultForm.get('treatments');
             let i = index
           "
           [formGroupName]="i"
@@ -97,7 +97,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-4">
       <button class="btn btn-warning btn-block">Aceptar</button>
     </div>
   </form>

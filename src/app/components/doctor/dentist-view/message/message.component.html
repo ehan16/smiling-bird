@@ -1,0 +1,34 @@
+div
+class="row m-0 justify-content-center align-content-center pale-yellow px-sm-5"
+>
+<div class="message-Form w-75">
+  <div class="module">
+    <form [formGroup]="message-Form (ngSubmit)=" onSubmit()">
+
+        
+
+      <div class="form-group">
+        <label for="name">Titulo del mensaje</label>
+        <input type="text" placeholder="La clinica Smiling bird" id="name" formControlName="name"
+          class="form-control form-field" />
+        <span *ngIf="!messageForm.get('name').valid &&messageForm.get('name').touched" class="help-block">
+          <span *ngIf="messageForm.get('name').errors['required']">El campo es obligatorio</span>
+        </span>
+      </div>
+
+      <div class="form-group w-auto p-3">
+        <label for="name">Texto del mensaje</label>
+        <input type="text" placeholder="Mensaje" id="name" formControlName="name"
+          class="form-control form-field" />
+        <span *ngIf="!messageForm.get('name').valid && messageForm.get('name').touched" class="help-block">
+          <span *ngIf="messageForm.get('name').errors['required']">El campo es obligatorio</span>
+        </span>
+      </div>
+
+      <button class="btn btn-block my-4 font-weight-bold" type="submit" [disabled]="!messageForm.valid">
+        Enviar
+      </button>
+    </form>
+  </div>
+</div>
+</div>

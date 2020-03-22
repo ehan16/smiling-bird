@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { log } from 'util';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { AppointmentService } from 'src/app/services/appointment.service';
 
 @Component({
   selector: 'app-consult-edit',
@@ -10,17 +10,23 @@ import { log } from 'util';
 export class ConsultEditComponent implements OnInit {
 
   consultForm: FormGroup;
+  treatments: FormArray;
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder, private appService: AppointmentService) { }
 
   ngOnInit() {
 
-    this.consultForm = new FormGroup({
-      date: new FormControl('', [Validators.required,this.invalidDate.bind(this)]),
-      hour: new FormControl('', [Validators.required, Validators.min(8), Validators.max(16)]),
-      price: new FormControl('', [Validators.required, Validators.min(1)]),
-      description: new FormControl('', Validators.required),
-      treatments: new FormArray([])
+    // this.consultForm = new FormGroup({
+    //   date: new FormControl('', [Validators.required,this.invalidDate.bind(this)]),
+    //   hour: new FormControl('', [Validators.required, Validators.min(8), Validators.max(16)]),
+    //   price: new FormControl('', [Validators.required, Validators.min(1)]),
+    //   description: new FormControl('', Validators.required),
+    //   treatments: new FormArray([])
+    // });
+    this.consultForm = this.formBuilder.group({
+      date: ['', [Validators.required,this.invalidDate.bind(this)]],
+      hour: ['', [Validators.required, Validators.min(1)]],
+      treatments: this.formBuilder.array([this.createTreatment()])
     });
 
   }
@@ -33,13 +39,20 @@ export class ConsultEditComponent implements OnInit {
     (this.consultForm.get('ingredients') as FormArray).removeAt(index);
   }
 
-  onAdd() {
-    console.log('Ya');
-    (this.consultForm.get('treatments') as FormArray).push(
-      new FormGroup({
-        description: new FormControl('', Validators.required),
-        price: new FormControl(0, [Validators.required, Validators.min(1)]),
-      })
+  createTreatment(): FormGroup {
+    return this.formBuilder.group({
+      description: '',
+      price: ''
+    });
+  }
+
+   onAdd() {
+     console.log('Ya');
+     (this.consultForm.get('treatments') as FormArray).push(
+       new FormGroup({
+         description: new FormControl('', Validators.required),
+         price: new FormControl(0, [Validators.required, Validators.min(1)]),
+     })
     );
   }
 

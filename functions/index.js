@@ -1,39 +1,51 @@
 const functions = require('firebase-functions');
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-const Functions = require('firebase-functions')
-const admin=require('firebase-admin')
 const nodemailer = require('nodemailer');
 
-admin.initializeApp()
-require('dotenv').config()
+// const {SENDER_EMAIL,SENDER_PASSWORD}= process.env;
 
-const {SENDER_EMAIL,SENDER_PASSWORD}= process.env;
+// exports.sendEmailNotification = funtion.firestore.document('alreadymademail/{docId}')
+// onabort.Create((snap,ctx)=>{
+//     const data=snap.data();
 
-exports.sendEmailNotification=funtion.firestore.document('submissions/{docId}')
-onabort.Create((snap,ctx)=>{
-    const data=snap.data();
+//     let autData=nodemailer.createTransport({
+//         host:'smtp/gmail.com',
+//         port:465,
+//         secure:true,
+//         auth:{
+//             user:SENDER_EMAIL,
+//             pass:SENDER_PASSWORD
+//         }
+//     });
+//     autData.sendMail({
+//          from :'smiling.bird.clinic@gmail.com',
+//         // to: 
+//         // subject: 
+//         // text: 
+//         // html: 
+//     }).then(res=>console.log('se mando')).catch(err=>console.log(err));
 
-    let autData=nodemailer.createTransport({
-        host:'smtp/gmail.com',
-        port:465,
-        secure:true,
-        auth:{
-            user:SENDER_EMAIL,
-            pass:SENDER_PASSWORD
-        }
+// });
+const transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: SERDER_EMAIL,
+        pass: SENDER_PASSWORD
+    }
+})
+
+exports.mail = functions.firestore.document('alreadymademail/{docId}').onCreate((snap, context) => {
+        const email = snap.data().email
+        const name = snap.data().name
+        return sendMail(email, name)
     });
-    autData.sendMail({
-        from :'e.han@correo.unimet.edu.ve',
-        to: `${data.email}`,
-        subject:'vamoh a probah esto',
-        text: `${data.email}`,
-        html: `${data.email}`,
-    }).then(res=>console.log('se mando')).catch(err=>console.log(err));
 
-});
+    function sendMail(email, name){
+        return transport.sendMail({
+            from: 'smiling.bird.clinic@gmail.com',
+            to: email,
+            subject: "holi",
+            text: "dame una dona ahi pueh"
+        })
+        .then(r => r)
+        .catch(e => e);
+    }
