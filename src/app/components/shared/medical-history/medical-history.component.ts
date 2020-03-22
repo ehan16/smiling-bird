@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Appointment } from 'src/app/models/appointment.model';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-medical-history',
@@ -7,9 +12,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MedicalHistoryComponent implements OnInit {
 
-  constructor() { }
+  currentUser: User;
+  medicalRecord = [];
+  patient: User;
+
+  constructor(private firestore: FirestoreService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.firestore.getAll('appointments').subscribe(data => {
+      this.medicalRecord = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as Appointment;
+      });
+    });
+
+    if (this.currentUser.type === 'patient') {
+      this.patient = this.currentUser;
+      this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.userService.currentUserId);
+      this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
+    } else {
+      this.route.params.subscribe(
+        (param: Params) => {
+          const patientId = param['patientId'];
+          this.firestore.getValue(patientId, 'users').subscribe((user: User) => {
+            this.patient = user;
+            this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === patientId);
+            this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
+          });
+        }
+      );
+    }
+
   }
+
+  onEdit(id) {
+
+  }
+
+  onSee(id) {
+
+  }
+
+
 
 }

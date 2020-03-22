@@ -1,1 +1,104 @@
-<p>consult-edit works!</p>
+<div class="row m-0 p-5">
+  <form [formGroup]="consultForm" (ngSubmit)="onEdit()">
+    <div class="row">
+      <div class="col-6 form-group">
+        <label for="date" class="font-weight-bold">Fecha</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            formControlName="date"
+            id="date"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary calendar"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+          <span
+            *ngIf="
+              !consultForm.get('date').valid && consultForm.get('date').touched
+            "
+            class="help-block"
+          >
+            <span *ngIf="consultForm.get('date').errors['required']"
+              >El campo es obligatorio</span
+            >
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 form-group">
+        <label for="hour" class="d-block">Hora de la cita</label>
+        <input
+          type="number"
+          formControlName="hour"
+          class="form-control form-field"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12" formArrayName="treatments">
+        <div
+          class="row"
+          *ngFor="
+            let control of consultForm.get('treatments');
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <div class="col-sm-8">
+            <input
+              type="text"
+              class="form-control form-field"
+              formControlName="description"
+            />
+          </div>
+
+          <div class="col-sm-4">
+            <input
+              type="number"
+              class="form-control form-field"
+              formControlName="price"
+            />
+          </div>
+
+          <div class="col-sm-10">
+            <input
+              type="file"
+              accept=" .png, .jpg"
+              (change)="onUpload($event)"
+            />
+          </div>
+
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-danger" (click)="onDelete(i)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <hr />
+        <div class="row">
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-success" (click)="onAdd()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-4">
+      <button class="btn btn-warning btn-block">Aceptar</button>
+    </div>
+  </form>
+</div>
