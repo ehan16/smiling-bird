@@ -28,6 +28,7 @@ export class UsersListComponent implements OnInit {
     this.today.getMonth(),
     this.today.getDate()
   );
+  selectedDate = this.minDate;
 
   constructor(
     private userService: UserService,
@@ -84,9 +85,19 @@ export class UsersListComponent implements OnInit {
       ]),
       hour: new FormControl('', [
         Validators.required,
-        this.invalidHour.bind(this)
+        this.invalidHour.bind(this),
+        this.occupiedHour.bind(this)
       ])
     });
+
+    this.newAppointment.get('date').valueChanges.subscribe(
+      x => {
+        console.log(x);
+        this.newAppointment.get('hour').patchValue('');
+        this.selectedDate = x;
+      }
+    );
+
   }
 
   addAppointment(dentistId) {
@@ -95,28 +106,23 @@ export class UsersListComponent implements OnInit {
     const selectedMonth = this.newAppointment.value.date.month;
     const selectedDay = this.newAppointment.value.date.day;
 
-    if (this.occupiedHour(selectedHour, selectedYear, selectedMonth, selectedDay)) {
+    console.log(this.newAppointment);
+    const app = {
+      date: {
+        year: selectedYear,
+        month: selectedMonth,
+        day: selectedDay
+      },
+      hour: selectedHour,
+      completed: false,
+      accepted: false,
+      treatments: [],
+      patient: this.userService.currentUserId,
+      dentist: dentistId
+    };
 
-      window.alert('La fecha y hora seleccionada se encuentra ocupada');
+    this.appointmentService.createAppointment(app);
 
-    } else {
-      console.log(this.newAppointment);
-      const app = {
-        date: {
-          year: selectedYear,
-          month: selectedMonth,
-          day: selectedDay
-        },
-        hour: selectedHour,
-        completed: false,
-        accepted: false,
-        treatments: [],
-        patient: this.userService.currentUserId,
-        dentist: dentistId
-      };
-
-      this.appointmentService.createAppointment(app);
-    }
   }
 
   seeMedicalHistory(patientId) {
@@ -162,29 +168,37 @@ export class UsersListComponent implements OnInit {
   }
 
   occupiedHour(
-    hour: number,
-    year: number,
-    month: number,
-    day: number
-  ): boolean {
+    control: FormControl
+  ): {[s: string]: boolean} {
+
     let occupied = false;
     const dentistAppointments = this.auxAppointments.filter(
       appointment => appointment.dentist === this.dentistId
     );
 
+    console.log('Hola');
+    console.log('Selected date ', this.selectedDate);
+    console.log('Dentist appointments ', dentistAppointments);
+
     dentistAppointments.forEach(appointment => {
       if (
-        year === appointment.date.year &&
-        month === appointment.date.month &&
-        day === appointment.date.day
+        this.selectedDate.year === appointment.date.year &&
+        this.selectedDate.month === appointment.date.month &&
+        this.selectedDate.day === appointment.date.day
       ) {
-        if (hour === appointment.hour) {
+        if (control.value === appointment.hour) {
           occupied = true;
+          console.log(this.selectedDate);
         }
       }
     });
 
-    return occupied;
+    if (occupied) {
+      return { occupiedHour: true };
+    } else {
+      return null;
+    }
+
   }
 
   getDentistShift(start: number, end: number, id: string) {

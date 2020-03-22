@@ -99,7 +99,7 @@
                   <div class="modal-body text-center">
                     <form
                       [formGroup]="appointmentForm"
-                      (ngSubmit)="modifyAppointment(appointment.id)"
+                      (ngSubmit)="modifyAppointment(appointment.id, appointment)"
                     >
                       <div class="form-group">
                         <div>
@@ -141,7 +141,7 @@
                         <label for="hour" class="d-block">Hora de la cita</label>
                         <input type="text" class="w-50" formControlName="hour" class="form-control form-field"/>
                         <span *ngIf="!appointmentForm.get('hour').valid && appointmentForm.get('hour').touched" class="help-block error">
-                          <span *ngIf="appointmentForm.get('hour').errors['required']">El campo es obligatorio</span>
+                          <span *ngIf="appointmentForm.get('hour').errors['occupiedHour']">Horario ocupado</span>
                           <span *ngIf="appointmentForm.get('hour').errors['invalidHour']">Hora no laboral</span>
                         </span>
                       </div>
@@ -159,7 +159,7 @@
                     <button
                       type="submit"
                       class="btn btn-primary"
-                      (click)="modifyAppointment(appointment.id, appointment.dentist)"
+                      (click)="modifyAppointment(appointment.id, appointment)"
                       [disabled]="!appointmentForm.valid"
                       data-dismiss="modal"
                     >

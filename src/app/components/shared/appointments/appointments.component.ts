@@ -18,9 +18,17 @@ export class AppointmentsComponent implements OnInit {
   currentUser: User;
   appointmentList = [];
   appointmentForm: FormGroup;
-  minDate;
+  today = new Date();
+  minDate = new NgbDate(
+    this.today.getFullYear(),
+    this.today.getMonth(),
+    this.today.getDate()
+  );
   start = 8;
   end = 16;
+  auxAppointments = [];
+  selectedDate;
+  dentistId;
 
   constructor(
     private userService: UserService,
@@ -33,24 +41,19 @@ export class AppointmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const today = new Date();
-    this.minDate = new NgbDate(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    );
+    this.selectedDate = this.minDate;
 
     this.appointmentForm = new FormGroup({
-      date: new FormControl(this.minDate, [
-        Validators.required,
-        this.invalidDate.bind(this)
-      ]),
-      hour: new FormControl('', [
-        Validators.required,
-        Validators.min(this.start),
-        Validators.max(this.end)
-      ])
+      date: new FormControl(this.minDate, [ Validators.required, this.invalidDate.bind(this)]),
+      hour: new FormControl('', [Validators.required, this.invalidHour.bind(this), this.occupiedHour.bind(this)])
     });
+
+    this.appointmentForm.get('date').valueChanges.subscribe(
+      x => {
+        this.appointmentForm.get('hour').patchValue('');
+        this.selectedDate = x;
+      }
+    );
 
     // this.appointmentService.getAll().then(r => {
     //   console.log(r);
@@ -76,7 +79,7 @@ export class AppointmentsComponent implements OnInit {
         } as Appointment;
       });
 
-      console.log(this.appointmentList);
+      this.auxAppointments = this.appointmentList;
       this.appointmentService.appointmentsList = this.appointmentList;
 
       if (this.currentUser.type === 'patient') {
@@ -108,9 +111,11 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentService.acceptAppointment(appointmentId);
   }
 
-  modifyAppointment(id) {
+  modifyAppointment(id, appointment) {
+
     console.log(this.appointmentForm);
     this.appointmentService.updateAppointment(this.appointmentForm.value.date, this.appointmentForm.value.hour, id);
+
   }
 
   deleteAppointment(id) {
@@ -123,16 +128,21 @@ export class AppointmentsComponent implements OnInit {
     this.router.navigate(['/patient', appointment.patient, 'consult', id], { relativeTo: this.route });
   }
 
-  getDentistShift(start: number, end: number) {
-    this.start = start;
-    this.end = end;
-  }
-
   patchValues(appointment: Appointment) {
-    this.appointmentForm.patchValue(appointment);
+
+    if (this.calculateHourDifference(appointment)) {
+      this.appointmentForm.patchValue(appointment);
+      this.dentistId = appointment.dentist;
+      this.start = this.getUser(this.dentistId).shift[0];
+      this.end = this.getUser(this.dentistId).shift[1];
+    } else {
+      window.alert('ACCIÓN INVÁLIDA: restan 6 horas o menos para la cita');
+    }
+
   }
 
   getUser(id): any {
+    // tslint:disable-next-line: no-shadowed-variable
     const user = this.userService.userList.find(user => user.id === id);
     return user;
   }
@@ -145,8 +155,67 @@ export class AppointmentsComponent implements OnInit {
     return this.getUser(id).user;
   }
 
-  // getUserData(userId): User {
-  //   return this.userService.getUserData(userId);
-  // }
+  invalidHour(control: FormControl): { [s: string]: boolean } {
+    if (control.value < this.start || this.end < control.value) {
+      return { invalidHour: true };
+    } else {
+      return null;
+    }
+  }
+
+  occupiedHour(
+    control: FormControl
+  ): {[s: string]: boolean} {
+
+    let occupied = false;
+    const dentistAppointments = this.auxAppointments.filter(
+      appointment => appointment.dentist === this.dentistId
+    );
+
+    console.log('Hola');
+    console.log('Selected date ', this.selectedDate);
+    console.log('Dentist appointments ', dentistAppointments);
+
+    dentistAppointments.forEach(appointment => {
+      if (
+        this.selectedDate.year === appointment.date.year &&
+        this.selectedDate.month === appointment.date.month &&
+        this.selectedDate.day === appointment.date.day
+      ) {
+        if (control.value === appointment.hour) {
+          occupied = true;
+          console.log(this.selectedDate);
+        }
+      }
+    });
+
+    if (occupied) {
+      return { occupiedHour: true };
+    } else {
+      return null;
+    }
+
+  }
+
+  calculateHourDifference(appointment): boolean {
+    const today = new Date();
+    const currentHour = today.getHours();
+    console.log(today);
+
+    if (appointment.date.year === today.getFullYear() &&
+        appointment.date.month === today.getMonth() &&
+        appointment.date.day === today.getDate()) {
+
+          if ((currentHour - appointment.hour) >= 6) {
+            return false;
+          } else {
+            return true;
+          }
+
+    } else {
+      return true;
+    }
+
+  }
 
 }
