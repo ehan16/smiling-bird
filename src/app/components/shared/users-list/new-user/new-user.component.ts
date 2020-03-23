@@ -83,8 +83,6 @@ export class NewUserComponent implements OnInit {
             this.router.navigate(['../'], { relativeTo: this.route });
           }
 
-          this.auth.signOut();
-
         }, error => {
           console.log(error);
           window.alert(error);

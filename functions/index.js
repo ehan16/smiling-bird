@@ -28,8 +28,8 @@ const {SENDER_EMAIL,SENDER_PASSWORD}= process.env;
 const transport = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-        user: SENDER_EMAIL,
-        pass: SENDER_PASSWORD
+        user: 'smiling.bird.clinic@gmail.com',
+        pass: 'SmilingBirdOdiaAqui'
     }
 })
 
@@ -47,6 +47,6 @@ exports.mail = functions.firestore.document('alreadymademail/{docId}').onCreate(
             subject: title,
             text: message
         })
-        .then(r => r)
+        .then(r => console.log(r))
         .catch(e => e);
     }
