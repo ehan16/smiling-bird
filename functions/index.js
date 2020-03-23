@@ -35,16 +35,17 @@ const transport = nodemailer.createTransport({
 
 exports.mail = functions.firestore.document('alreadymademail/{docId}').onCreate((snap, context) => {
         const email = snap.data().email
-        const name = snap.data().name
-        return sendMail(email, name)
+        const title = snap.data().title
+        const message = snap.data().message
+        return sendMail(email, title, message)
     });
 
-    function sendMail(email, name){
+    function sendMail(email, title, message){
         return transport.sendMail({
             from: 'smiling.bird.clinic@gmail.com',
             to: email,
-            subject: "holi",
-            text: "dame una dona ahi pueh"
+            subject: title,
+            text: message
         })
         .then(r => r)
         .catch(e => e);
