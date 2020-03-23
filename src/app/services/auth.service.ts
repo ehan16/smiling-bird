@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { FirestoreService } from './firestore.service';
-import { first, take } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -13,21 +12,24 @@ export  class  AuthService {
 
   user: any;
   id: any;
-  currentUser;
+  currentUser: User;
 
-  constructor(private afAuth: AngularFireAuth,
-              private router: Router,
-              private firestoreService: FirestoreService) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private router: Router,
+    private firestoreService: FirestoreService
+  ) {
+    console.log('auth init');
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
         this.id = user.uid;
-        this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
-          (e: User) => {
-            this.currentUser = e;
-            console.log('user id is ', this.id, 'and the user is ', this.currentUser);
-          }
-        );
+        // this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
+        //   (e: User) => {
+        //     this.currentUser = e;
+        //     console.log('user id is ', this.id, 'and the user is ', this.currentUser);
+        //   }
+        // );
         localStorage.setItem('user', JSON.stringify(this.user));
       } else {
         localStorage.setItem('user', null);
@@ -36,9 +38,28 @@ export  class  AuthService {
 
   }
 
-  getUserData(id) {
-    // return this.firestoreService.getValue(this.id, 'users').pipe( first() ).toPromise();
-    return this.firestoreService.getSnapshot(id, 'users').pipe(take(1));
+  getUser(userId) {
+    this.firestoreService.get(userId, 'users').subscribe(
+      (user) => {
+        this.currentUser = {
+          name: user.data().name,
+          user: user.data().user,
+          identification: user.data().identification,
+          gender: user.data().gender,
+          type: user.data().type,
+          birth: {
+            year: user.data().date.year,
+            month: user.data().date.month,
+            day: user.data().date.day
+          },
+          enable: user.data().enable,
+          debt: user.data().debt,
+          shift: [ user.data().shift[0], user.data().shift[1] ],
+          comission: user.data().comission,
+          id: userId
+        };
+      }
+    );
   }
 
   doRegister(email, password) {
@@ -47,6 +68,10 @@ export  class  AuthService {
         firebase.auth().createUserWithEmailAndPassword(email, password).then(
           res => {
             resolve(res);
+            // this.afAuth.auth.signOut().then(() => {
+            //   localStorage.removeItem('user');
+            //   this.router.navigate(['/visitor']);
+            // });
           }, error => reject(error));
       });
   }
@@ -71,7 +96,7 @@ export  class  AuthService {
 
       localStorage.removeItem('user');
       console.log('Signed out');
-      window.alert('Ha cerrado sesion');
+      // window.alert('Ha cerrado sesion');
       this.router.navigate(['/visitor']);
 
     });

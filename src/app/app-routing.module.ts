@@ -44,16 +44,16 @@ const appRoutes: Routes = [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
     {path: 'patient-list/new-patient', component: NewUserComponent},
-    {path: 'patient/:patientId/medical-record', component: MedicalHistoryComponent},
-    {path: 'patient/:patientId/consult/:consultId', component: ConsultDetailComponent},
-    {path: 'patient/:patientId/consult/:consultId/edit', component: ConsultEditComponent},
-    {path: 'patient/:patientId/message', component: MessageComponent},
+    {path: 'patient-list/:patientId/medical-record', component: MedicalHistoryComponent},
+    {path: 'patient-list/:patientId/consult/:consultId', component: ConsultDetailComponent},
+    {path: 'patient-list/:patientId/consult/:consultId/edit', component: ConsultEditComponent},
+    {path: 'patient-list/:patientId/message', component: MessageComponent},
   ]},
   {path: 'admin/:id', component: AdminViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
     {path: 'user-edit/:editedId', component: UserEditComponent},
-    {path: 'new-user', component: NewUserComponent}
+    {path: 'user-list/new-user', component: NewUserComponent}
   ]},
   {path: ':userType/:id/profile', component: ProfileComponent, canActivate: [AuthGuard], children: [
     {path: '', component: ProfileDetailComponent},

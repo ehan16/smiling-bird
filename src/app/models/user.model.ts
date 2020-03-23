@@ -11,10 +11,9 @@ export class User {
   };
   public gender: string;
   public enable: boolean;
-  public appointment = []; // Para el historial medico se filtran los completados y asi
   public debt: number;
   public comission: number;
   public shift: number[];
- public id: any;
+  public id: any;
 
 }

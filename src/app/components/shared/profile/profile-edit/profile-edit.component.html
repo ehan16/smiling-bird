@@ -69,7 +69,7 @@
             class="btn btn-outline-secondary calendar"
             (click)="d.toggle()"
             type="button"
-          ></button>
+          ><i class="fas fa-calendar"></i></button>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
 
     <span *ngIf="currentUser.type === 'dentist'">
       <label for="shift" class="text-uppercase font-weight-bold">Horario</label>
-      <div class="d-flex">
+      <div class="form-hour">
         <div class="form-group d-flex w-50">
           <label
             for="entrance"
@@ -99,8 +99,8 @@
             type="number"
             id="entrance"
             formControlName="start"
-            class="form-control form-field my-2 mr-5"
-            [(ngModel)]="minHour"
+            class="form-control form-field my-2 mr-3"
+            [(ngModel)]="start"
           />
         </div>
         <div class="form-group d-flex w-50">
@@ -111,23 +111,50 @@
             type="number"
             id="exit"
             formControlName="end"
-            [(ngModel)]="maxHour"
-            class="form-control form-field my-2"
+            [(ngModel)]="end"
+            class="form-control form-field my-2 mr-3"
           />
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="text-uppercase font-weight-bold"
-          >Métodos de pago</label
-        >
-        <input
-          formControlName="payment-methods"
-          class="form-control form-field"
-        />
+      <div>
+        <label class="text-uppercase font-weight-bold">Métodos de pago</label>
+        <div class="row mx-3">
 
+          <!-- <div class="col-sm-6 custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input">
+            <label class="custom-control-label">Paypal</label>
+          </div> -->
+          <div class="col-12 form-check d-inline">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label mr-5">Paypal</label>
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">Zelle</label>
+          </div>
+          <div class="col-sm-6 form-check">
+          </div>
 
+          <hr>
+
+          <div formArrayName="bankAccounts" *ngFor="let bankAccount of BankAccounts.controls; let i = index">
+            <div [formGroupName]="i" class="banks my-3">
+              <input type="text" formControlName="bank" placeholder="Nombre del banco" class="form-control form-field form-bank">
+              <input type="number" formControlName="account" placeholder="Número de cuenta" class="form-control form-field">
+              <button type="button" class="btn btn-delete" (click)="deleteBankAccount(i)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success btn-block my-4" (click)="createBankAccount()">
+            Añadir <i class="fas fa-plus mx-3"></i>
+          </button>
+
+        </div>
       </div>
+
+
+
     </span>
 
     <button

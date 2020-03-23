@@ -134,7 +134,7 @@ export class UsersListComponent implements OnInit {
   }
 
   seeMedicalHistory(patientId) {
-    this.router.navigate(['../', 'patient', patientId, 'medical-record'], {
+    this.router.navigate([patientId, 'medical-record'], {
       relativeTo: this.route
     });
   }
@@ -149,7 +149,7 @@ export class UsersListComponent implements OnInit {
 
   newUser() {
     if (this.currentUser.type === 'admin') {
-      this.router.navigate(['../', 'new-user'], { relativeTo: this.route });
+      this.router.navigate(['new-user'], { relativeTo: this.route });
     } else {
       this.router.navigate(['new-patient'], { relativeTo: this.route });
     }
@@ -183,10 +183,6 @@ export class UsersListComponent implements OnInit {
     const dentistAppointments = this.auxAppointments.filter(
       appointment => appointment.dentist === this.dentistId
     );
-
-    console.log('Hola');
-    console.log('Selected date ', this.selectedDate);
-    console.log('Dentist appointments ', dentistAppointments);
 
     dentistAppointments.forEach(appointment => {
       if (

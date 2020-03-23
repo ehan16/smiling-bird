@@ -24,7 +24,7 @@ export class ConsultEditComponent implements OnInit {
     //   treatments: new FormArray([])
     // });
     this.consultForm = this.formBuilder.group({
-      date: ['', [Validators.required,this.invalidDate.bind(this)]],
+      date: ['', [Validators.required, this.invalidDate.bind(this)]],
       hour: ['', [Validators.required, Validators.min(1)]],
       treatments: this.formBuilder.array([this.createTreatment()])
     });

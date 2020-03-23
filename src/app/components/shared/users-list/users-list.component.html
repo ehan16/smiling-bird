@@ -180,6 +180,8 @@
       </div>
     </div>
 
+    <!-- Another list -->
+
     <ng-template #listView>
 
       <div class="row">
@@ -198,10 +200,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of userList | filter: 'name':searchName">
-            <th scope="row">{{ user.name }}</th>
-            <td>{{ user.identification }}</td>
-            <td>{{ user.user }}</td>
-            <td class="text-capitalize">{{ user.type }}</td>
+            <th scope="row">{{ user?.name }}</th>
+            <td>{{ user?.identification }}</td>
+            <td>{{ user?.user }}</td>
+            <td class="text-capitalize">{{ user?.type }}</td>
             <td class="text-center">
               <a
                 *ngIf="currentUser.type === 'dentist'"

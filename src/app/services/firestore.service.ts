@@ -13,6 +13,14 @@ export class FirestoreService {
     return this.firestore.collection(collection).add(data);
   }
 
+  public setValue(documentId: string, data: any, collection: string) {
+    this.firestore.collection(collection).doc(documentId).set(data);
+  }
+
+  public get(documentId: string, collection: string) {
+    return this.firestore.collection(collection).doc(documentId).get();
+  }
+
   public getValue(documentId: string, collection: string) {
     return this.firestore.collection(collection).doc(documentId).valueChanges();
   }
@@ -29,8 +37,5 @@ export class FirestoreService {
     return this.firestore.collection(collection).doc(documentId).set(data , { merge: true});
   }
 
-  public setValue(documentId: string, data: any, collection: string) {
-    this.firestore.collection(collection).doc(documentId).set(data);
-  }
 
 }

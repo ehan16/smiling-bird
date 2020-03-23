@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { PaymentAccounts } from 'src/app/models/payment-accounts.model';
 
 @Component({
   selector: 'app-profile-edit',
@@ -14,35 +15,90 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ProfileEditComponent implements OnInit {
 
   editForm: FormGroup;
-  dentistEditForm: FormGroup;
   currentUser: User;
+  dentistExtra: PaymentAccounts;
   todayDate = new Date();
-  maxHour: number;
-  minHour: number;
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
   start = 8;
   end = 16;
+  paypal = true;
+  zelle = true;
 
-  constructor(private userService: UserService, private firestore: FirestoreService, private auth: AuthService) {
+  constructor(
+    private userService: UserService,
+    private firestore: FirestoreService,
+    private auth: AuthService,
+    private formBuilder: FormBuilder
+    ) {
     this.currentUser = this.userService.currentUser;
+    console.log(this.currentUser);
     this.start = this.currentUser.shift[0];
     this.end = this.currentUser.shift[1];
+
+    if (this.currentUser.type === 'dentist') {
+      this.firestore.get(this.auth.id, 'dentist-extra').subscribe(
+        (accounts) => {
+          this.dentistExtra = {
+            zelle: accounts.data().zelle,
+            paypal: accounts.data().zelle,
+            bankAccounts: accounts.data().bankAccounts
+          };
+
+          console.log(this.dentistExtra);
+          this.paypal = this.dentistExtra.paypal;
+          this.zelle = this.dentistExtra.zelle;
+
+        }
+      );
+    }
 
     console.log('start ', this.start, 'end ', this.end);
   }
 
   ngOnInit() {
 
-    this.editForm = new FormGroup({
-      name: new FormControl(this.currentUser.name, Validators.required),
-      identification: new FormControl(this.currentUser.identification, Validators.required),
-      birthDate: new FormControl(this.currentUser.birth , Validators.required),
-      gender: new FormControl(this.currentUser.gender, Validators.required),
-      start: new FormControl(this.start, [Validators.required, this.invalidHour.bind(this), Validators.max(this.maxHour)]),
-      end: new FormControl(this.end, [Validators.required, this.invalidHour.bind(this), Validators.min(this.minHour)]),
+    this.editForm = this.formBuilder.group({
+      name: [this.currentUser.name, Validators.required],
+      identification: [this.currentUser.identification, Validators.required],
+      birthDate: [this.currentUser.birth , Validators.required],
+      gender: [this.currentUser.gender, Validators.required],
+      start: [this.start, [Validators.required, this.invalidHour.bind(this)]],
+      end: [this.end, [Validators.required, this.invalidHour.bind(this)]],
+      bankAccounts: this.formBuilder.array([]),
+      paypal: this.paypal,
+      zelle: this.zelle,
     });
 
+    // if (this.currentUser.type === 'dentist') {
+    //   this.editForm.get('bankAccounts').patchValue(this.dentistExtra.bankAccounts);
+    // }
+
+    // this.editForm = new FormGroup({
+    //   name: new FormControl(this.currentUser.name, Validators.required),
+    //   identification: new FormControl(this.currentUser.identification, Validators.required),
+    //   birthDate: new FormControl(this.currentUser.birth , Validators.required),
+    //   gender: new FormControl(this.currentUser.gender, Validators.required),
+    //   start: new FormControl(this.start, [Validators.required, this.invalidHour.bind(this), Validators.max(this.maxHour)]),
+    //   end: new FormControl(this.end, [Validators.required, this.invalidHour.bind(this), Validators.min(this.minHour)]),
+    // });
+
+  }
+
+  createBankAccount() {
+    const bankAccount = (this.editForm.get('bankAccounts') as FormArray);
+    bankAccount.push(this.formBuilder.group({
+      bank: ['', Validators.required],
+      account: ['', [Validators.required, Validators.min(0)]]
+    }));
+  }
+
+  deleteBankAccount(index) {
+    (this.editForm.get('bankAccounts') as FormArray).removeAt(index);
+  }
+
+  get BankAccounts() {
+    return this.editForm.get('bankAccounts') as FormArray;
   }
 
   onEdit() {

@@ -18,7 +18,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
-    console.log(this.currentUser);
   }
 
   onEditMode() {
@@ -27,15 +26,16 @@ export class ProfileComponent implements OnInit {
     if (this.editMode) {
       this.router.navigate(['edit'], {relativeTo: this.route});
     } else {
-      // this.router.navigate(['../'], {relativeTo: this.route});
       this.router.navigate([this.currentUser.type, this.auth.id, 'profile']);
+      // this.router.navigate(['../'], { relativeTo: this.route });
     }
 
   }
 
   logOut() {
-  this.auth.signOut();
-  this.userService.currentUser = null;
+    this.auth.signOut();
+    window.alert('Ha cerrado sesion');
+    this.userService.currentUser = null;
   }
 
 }

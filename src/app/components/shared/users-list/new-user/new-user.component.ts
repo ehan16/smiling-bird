@@ -23,13 +23,13 @@ export class NewUserComponent implements OnInit {
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 70, this.todayDate.getMonth() + 1, this.todayDate.getDate());
 
   constructor(private userService: UserService, private auth: AuthService, private router: Router, private route: ActivatedRoute) {
-    // this.currentUser = this.userService.currentUser;
-    this.userService.getLoggedUserData().then(
-      (e: User) => {
-        console.log('searched user: ', e);
-        this.currentUser = e;
-      }
-    );
+    this.currentUser = this.userService.currentUser;
+    // this.userService.getLoggedUserData().then(
+    //   (e: User) => {
+    //     console.log('searched user: ', e);
+    //     this.currentUser = e;
+    //   }
+    // );
   }
 
   ngOnInit() {
@@ -78,10 +78,12 @@ export class NewUserComponent implements OnInit {
           this.userService.createUser(user, res.user.uid);
 
           if (this.currentUser.type === 'dentist') {
-            this.router.navigate(['/dentist', this.currentUser.id, 'patient', res.user.uid, 'medical-record']);
+            this.router.navigate(['../', res.user.uid, 'medical-record'], { relativeTo: this.route });
           } else {
-            this.router.navigate(['../', 'user-list'], { relativeTo: this.route });
+            this.router.navigate(['../'], { relativeTo: this.route });
           }
+
+          this.auth.signOut();
 
         }, error => {
           console.log(error);
