@@ -131,7 +131,9 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  sendMessage(patient: User, patientId) {}
+  sendMessage(patient: User, patientId) {
+    this.router.navigate(['../', 'patient',patientId,'message'], { relativeTo: this.route });
+  }
 
   editUser(userId) {
     this.router.navigate(['../', 'user-edit', userId], {
