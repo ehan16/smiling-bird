@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 
-// const {SENDER_EMAIL,SENDER_PASSWORD}= process.env;
+const {SENDER_EMAIL,SENDER_PASSWORD}= process.env;
 
 // exports.sendEmailNotification = funtion.firestore.document('alreadymademail/{docId}')
 // onabort.Create((snap,ctx)=>{
@@ -18,17 +18,17 @@ const nodemailer = require('nodemailer');
 //     });
 //     autData.sendMail({
 //          from :'smiling.bird.clinic@gmail.com',
-//         // to: 
-//         // subject: 
-//         // text: 
-//         // html: 
+//         // to:
+//         // subject:
+//         // text:
+//         // html:
 //     }).then(res=>console.log('se mando')).catch(err=>console.log(err));
 
 // });
 const transport = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-        user: SERDER_EMAIL,
+        user: SENDER_EMAIL,
         pass: SENDER_PASSWORD
     }
 })

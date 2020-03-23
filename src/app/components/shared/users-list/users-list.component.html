@@ -148,7 +148,6 @@
                             <label for="hour" class="d-block">Hora de la cita</label>
                             <input type="text" class="w-25" formControlName="hour" class="form-control form-field">
                             <span *ngIf="!newAppointment.get('hour').valid && newAppointment.get('hour').touched" class="help-block error">
-                              <!-- <span *ngIf="newAppointment.get('hour').errors['required']">El campo es obligatorio</span> -->
                               <span *ngIf="newAppointment.get('hour').errors['invalidHour']">Hora no laboral</span>
                               <span *ngIf="newAppointment.get('hour').errors['occupiedHour']">Horario ocupado</span>
                             </span>
@@ -165,7 +164,7 @@
                         >
                           Cerrar
                         </button>
-                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)" [disabled]="!newAppointment.valid" data-dismiss="modal">
+                        <button type="submit" class="btn btn-primary" (click)="addAppointment(user.id)" [disabled]="!newAppointment.get('hour').valid" data-dismiss="modal">
                           Aceptar
                         </button>
                       </div>

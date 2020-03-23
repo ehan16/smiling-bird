@@ -102,11 +102,15 @@
                       (ngSubmit)="modifyAppointment(appointment.id, appointment)"
                     >
                       <div class="form-group">
-                        <div>
-                          <label class="font-weight-bold d-block"
-                            >Paciente:
-                          </label>
+                        <div *ngIf="currentUser.type === 'dentist'">
+                          <label class="font-weight-bold d-block">Paciente:</label>
                           <span> {{ getUserName(appointment?.patient) }}</span>
+                        </div>
+                        <div *ngIf="currentUser.type === 'patient'">
+                          <label class="font-weight-bold d-block">Odontólogo:</label>
+                          <span> {{ getUserName(appointment?.dentist) }}</span>
+                          <label class="font-weight-bold d-block mt-3">Horario:</label>
+                          <span>{{ getUserShift(appointment?.dentist)[0] }}  -  {{ getUserShift(appointment?.dentist)[1] }}</span>
                         </div>
                       </div>
                       <hr />
@@ -160,7 +164,7 @@
                       type="submit"
                       class="btn btn-primary"
                       (click)="modifyAppointment(appointment.id, appointment)"
-                      [disabled]="!appointmentForm.valid"
+                      [disabled]="!appointmentForm.get('hour').valid"
                       data-dismiss="modal"
                     >
                       Aceptar

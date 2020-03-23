@@ -7,6 +7,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-appointments',
@@ -22,26 +23,33 @@ export class AppointmentsComponent implements OnInit {
   minDate = new NgbDate(
     this.today.getFullYear(),
     this.today.getMonth(),
-    this.today.getDate()
+    this.today.getDate() + 1
   );
   start = 8;
   end = 16;
   auxAppointments = [];
-  selectedDate;
+  selectedDate = this.minDate;
   dentistId;
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private appointmentService: AppointmentService,
     private router: Router,
     private route: ActivatedRoute,
     private firestore: FirestoreService
   ) {
-    this.currentUser = this.userService.currentUser;
+    // this.currentUser = this.userService.currentUser;
+    // this.currentUser = this.userService.getCurrentUserData();
+    this.authService.getUserData().then(
+      (e: User) => {
+        console.log('searched user: ', e);
+        this.currentUser = e;
+      }
+    );
   }
 
   ngOnInit() {
-    this.selectedDate = this.minDate;
 
     this.appointmentForm = new FormGroup({
       date: new FormControl(this.minDate, [ Validators.required, this.invalidDate.bind(this)]),
@@ -80,7 +88,7 @@ export class AppointmentsComponent implements OnInit {
       });
 
       this.auxAppointments = this.appointmentList;
-      this.appointmentService.appointmentsList = this.appointmentList;
+      // this.appointmentService.appointmentsList = this.appointmentList;
 
       if (this.currentUser.type === 'patient') {
         this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
@@ -89,8 +97,6 @@ export class AppointmentsComponent implements OnInit {
         this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
         this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
       }
-
-      console.log('Filtered list is ', this.appointmentList);
 
     });
 
@@ -114,7 +120,7 @@ export class AppointmentsComponent implements OnInit {
   modifyAppointment(id, appointment) {
 
     console.log(this.appointmentForm);
-    this.appointmentService.updateAppointment(this.appointmentForm.value.date, this.appointmentForm.value.hour, id);
+    this.appointmentService.updateAppointment(this.appointmentForm.value.date, this.appointmentForm.value.hour, appointment, id);
 
   }
 
@@ -149,6 +155,10 @@ export class AppointmentsComponent implements OnInit {
 
   getUserName(id): string {
     return this.getUser(id).name;
+  }
+
+  getUserShift(id): number[] {
+    return this.getUser(id).shift;
   }
 
   getUserEmail(id): string {

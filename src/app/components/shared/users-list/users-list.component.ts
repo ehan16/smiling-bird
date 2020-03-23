@@ -26,7 +26,7 @@ export class UsersListComponent implements OnInit {
   minDate = new NgbDate(
     this.today.getFullYear(),
     this.today.getMonth(),
-    this.today.getDate()
+    this.today.getDate() + 1
   );
   selectedDate = this.minDate;
 
@@ -36,7 +36,13 @@ export class UsersListComponent implements OnInit {
     private route: ActivatedRoute,
     private appointmentService: AppointmentService
   ) {
-    this.currentUser = this.userService.currentUser;
+    // this.currentUser = this.userService.currentUser;
+    this.userService.getLoggedUserData().then(
+      (e: User) => {
+        console.log('searched user: ', e);
+        this.currentUser = e;
+      }
+    );
   }
 
   ngOnInit() {

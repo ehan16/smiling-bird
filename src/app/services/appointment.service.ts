@@ -38,16 +38,23 @@ export class AppointmentService {
     return this.af.collection('appointments').doc(id).delete();
   }
 
-  updateAppointment(newDay: any, newHour: number, appointmentId) {
-    this.firestore.update(
-      appointmentId,
-      [
-        { day: newDay },
-        { hour: newHour}
+  updateAppointment(newDate: any, newHour: number, oldAppointment, appointmentId) {
 
-      ],
-      'appointments'
-    );
+    const appointment = {
+      accepted: oldAppointment.accepted,
+      completed: oldAppointment.completed,
+      hour: newHour,
+      patient: oldAppointment.patient,
+      dentist: oldAppointment.dentist,
+      treatments: oldAppointment.treatments,
+      date: {
+        year: newDate.year,
+        month: newDate.month,
+        day: newDate.day
+      }
+    };
+
+    this.firestore.setValue(appointmentId, appointment, 'appointments');
   }
 
   startAppointment(id) {

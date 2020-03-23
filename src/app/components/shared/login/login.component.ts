@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm);
     this.auth.signInWithEmail( this.loginForm.value.username, this.loginForm.value.password);
     this.userService.logUser(this.auth.id);
-    this.loginForm.reset();
+    // this.loginForm.reset();
   }
 
 }

@@ -16,14 +16,20 @@ export class NewUserComponent implements OnInit {
   currentUser: User;
   createForm: FormGroup;
   newType = 'patient';
-  maxHour: number = 13;
-  minHour: number = 9;
+  maxHour = 13;
+  minHour = 9;
   todayDate = new Date();
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 70, this.todayDate.getMonth() + 1, this.todayDate.getDate());
 
   constructor(private userService: UserService, private auth: AuthService, private router: Router, private route: ActivatedRoute) {
-    this.currentUser = this.userService.currentUser;
+    // this.currentUser = this.userService.currentUser;
+    this.userService.getLoggedUserData().then(
+      (e: User) => {
+        console.log('searched user: ', e);
+        this.currentUser = e;
+      }
+    );
   }
 
   ngOnInit() {
