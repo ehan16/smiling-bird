@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { FirestoreService } from './firestore.service';
-import { first } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -18,29 +18,27 @@ export  class  AuthService {
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
               private firestoreService: FirestoreService) {
-
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
         this.id = user.uid;
-        console.log('user', this.user, 'uid', this.id);
         this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
           (e: User) => {
             this.currentUser = e;
-            console.log(e);
             console.log('user id is ', this.id, 'and the user is ', this.currentUser);
           }
         );
-        localStorage.setItem('userUID', JSON.stringify(this.user));
+        localStorage.setItem('user', JSON.stringify(this.user));
       } else {
-        localStorage.setItem('userUID', null);
+        localStorage.setItem('user', null);
       }
     });
 
   }
 
-  getUserData() {
-    return this.firestoreService.getValue(this.id, 'users').pipe( first() ).toPromise();
+  getUserData(id) {
+    // return this.firestoreService.getValue(this.id, 'users').pipe( first() ).toPromise();
+    return this.firestoreService.getSnapshot(id, 'users').pipe(take(1));
   }
 
   doRegister(email, password) {
@@ -57,7 +55,7 @@ export  class  AuthService {
 
     return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(
       (result) => {
-        console.log('result is ', result);
+        this.id = result.user.uid;
         console.log('Log in successful');
         // this.router.navigate(['/home']);
       }
@@ -71,7 +69,7 @@ export  class  AuthService {
   signOut() {
     return this.afAuth.auth.signOut().then(() => {
 
-      localStorage.removeItem('userUID');
+      localStorage.removeItem('user');
       console.log('Signed out');
       window.alert('Ha cerrado sesion');
       this.router.navigate(['/visitor']);

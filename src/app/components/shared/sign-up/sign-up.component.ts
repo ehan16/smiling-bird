@@ -47,7 +47,6 @@ export class SignUpComponent implements OnInit {
               day: 12
             },
             enable: true,
-            appointment: [],
             debt: 0,
             shift: [ 10, 14 ],
             comission: 0

@@ -39,14 +39,14 @@ export class AppointmentsComponent implements OnInit {
     private route: ActivatedRoute,
     private firestore: FirestoreService
   ) {
-    // this.currentUser = this.userService.currentUser;
+    this.currentUser = this.userService.currentUser;
     // this.currentUser = this.userService.getCurrentUserData();
-    this.authService.getUserData().then(
-      (e: User) => {
-        console.log('searched user: ', e);
-        this.currentUser = e;
-      }
-    );
+    // this.authService.getUserData().then(
+    //   (e: User) => {
+    //     console.log('searched user: ', e);
+    //     this.currentUser = e;
+    //   }
+    // );
   }
 
   ngOnInit() {

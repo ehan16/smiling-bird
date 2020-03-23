@@ -70,7 +70,6 @@ export class NewUserComponent implements OnInit {
               day: this.createForm.value.date.day
             },
             enable: true,
-            appointment: [],
             debt: 0,
             shift: [ this.createForm.value.start, this.createForm.value.end ],
             comission: this.createForm.value.comission,

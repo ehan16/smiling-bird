@@ -68,7 +68,6 @@ export class UserEditComponent implements OnInit {
       },
       shift: [this.editedUser.shift[0], this.editedUser.shift[1]],
       enable: this.editedUser.enable,
-      appointment: this.editedUser.appointment,
       debt: this.editedUser.debt,
       comission: this.editForm.value.comission
     };

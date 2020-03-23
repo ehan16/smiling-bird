@@ -21,22 +21,26 @@ export class ProfileEditComponent implements OnInit {
   minHour: number;
   maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
   minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
+  start = 8;
+  end = 16;
 
   constructor(private userService: UserService, private firestore: FirestoreService, private auth: AuthService) {
     this.currentUser = this.userService.currentUser;
+    this.start = this.currentUser.shift[0];
+    this.end = this.currentUser.shift[1];
+
+    console.log('start ', this.start, 'end ', this.end);
   }
 
   ngOnInit() {
-
-    const birth: NgbDate = new NgbDate(this.currentUser.birth.year, this.currentUser.birth.month, this.currentUser.birth.day);
 
     this.editForm = new FormGroup({
       name: new FormControl(this.currentUser.name, Validators.required),
       identification: new FormControl(this.currentUser.identification, Validators.required),
       birthDate: new FormControl(this.currentUser.birth , Validators.required),
       gender: new FormControl(this.currentUser.gender, Validators.required),
-      start: new FormControl(this.currentUser.shift[0], [Validators.required, this.invalidHour.bind(this), Validators.max(this.maxHour)]),
-      end: new FormControl(this.currentUser.shift[1], [Validators.required, this.invalidHour.bind(this), Validators.min(this.minHour)]),
+      start: new FormControl(this.start, [Validators.required, this.invalidHour.bind(this), Validators.max(this.maxHour)]),
+      end: new FormControl(this.end, [Validators.required, this.invalidHour.bind(this), Validators.min(this.minHour)]),
     });
 
   }
@@ -61,7 +65,6 @@ export class ProfileEditComponent implements OnInit {
         },
         shift: [this.editForm.value.start, this.editForm.value.end],
         enable: this.currentUser.enable,
-        appointment: this.currentUser.appointment,
         debt: this.currentUser.debt,
         comission: this.currentUser.comission
       };

@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Appointment } from 'src/app/models/appointment.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-users-list',
@@ -34,15 +35,16 @@ export class UsersListComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private authService: AuthService
   ) {
-    // this.currentUser = this.userService.currentUser;
-    this.userService.getLoggedUserData().then(
-      (e: User) => {
-        console.log('searched user: ', e);
-        this.currentUser = e;
-      }
-    );
+    this.currentUser = this.userService.currentUser;
+    // this.authService.getUserData().then(
+    //   (e: User) => {
+    //     console.log('searched user: ', e);
+    //     this.currentUser = e;
+    //   }
+    // );
   }
 
   ngOnInit() {

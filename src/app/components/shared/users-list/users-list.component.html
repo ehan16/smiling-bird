@@ -39,7 +39,7 @@
               [attr.aria-expanded]="false"
               [attr.aria-controls]="'user' + i"
             >
-              {{ user.name }}
+              {{ user?.name }}
             </button>
           </h5>
         </div>
@@ -55,11 +55,11 @@
               <img src="../../../../assets/extra/avatar.png" alt="avatar" />
             </div>
             <div class="col-sm-7 card-body ">
-              <p>Nombre: {{ user.name }}</p>
-              <p>Cédula: {{ user.identification }}</p>
-              <p>Correo: {{ user.user }}</p>
-              <p>{{ user.type | titlecase }}</p>
-              <p>Horario: {{ user.shift[0] }} - {{ user.shift[1] }}</p>
+              <p>Nombre: {{ user?.name }}</p>
+              <p>Cédula: {{ user?.identification }}</p>
+              <p>Correo: {{ user?.user }}</p>
+              <p>{{ user?.type | titlecase }}</p>
+              <p>Horario: {{ user?.shift[0] }} - {{ user?.shift[1] }}</p>
               <p>Lunes a Viernes</p>
 
               <div class="text-center">
@@ -110,9 +110,9 @@
                                 class="font-weight-bold d-block"
                                 >Odontólogo:
                               </label>
-                              <span> {{ user.name }}</span>
+                              <span> {{ user?.name }}</span>
                               <label class="font-weight-bold d-block mt-3">Horario:</label>
-                              <span>{{ user.shift[0] }}  -  {{ user.shift[1] }}</span>
+                              <span>{{ user?.shift[0] }}  -  {{ user?.shift[1] }}</span>
                             </div>
                           </div>
                           <hr>

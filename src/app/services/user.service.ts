@@ -4,7 +4,7 @@ import { FirestoreService } from './firestore.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
-import { first } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -18,6 +18,7 @@ export class UserService {
     private router: Router,
     private auth: AuthService
   ) {
+    console.log('user service init');
     this.firestore.getAll('users').subscribe(data => {
       this.userList = data.map(e => {
         return {
@@ -25,6 +26,9 @@ export class UserService {
           ...e.payload.doc.data()
         } as User;
       });
+
+
+
     });
 
     console.log(this.userList);
@@ -47,7 +51,8 @@ export class UserService {
   }
 
   getLoggedUserData() {
-    return this.firestore.getValue(this.auth.id, 'users').pipe( first() ).toPromise();
+    // return this.firestore.getValue(this.auth.id, 'users').pipe( first() ).toPromise();
+    return this.firestore.getSnapshot(this.auth.id, 'users').pipe(take(1));
   }
 
   getUserData(id): any {
