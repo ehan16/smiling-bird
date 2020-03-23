@@ -1,57 +1,78 @@
-<div class="row m-0 justify-content-center align-content-center pale-yellow px-sm-5">
-  <div class="message-Form w-75">
-    <div class="module">
-      <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+<div class="row m-0 justify-content-center align-content-center p-5 md-5 pale-yellow px-sm-5">
+<div class=".conteiner-fluid p-2 mt-5 w-75 rounded justify-content-center bg-info">
+  <div class="module m-3">
+    <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+
+      <div class=".container-fluid">
+        <p> Enviar mensaje a: </p>
+      </div>
         <div class="form-group">
-          <label for="name">Titulo del mensaje</label>
-          <input
-            type="text"
-            placeholder="La clinica Smiling bird"
-            id="name"
-            formControlName="name"
-            class="form-control form-field"
-          />
-          <span
-            *ngIf="
-              !messageForm.get('name').valid && messageForm.get('name').touched
-            "
-            class="help-block"
-          >
-            <span *ngIf="messageForm.get('name').errors['required']"
-              >El campo es obligatorio</span
-            >
-          </span>
+          <label for="Select">Elija su mensaje predeterminado </label>
+          <select class="form-control" id="Select">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
         </div>
+      <div class="form-group">
+        <label for="name">Titulo del mensaje</label>
+        <input type="text" placeholder="La clinica Smiling bird" id="name" formControlName="name"
+          class="form-control form-field" />
+        <span *ngIf="!messageForm.get('name').valid &&messageForm.get('name').touched" class="help-block">
+          <span *ngIf="messageForm.get('name').errors['required']">El campo es obligatorio</span>
+        </span>
+      </div>
 
-        <div class="form-group w-auto p-3">
-          <label for="name">Texto del mensaje</label>
-          <input
-            type="text"
-            placeholder="Mensaje"
-            id="name"
-            formControlName="name"
-            class="form-control form-field"
-          />
-          <span
-            *ngIf="
-              !messageForm.get('name').valid && messageForm.get('name').touched
-            "
-            class="help-block"
-          >
-            <span *ngIf="messageForm.get('name').errors['required']"
-              >El campo es obligatorio</span
-            >
-          </span>
-        </div>
+      <div class="form-group">
+        <label for="name">Texto del mensaje</label>
+        <textarea class="form-control  form-field" id="name" placeholder="Mensaje" formControlName="name" rows="3"></textarea>
+        <span *ngIf="!messageForm.get('name').valid && messageForm.get('name').touched" class="help-block">
+          <span *ngIf="messageForm.get('name').errors['required']">El campo es obligatorio</span>
+        </span>
+      </div>
 
-        <button
-          class="btn btn-block my-4 font-weight-bold"
-          type="submit"
-          [disabled]="!messageForm.valid"
-        >
-          Enviar
-        </button>
-      </form>
+    <div class="form-row align-items-center m-3">
+      <button class="col-auto btn btn-block my-4 font-weight-bold w-25 " type="submit"
+        [disabled]="!messageForm.valid">
+        Enviar
+      </button>
+      <button class="col-auto btn btn-block my-4 font-weight-bold ml-3  w-25" data-toggle="modal"
+        data-target="#NuevoPredeterminado" data-whatever="@getbootstrap" type="button">
+        crear
+      </button>
+              <div class="modal fade m-5" id="NuevoPredeterminado" tabindex="-1" role="dialog"
+                aria-labelledby="NuevoPredeterminado"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="NuevoPredeterminado">Nuevo mensaje predeterminado</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Titulo:</label>
+                          <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Mensaje:</label>
+                          <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
     </div>
+    </form>
   </div>
 </div>
