@@ -1,5 +1,10 @@
-.card-color{
-    background-color: rgb(243, 207, 139);
+.card-color {
+  background-color: rgb(243, 207, 139);
+}
+
+.card-style {
+  background-color: #fff5d9;
+  padding-bottom: 20px;
 }
 
 .btn-name {
@@ -8,48 +13,59 @@
 }
 
 .card-data {
-  background-color: rgb(255, 250, 184);
+  background-color: rgb(255, 251, 202);
+  border-radius: 25px;
 }
 
 .container {
-    position: relative;
+  position: relative;
+  padding: 0;
+}
 
-  }
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
 
-  .payment-image{
-      height: 214px;
-  }
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
 
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
+@media (max-width: 770px) {
   .image {
-    opacity: 1;
-    display: block;
-    width: 100%;
-    transition: .5s ease;
-    backface-visibility: hidden;
+    width: 20vw;
+    margin: auto;
   }
+}
 
-  .middle {
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
+@media (max-width: 575px) {
+  .image {
+    width: 65%;
+    margin: auto;
   }
-
-  .container:hover .image {
-    opacity: 0.3;
-  }
-
-  .container:hover .middle {
-    opacity: 1;
-  }
-
-  .text {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    padding: 16px 32px;
-  }
+}

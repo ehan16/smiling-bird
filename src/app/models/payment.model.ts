@@ -7,5 +7,7 @@ export class Payment {
     day: number
   };
   public patient: string;
+  public email: string;
+  public dentist: string;
   public voucher;
 }
