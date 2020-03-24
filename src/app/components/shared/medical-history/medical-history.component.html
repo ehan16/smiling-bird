@@ -6,6 +6,7 @@
 
   <div class="col-md-4 text-center py-4 px-sm-4 pale-yellow">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
+    <button *ngIf="currentUser.type === 'dentist'" type="button" class="btn btn-warning w-75 mt-3">Crear</button>
     <hr class="my-4">
     <h5>Deuda</h5>
     <p>{{ patient?.debt }}</p>

@@ -64,7 +64,7 @@
           [maxDate]="maxDate"
           [minDate]="minDate"
         />
-        <div class="input-group-append">
+        <div class="input-group-append bg-warning">
           <button
             class="btn btn-outline-secondary calendar"
             (click)="d.toggle()"
@@ -89,7 +89,7 @@
     <span *ngIf="currentUser.type === 'dentist'">
       <label for="shift" class="text-uppercase font-weight-bold">Horario</label>
       <div class="form-hour">
-        <div class="form-group d-flex w-50">
+        <div class="form-group d-flex">
           <label
             for="entrance"
             class="text-uppercase font-weight-bold my-2 mr-2"
@@ -103,8 +103,8 @@
             [(ngModel)]="start"
           />
         </div>
-        <div class="form-group d-flex w-50">
-          <label for="exit" class="text-uppercase font-weight-bold my-2 mr-2"
+        <div class="form-group d-flex">
+          <label for="exit" class="text-uppercase font-weight-bold my-2 mr-4"
             >Salida</label
           >
           <input
@@ -121,17 +121,11 @@
         <label class="text-uppercase font-weight-bold">Métodos de pago</label>
         <div class="row mx-3">
 
-          <!-- <div class="col-sm-6 custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input">
-            <label class="custom-control-label">Paypal</label>
-          </div> -->
           <div class="col-12 form-check d-inline">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" class="form-check-input" formControlName="paypal">
             <label class="form-check-label mr-5">Paypal</label>
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" class="form-check-input ml-5" formControlName="zelle">
             <label class="form-check-label">Zelle</label>
-          </div>
-          <div class="col-sm-6 form-check">
           </div>
 
           <hr>
@@ -152,8 +146,6 @@
 
         </div>
       </div>
-
-
 
     </span>
 

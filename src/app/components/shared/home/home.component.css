@@ -52,7 +52,7 @@
 }
 
 .treatment:hover {
-  background-color: rgb(171, 238, 246);
+  background-color: rgba(184, 247, 255, 0.89);
   border-radius: 5px;
 }
 

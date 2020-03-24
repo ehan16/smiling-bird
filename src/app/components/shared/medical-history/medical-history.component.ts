@@ -28,22 +28,24 @@ export class MedicalHistoryComponent implements OnInit {
       });
     });
 
-    if (this.currentUser.type === 'patient') {
-      this.patient = this.currentUser;
-      this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.userService.currentUserId);
-      this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
-    } else {
-      this.route.params.subscribe(
-        (param: Params) => {
-          const patientId = param['patientId'];
-          this.firestore.getValue(patientId, 'users').subscribe((user: User) => {
-            this.patient = user;
-            this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === patientId);
-            this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
-          });
-        }
-      );
-    }
+    // if (this.currentUser.type === 'patient') {
+    //   this.patient = this.currentUser;
+    //   console.log(this.patient);
+    //   this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.userService.currentUserId);
+    //   this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
+    // } else {
+    this.route.params.subscribe(
+      (param: Params) => {
+        const patientId = param.patientId;
+        this.firestore.getValue(patientId, 'users').subscribe((user: User) => {
+          this.patient = user;
+          this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === patientId);
+          this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
+          console.log(this.patient);
+        });
+      }
+    );
+    // }
 
   }
 

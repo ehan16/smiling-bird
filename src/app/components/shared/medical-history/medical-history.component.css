@@ -4,6 +4,10 @@
   min-height: 60vh;
 }
 
+tr {
+  background-color: transparent;
+}
+
 tr:hover {
   background-color: rgb(167, 167, 167);
 }

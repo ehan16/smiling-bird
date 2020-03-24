@@ -1,5 +1,9 @@
   .mythead{
-      background-color: rgb(80, 185, 218);
+    background-color: rgb(80, 185, 218);
+  }
+
+  .tr {
+    background-color: #f3fdff;
   }
 
   tbody > tr:hover {
@@ -10,17 +14,6 @@
     width: 100vw;
   }
 
-  .invalid {
-    border: 1px solid red;
-  }
-
-  /* span {
-    font-size: 0.7rem;
-    width: 100%;
-    text-align: left;
-    margin-top: 2px;
-  } */
-
   .error {
     width: 100%;
     font-size: 0.7rem;
@@ -30,6 +23,8 @@
   .icons {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 50px;
   }
 
   .wrapper {
@@ -39,5 +34,11 @@
   @media (max-width: 1000px) {
     .wrapper {
       padding: 6vw 4vw 0vw 4vw;
+    }
+  }
+
+  @media (max-width: 880px) {
+    .icons {
+      height: 70px;
     }
   }

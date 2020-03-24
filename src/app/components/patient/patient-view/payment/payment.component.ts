@@ -21,6 +21,7 @@ export class PaymentComponent implements OnInit {
 
   currentUser: User;
   dentistIdList = [];
+  dentistList = this.userService.userList;
 
   constructor(private userService: UserService, private firestoreService: FirestoreService) {
     this.currentUser = this.userService.currentUser;
@@ -34,7 +35,7 @@ export class PaymentComponent implements OnInit {
 
   paidFor = false;
 
-  ngOnInit(): void {
+  ngOnInit() {
     console.log(this.currentUser);
     this.firestoreService.getAll('appointments').subscribe(data => {
       let appointmentList = data.map(e => {
@@ -82,6 +83,9 @@ export class PaymentComponent implements OnInit {
       })
 
       .render(this.paypalElement.nativeElement);
-    
-  }
+
+ }
+
 }
+
+

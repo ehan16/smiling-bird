@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+  FormArray
+} from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
@@ -13,84 +19,92 @@ import { PaymentAccounts } from 'src/app/models/payment-accounts.model';
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
-
   editForm: FormGroup;
   currentUser: User;
   dentistExtra: PaymentAccounts;
   todayDate = new Date();
-  maxDate: NgbDate = new NgbDate(this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
-  minDate: NgbDate = new NgbDate(this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
+  maxDate: NgbDate = new NgbDate(
+    this.todayDate.getFullYear(),
+    this.todayDate.getMonth() + 1,
+    this.todayDate.getDate()
+  );
+  minDate: NgbDate = new NgbDate(
+    this.todayDate.getFullYear() - 100,
+    this.todayDate.getMonth(),
+    this.todayDate.getDate()
+  );
   start = 8;
   end = 16;
-  paypal = true;
-  zelle = true;
+  paypal = new FormControl(true);
+  zelle = new FormControl(true);
+  banksArray = new FormArray([]);
 
   constructor(
     private userService: UserService,
     private firestore: FirestoreService,
     private auth: AuthService,
     private formBuilder: FormBuilder
-    ) {
+  ) {
     this.currentUser = this.userService.currentUser;
     console.log(this.currentUser);
     this.start = this.currentUser.shift[0];
     this.end = this.currentUser.shift[1];
 
     if (this.currentUser.type === 'dentist') {
-      this.firestore.get(this.auth.id, 'dentist-extra').subscribe(
-        (accounts) => {
-          this.dentistExtra = {
-            zelle: accounts.data().zelle,
-            paypal: accounts.data().zelle,
-            bankAccounts: accounts.data().bankAccounts
-          };
+      this.firestore.get(this.auth.id, 'dentist-extra').subscribe(accounts => {
+        this.dentistExtra = {
+          zelle: accounts.data().zelle,
+          paypal: accounts.data().paypal,
+          bankAccounts: accounts.data().bankAccounts
+        };
 
-          console.log(this.dentistExtra);
-          this.paypal = this.dentistExtra.paypal;
-          this.zelle = this.dentistExtra.zelle;
+        console.log(this.dentistExtra);
+        this.paypal.setValue(this.dentistExtra.paypal);
+        this.zelle.setValue(this.dentistExtra.zelle);
 
+        const bankAccounts = this.dentistExtra.bankAccounts;
+        if (bankAccounts) {
+          for (let bankAccount of bankAccounts) {
+            this.banksArray.push(
+              new FormGroup({
+                bank: new FormControl(bankAccount.bank, Validators.required),
+                account: new FormControl(
+                  bankAccount.account,
+                  Validators.required
+                )
+              })
+            );
+          }
         }
-      );
+      });
     }
 
     console.log('start ', this.start, 'end ', this.end);
   }
 
   ngOnInit() {
-
     this.editForm = this.formBuilder.group({
       name: [this.currentUser.name, Validators.required],
       identification: [this.currentUser.identification, Validators.required],
-      birthDate: [this.currentUser.birth , Validators.required],
+      birthDate: [this.currentUser.birth, Validators.required],
       gender: [this.currentUser.gender, Validators.required],
       start: [this.start, [Validators.required, this.invalidHour.bind(this)]],
       end: [this.end, [Validators.required, this.invalidHour.bind(this)]],
-      bankAccounts: this.formBuilder.array([]),
+      bankAccounts: this.banksArray,
       paypal: this.paypal,
-      zelle: this.zelle,
+      zelle: this.zelle
     });
-
-    // if (this.currentUser.type === 'dentist') {
-    //   this.editForm.get('bankAccounts').patchValue(this.dentistExtra.bankAccounts);
-    // }
-
-    // this.editForm = new FormGroup({
-    //   name: new FormControl(this.currentUser.name, Validators.required),
-    //   identification: new FormControl(this.currentUser.identification, Validators.required),
-    //   birthDate: new FormControl(this.currentUser.birth , Validators.required),
-    //   gender: new FormControl(this.currentUser.gender, Validators.required),
-    //   start: new FormControl(this.start, [Validators.required, this.invalidHour.bind(this), Validators.max(this.maxHour)]),
-    //   end: new FormControl(this.end, [Validators.required, this.invalidHour.bind(this), Validators.min(this.minHour)]),
-    // });
 
   }
 
   createBankAccount() {
-    const bankAccount = (this.editForm.get('bankAccounts') as FormArray);
-    bankAccount.push(this.formBuilder.group({
-      bank: ['', Validators.required],
-      account: ['', [Validators.required, Validators.min(0)]]
-    }));
+    const bankAccount = this.editForm.get('bankAccounts') as FormArray;
+    bankAccount.push(
+      this.formBuilder.group({
+        bank: ['', Validators.required],
+        account: ['', [Validators.required, Validators.min(0)]]
+      })
+    );
   }
 
   deleteBankAccount(index) {
@@ -102,12 +116,8 @@ export class ProfileEditComponent implements OnInit {
   }
 
   onEdit() {
-
     if (this.editForm.value.end > this.editForm.value.start) {
       console.log(this.editForm);
-      const yea = this.editForm.value.birthDate.year;
-      const mont = this.editForm.value.birthDate.month;
-      const da = this.editForm.value.birthDate.day;
       const user = {
         name: this.editForm.value.name,
         identification: this.editForm.value.identification,
@@ -115,21 +125,31 @@ export class ProfileEditComponent implements OnInit {
         gender: this.editForm.value.gender,
         type: this.currentUser.type,
         birth: {
-          year: yea,
-          month: mont,
-          day: da
+          year: this.editForm.value.birthDate.year,
+          month: this.editForm.value.birthDate.month,
+          day: this.editForm.value.birthDate.day
         },
         shift: [this.editForm.value.start, this.editForm.value.end],
         enable: this.currentUser.enable,
         debt: this.currentUser.debt,
         comission: this.currentUser.comission
       };
-      this.firestore.setValue(this.auth.getCurrentUID(), user, 'users');
-      this.editForm.reset();
-    } else {
-      window.alert('ACCIÓN INVÁLIDA: la hora de salida es mayor que la hora de entrada');
-    }
+      this.firestore.setValue(this.auth.id, user, 'users');
 
+      if (this.currentUser.type === 'dentist') {
+        const dentistExtra = {
+          paypal: this.editForm.value.paypal,
+          zelle: this.editForm.value.zelle,
+          bankAccounts: this.editForm.value.bankAccounts
+        };
+        this.firestore.setValue(this.auth.id, dentistExtra, 'dentist-extra');
+      }
+
+    } else {
+      window.alert(
+        'ACCIÓN INVÁLIDA: la hora de salida es mayor que la hora de entrada'
+      );
+    }
   }
 
   invalidHour(control: FormControl): { [s: string]: boolean } {
@@ -139,5 +159,4 @@ export class ProfileEditComponent implements OnInit {
       return null;
     }
   }
-
 }

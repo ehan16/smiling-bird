@@ -1,90 +1,171 @@
-<div class="row m-0 justify-content-center align-content-center p-5 md-5">
-<div class=".conteiner-fluid p-2 w-75 rounded justify-content-center bg-info">
-  <div class="module m-3">
+<div class="row m-0 justify-content-center align-content-center p-5">
+  <div class="conteiner-fluid rounded justify-content-center bg-form">
     <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-
-      <div class=".container-fluid">
-        <p> Enviar mensaje a: {{ patient?.name | titlecase }}</p>
+      <div class="container-fluid mt-2 text-center">
+        <p class="text-uppercase">Enviar mensaje a: {{ patient?.name | titlecase }}</p>
       </div>
-        <div class="form-group">
-          <label class="d-block">Elija su mensaje predeterminado </label>
-          <div class="d-flex">
-            <select class="form-control form-field" (change)="changedMessage($event)" formControlName="pre">
-              <option *ngFor="let message of savedMessages">{{ message?.title }}</option>
-            </select>
-            <button type="button" class="btn bg-success text-white" (click)="selectMessage()"><i class="fas fa-check"></i></button>
-          </div>
+      <div class="form-group">
+        <label class="d-block">Elija su mensaje predeterminado </label>
+        <div class="d-flex">
+          <select
+            class="form-control form-field"
+            (change)="changedMessage($event)"
+            formControlName="pre"
+          >
+            <option *ngFor="let message of savedMessages">{{
+              message?.title
+            }}</option>
+          </select>
+          <button
+            type="button"
+            class="btn bg-success text-white"
+            (click)="selectMessage()"
+          >
+            <i class="fas fa-check"></i>
+          </button>
         </div>
+      </div>
       <div class="form-group">
         <label for="title">Titulo del mensaje</label>
-        <input type="text" placeholder="La clinica Smiling bird" id="title" formControlName="title"
-          class="form-control form-field" />
-        <span *ngIf="!messageForm.get('title').valid &&messageForm.get('title').touched" class="help-block">
+        <input
+          type="text"
+          placeholder="La clinica Smiling bird"
+          id="title"
+          formControlName="title"
+          class="form-control form-field"
+        />
+        <span *ngIf="!messageForm.get('title').valid && messageForm.get('title').touched" class="help-block">
           <span *ngIf="messageForm.get('title').errors['required']">El campo es obligatorio</span>
         </span>
       </div>
 
       <div class="form-group">
         <label for="message">Texto del mensaje</label>
-        <textarea class="form-control form-field" id="message" placeholder="Mensaje" formControlName="message" rows="3"></textarea>
-        <span *ngIf="!messageForm.get('message').valid && messageForm.get('message').touched" class="help-block">
+        <textarea
+          class="form-control form-field"
+          id="message"
+          placeholder="Mensaje"
+          formControlName="message"
+          rows="3"
+        ></textarea>
+        <span *ngIf="!messageForm.get('message').valid && messageForm.get('message').touched" class="help-block" >
           <span *ngIf="messageForm.get('message').errors['required']">El campo es obligatorio</span>
         </span>
       </div>
 
-    <div class="form-row align-items-center m-3">
-      <button class="col-auto btn btn-block my-4 font-weight-bold w-25" type="submit"
-        [disabled]="!messageForm.valid">
-        Enviar
-      </button>
-      <button class="col-auto btn btn-block my-4 font-weight-bold ml-3  w-25" data-toggle="modal"
-        data-target="#NuevoPredeterminado" data-whatever="@getbootstrap" type="button">
-        Crear
-      </button>
+      <div class="form-row align-items-center my-2">
+        <button
+          class="col-auto btn btn-send font-weight-bold "
+          type="submit"
+          [disabled]="!messageForm.valid"
+        >
+          Enviar
+        </button>
+        <button
+          class="col-auto btn btn-send font-weight-bold"
+          data-toggle="modal"
+          data-target="#NuevoPredeterminado"
+          data-whatever="@getbootstrap"
+          type="button"
+        >
+          Crear
+        </button>
+      </div>
+    </form>
+  </div>
 
-    </div>
-  </form>
-</div>
-</div>
+  <!-- Comienzo de modal -->
 
-<!-- Comienzo de modal -->
-
-        <div class="modal fade m-5" id="NuevoPredeterminado" tabindex="-1" role="dialog"
-          aria-labelledby="NuevoPredeterminado"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="NuevoPredeterminado">Nuevo mensaje predeterminado</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form [formGroup]="newMessageForm" (ngSubmit)="createMessage()">
-                  <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Titulo:</label>
-                    <input type="text" class="form-control form-field" id="recipient-name" formControlName="newTitle">
-                    <span *ngIf="!newMessageForm.get('newTitle').valid && newMessageForm.get('newTitle').touched" class="help-block">
-                      <span *ngIf="newMessageForm.get('newTitle').errors['required']">El campo es obligatorio</span>
-                      <span *ngIf="newMessageForm.get('newTitle').errors['titleExist']">Título ya existe</span>
-                    </span>
-                  </div>
-                  <div class="form-group">
-                    <label for="message-text" class="col-form-label">Mensaje:</label>
-                    <textarea class="form-control form-field" id="message-text" formControlName="newMessage"></textarea>
-                    <span *ngIf="!newMessageForm.get('newMessage').valid && newMessageForm.get('newMessage').touched" class="help-block">
-                      <span *ngIf="newMessageForm.get('newMessage').errors['messageExist']">Cuerpo ya existe</span>
-                    </span>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="createMessage()" [disabled]="!newMessageForm.valid">Guardar</button>
-              </div>
-            </div>
-          </div>
+  <div
+    class="modal fade m-5"
+    id="NuevoPredeterminado"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="NuevoPredeterminado"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="NuevoPredeterminado">
+            Nuevo mensaje predeterminado
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <form [formGroup]="newMessageForm" (ngSubmit)="createMessage()">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Titulo:</label>
+              <input
+                type="text"
+                class="form-control form-field"
+                id="recipient-name"
+                formControlName="newTitle"
+              />
+              <span
+                *ngIf="
+                  !newMessageForm.get('newTitle').valid &&
+                  newMessageForm.get('newTitle').touched
+                "
+                class="help-block"
+              >
+                <span *ngIf="newMessageForm.get('newTitle').errors['required']"
+                  >El campo es obligatorio</span
+                >
+                <span
+                  *ngIf="newMessageForm.get('newTitle').errors['titleExist']"
+                  >Título ya existe</span
+                >
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Mensaje:</label>
+              <textarea
+                class="form-control form-field"
+                id="message-text"
+                formControlName="newMessage"
+              ></textarea>
+              <span
+                *ngIf="
+                  !newMessageForm.get('newMessage').valid &&
+                  newMessageForm.get('newMessage').touched
+                "
+                class="help-block"
+              >
+                <span
+                  *ngIf="
+                    newMessageForm.get('newMessage').errors['messageExist']
+                  "
+                  >Cuerpo ya existe</span
+                >
+              </span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cerrar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            (click)="createMessage()"
+            [disabled]="!newMessageForm.valid"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- Fin de modal -->
+  <!-- Fin de modal -->
+</div>

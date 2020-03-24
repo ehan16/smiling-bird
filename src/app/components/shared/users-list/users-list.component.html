@@ -5,8 +5,8 @@
     <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
   </div>
 
-  <div class="w-100 px-4 mt-4">
-    <app-appointments *ngIf="currentUser.type === 'patient'"></app-appointments>
+  <div class="w-100 px-4 mt-4" *ngIf="currentUser.type === 'patient'">
+    <app-appointments></app-appointments>
     <hr>
   </div>
 
@@ -39,7 +39,7 @@
               [attr.aria-expanded]="false"
               [attr.aria-controls]="'user' + i"
             >
-              {{ user?.name }}
+              {{ user?.name | titlecase }}
             </button>
           </h5>
         </div>
@@ -55,7 +55,7 @@
               <img src="../../../../assets/extra/avatar.png" alt="avatar" />
             </div>
             <div class="col-sm-7 card-body ">
-              <p>Nombre: {{ user?.name }}</p>
+              <p>Nombre: {{ user?.name | titlecase }}</p>
               <p>Cédula: {{ user?.identification }}</p>
               <p>Correo: {{ user?.user }}</p>
               <p>{{ user?.type | titlecase }}</p>
@@ -200,7 +200,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of userList | filter: 'name':searchName">
-            <th scope="row">{{ user?.name }}</th>
+            <th scope="row">{{ user?.name | titlecase }}</th>
             <td>{{ user?.identification }}</td>
             <td>{{ user?.user }}</td>
             <td class="text-capitalize">{{ user?.type }}</td>

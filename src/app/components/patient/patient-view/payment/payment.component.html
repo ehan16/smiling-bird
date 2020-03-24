@@ -2,117 +2,106 @@
   <div class="banner font-title">
     <p>Pagos</p>
   </div>
-</div>
 
-<div class="row m-lg-4 my-4">
+  <div class="my-4 px-2">
 
-  <!-- col izq -->
-  <div class="col-md-4 text-center p-3 rounded-sm card-color">
-    <img src="../../../../assets/extra/avatar.png" alt="avatar">
-    <h5>Nombre: </h5> <span>{{currentUser.name}}</span>
-    <h5>Estado de Cuenta: </h5> <span>{{currentUser.debt}}</span>
-  </div>
-  <!-- col der -->
-  <div class="col-md-8 p-3 rounded-sm">
-    <!-- paypal -->
-    <!-- <div *ngIf="!paidFor">
+    <!-- col izq -->
+    <div class="col-md-4 text-center p-3 rounded-sm card-data">
+      <img src="../../../../assets/extra/avatar.png" alt="avatar">
+      <h5>Nombre: </h5> <span>{{ currentUser?.name | titlecase }}</span>
+      <h5 class="mt-2">Estado de Cuenta: </h5> <span>{{currentUser?.debt}}</span>
+    </div>
+    <!-- col der -->
+    <div class="col-md-8 p-3 rounded-sm">
+      <!-- paypal -->
+      <!-- <div *ngIf="!paidFor">
 
-    <h5>El costo de la cita es de - ${{ product.price }}</h5>
-  </div>
-  
-  <div *ngIf=paidFor>
-    <h5>Has pagado al Odontologo</h5>
-  </div>
+      <h5>El costo de la cita es de - ${{ product.price }}</h5>
+    </div>
 
-  <div [hidden]="paidFor" #paypal></div> -->
-    <!-- paypal-end -->
+    <div *ngIf=paidFor>
+      <h5>Has pagado al Odontologo</h5>
+    </div>
+
+    <div [hidden]="paidFor" #paypal></div> -->
+      <!-- paypal-end -->
 
 
-    <!-- <div class="w-100" id="accordion">
-      <div class="card">
-        <div class="card-header card-color" id="{{ 'heading' + i }}">
-          <h5 class="mb-0">
-            <button class="btn btn-dentist" data-toggle="collapse" [attr.data-target]="'#dentist' + i"
-              [attr.aria-expanded]="false" [attr.aria-controls]="'dentist' + i">
-              {{ dentist.name }}
-            </button>
-          </h5>
-        </div>
+      <!-- <div class="w-100" id="accordion">
+        <div class="card">
+          <div class="card-header card-color" id="{{ 'heading' + i }}">
+            <h5 class="mb-0">
+              <button class="btn btn-dentist" data-toggle="collapse" [attr.data-target]="'#dentist' + i"
+                [attr.aria-expanded]="false" [attr.aria-controls]="'dentist' + i">
+                {{ dentist.name }}
+              </button>
+            </h5>
+          </div>
 
-        <div id="{{ 'dentist' + i }}" class="collapse" [attr.aria-labelledby]="'dentist' + i" data-parent="#accordion"> -->
+          <div id="{{ 'dentist' + i }}" class="collapse" [attr.aria-labelledby]="'dentist' + i" data-parent="#accordion"> -->
 
-    <div class="w-100" id="accordion">
-      <div class="card">
-        <div class="card-header card-color" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
-              aria-controls="collapseOne">
-              Dentista #1
-            </button>
-          </h5>
-        </div>
+      <div class="w-100" id="accordion">
 
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12 text-center">
-                <h4>Métodos de pagos permitidos</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4">
-                <!-- overlay paypal -->
-                <div class="container">
-                  <img src="../../../../assets/logo/paypal-min.png" alt="Paypal" class="image payment-image"
-                    style="width:100%">
-                  <div class="middle">
-                    <button class="btn btn-lg btn-info">Paypal</button>
-                  </div>
+        <div class="card" *ngFor="let dentist of dentistList; let i = index">
+          <div class="card-color" id="{{ 'heading' + i }}">
+            <h5 class="mb-0">
+              <button class="btn btn-name" data-toggle="collapse" [attr.data-target]="'#dentist' + i" [attr.aria-expanded]="false"
+                [attr.aria-controls]="'dentist' + i">
+                {{ dentist?.name }}
+              </button>
+            </h5>
+          </div>
+
+          <div id="{{ 'dentist' + i }}}" class="collapse" [attr.aria-labelledby]="'#dentist' + i" data-parent="#accordion">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <h4>Métodos de pagos permitidos</h4>
                 </div>
-                <!-- end overlay -->
               </div>
-              <div class="col-4">
-                <!-- overlay zelle -->
-                <div class="container">
-                  <img src="../../../../assets/logo/zelle-min.png" alt="Zelle" class="image payment-image"
-                    style="width:100%">
-                  <div class="middle">
-                    <button class="btn btn-lg btn-info">Zelle</button>
+              <div class="row">
+                <div class="col-4">
+                  <!-- overlay paypal -->
+                  <div class="container">
+                    <img src="../../../../assets/logo/paypal.png" alt="Paypal" class="image payment-image"
+                      style="width:100%">
+                    <div class="middle">
+                      <button class="btn btn-lg btn-info">Paypal</button>
+                    </div>
                   </div>
+                  <!-- end overlay -->
                 </div>
-                <!-- end overlay -->
-              </div>
-              <div class="col-4">
-                <!-- overlay transf -->
-                <div class="container">
-                  <img src="../../../../assets/logo/transfBanco-min.jpg" alt="Transferencia Bancaria" class="image payment-image" style="width:100%">
-                  <div class="middle">
-                    <button class="btn btn-lg btn-info">Transferencia Bancaria</button>
+                <div class="col-4">
+                  <!-- overlay zelle -->
+                  <div class="container">
+                    <img src="../../../../assets/logo/zelle.png" alt="Zelle" class="image payment-image"
+                      style="width:100%">
+                    <div class="middle">
+                      <button class="btn btn-lg btn-info">Zelle</button>
+                    </div>
                   </div>
+                  <!-- end overlay -->
                 </div>
-                <!-- end overlay -->
+                <div class="col-4">
+                  <!-- overlay transf -->
+                  <div class="container">
+                    <img src="../../../../assets/logo/transfer.jpg" alt="Transferencia Bancaria" class="image payment-image" style="width:100%">
+                    <div class="middle">
+                      <button class="btn btn-lg btn-info">Transferencia</button>
+                    </div>
+                  </div>
+                  <!-- end overlay -->
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-header card-color" id="headingTwo">
-          <h5 class="mb-0">
-            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-              aria-expanded="false" aria-controls="collapseTwo">
-              Dentista #2
-            </button>
-          </h5>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-          <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
-            officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
 
-          </div>
-        </div>
       </div>
+
+
     </div>
   </div>
+
 </div>
+

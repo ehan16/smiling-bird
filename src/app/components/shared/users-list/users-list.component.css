@@ -4,7 +4,7 @@
 }
 
 tr:hover {
-  background-color: rgb(167, 167, 167);
+  background-color: rgb(175, 221, 235);
 }
 
 .error {
@@ -14,7 +14,7 @@ tr:hover {
 }
 
 i:hover {
-  color: rgb(9, 39, 139);
+  color: #ffb641b5;
 }
 
 .card-color {
@@ -40,6 +40,10 @@ i:hover {
   width: 100%;
   background-color: transparent;
   text-align: left;
+}
+
+.tr {
+  background-color: #f3fdff;
 }
 
 @media (max-width: 760px) {

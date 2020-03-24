@@ -2,15 +2,24 @@
     background-color: rgb(243, 207, 139);
 }
 
+.btn-name {
+  border: transparent;
+  background: transparent;
+}
+
+.card-data {
+  background-color: rgb(255, 250, 184);
+}
+
 .container {
     position: relative;
- 
+
   }
 
   .payment-image{
       height: 214px;
   }
-  
+
   .image {
     opacity: 1;
     display: block;
@@ -18,7 +27,7 @@
     transition: .5s ease;
     backface-visibility: hidden;
   }
-  
+
   .middle {
     transition: .5s ease;
     opacity: 0;
@@ -29,15 +38,15 @@
     -ms-transform: translate(-50%, -50%);
     text-align: center;
   }
-  
+
   .container:hover .image {
     opacity: 0.3;
   }
-  
+
   .container:hover .middle {
     opacity: 1;
   }
-  
+
   .text {
     background-color: #4CAF50;
     color: white;

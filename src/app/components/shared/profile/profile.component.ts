@@ -11,12 +11,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
-  editMode = false;
+  editMode: boolean;
   currentUser: User;
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, public auth: AuthService) { }
 
   ngOnInit() {
+    this.editMode = false;
     this.currentUser = this.userService.currentUser;
   }
 
