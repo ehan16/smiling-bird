@@ -75,7 +75,7 @@ export class MedicalHistoryComponent implements OnInit {
       dentist: this.authService.id,
       date: {
         year: date.getFullYear(),
-        month: date.getMonth() - 1,
+        month: date.getMonth() + 1,
         day: date.getDate()
       },
       recipe: '',

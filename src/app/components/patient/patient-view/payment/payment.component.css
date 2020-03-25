@@ -67,5 +67,11 @@
   .image {
     width: 65%;
     margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
+}
+
+#containerPaypal{
+  display: none;
 }

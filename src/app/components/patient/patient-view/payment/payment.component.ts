@@ -16,6 +16,7 @@ declare var paypal;
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
+
   @ViewChild('paypal', { static: true }) paypalElement: ElementRef;
 
   showSuccess: boolean;
@@ -31,9 +32,8 @@ export class PaymentComponent implements OnInit {
   product = {
     price: 30,
     description: 'Consulta médica en Smiling Bird',
-    img: 'assets/couch.jpg'
+    // img: 'assets/couch.jpg'
   };
-  order;
 
   paidFor = false;
 
@@ -64,14 +64,6 @@ export class PaymentComponent implements OnInit {
       });
     });
 
-    // this.route.params.subscribe((param: Params) => {
-    //   const patientId = param['patientId'];
-    //   this.firestoreService.getValue(patientId, 'users').subscribe((user: User) => {
-    //       this.currentUser = user;
-    //       console.log(this.currentUser);
-    //     });
-    // });
-
     let appointmentList = [];
 
     this.firestoreService.getAll('appointments').subscribe(data => {
@@ -82,7 +74,6 @@ export class PaymentComponent implements OnInit {
         } as Appointment;
       });
 
-      console.log(appointmentList);
       appointmentList = appointmentList.filter(appointment => appointment.patient === this.authService.id);
 
       for (let appointment of appointmentList) {
@@ -92,7 +83,6 @@ export class PaymentComponent implements OnInit {
       }
 
       console.log(this.dentistIdList);
-      console.log(appointmentList);
 
       for (let dentistId of this.dentistIdList) {
         const dentist = this.userList.filter(user => user.id === dentistId);
@@ -124,9 +114,11 @@ export class PaymentComponent implements OnInit {
         });
       },
       onApprove: async (data, actions) => {
-        this.order = await actions.order.capture();
+        const order = await actions.order.capture();
         this.paidFor = true;
-        console.log(this.order);
+        console.log(order);
+        console.log(data);
+        this.paypalPayment(order);
       },
       onError: err => {
         console.log(err);
@@ -162,7 +154,12 @@ export class PaymentComponent implements OnInit {
     const newDebt = this.currentUser.debt - this.voucherForm.value.amount;
     this.updateDebt(newDebt);
     this.firestoreService.create(paymentData, 'payments');
+    window.alert('El pago ha sido existoso');
 
+  }
+
+  activatePaypal() {
+    document.getElementById('containerPaypal').style.display = 'block';
   }
 
   selectMethod(method: 'zelle' | 'paypal' | 'transferencia', dentistId) {
@@ -170,22 +167,38 @@ export class PaymentComponent implements OnInit {
     this.dentistId = dentistId;
     if (method === 'zelle') {
 
+      document.getElementById('containerPaypal').style.display = 'none';
       if (this.voucherForm.get('voucher')) {
         this.voucherForm.removeControl('voucher');
       }
 
     } else if (method === 'transferencia') {
 
+      document.getElementById('containerPaypal').style.display = 'none';
       if (!this.voucherForm.get('voucher')) {
         this.voucherForm.addControl('voucher', new FormControl('', Validators.required));
       }
 
     } else {
+      this.paidFor = false;
     }
   }
 
   paypalPayment(order) {
-
+    const today = new Date();
+    const paymentData = {
+      amount: this.voucherForm.value.amount,
+      voucher: '',
+      email: this.currentUser.user,
+      patient: this.currentUser.name,
+      method: this.method,
+      date: {
+        year: today.getFullYear(),
+        month: today.getMonth() + 1,
+        day: today.getDate()
+      },
+      dentist: this.dentistId
+    };
   }
 
   updateDebt(newDebt) {
