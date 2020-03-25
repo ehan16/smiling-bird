@@ -38,6 +38,7 @@ import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ForgotPasswordComponent } from './components/shared/login/forgot-password/forgot-password.component';
 import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
+import { ReportesComponent } from './components/doctor/dentist-view/reportes/reportes.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { NewUserComponent } from './components/shared/users-list/new-user/new-us
     FilterPipe,
     VisitorViewComponent,
     ForgotPasswordComponent,
-    NewUserComponent
+    NewUserComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule,

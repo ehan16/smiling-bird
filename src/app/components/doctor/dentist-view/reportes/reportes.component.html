@@ -1,0 +1,26 @@
+  <<ng-container >
+
+    <table class="table table-responsive-md list">
+      <thead>
+        <tr class="bg-info">
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Medio de Pago</th>
+          <th>Monto cancelado</th>
+          <th>Fecha</th>
+          <th>Numero de referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of paymentlist ">
+          <th scope="row">{{ payment?.patient }}</th>
+          <td>{{ payment?.email }}</td>
+          <td>{{ payment?.method }}</td>
+          <td>{{ payment?.amount }}</td>
+          <td>{{ payment?.date.day}} {{"/"}} {{payment?.date.month}} {{"/"}} {{payment?.date.year }}</td>
+          <td>{{ payment?.voucher }} </td>
+        </tr>
+      </tbody>
+    </table>
+
+</ng-container> 
