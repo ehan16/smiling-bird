@@ -37,12 +37,12 @@
 
             <div class="row justify-content-center" *ngIf="dentist?.payment">
 
-              <div class="col-sm-4" >
+              <div class="col-sm-4">
                 <!-- overlay paypal -->
                 <div class="container">
                   <img src="../../../../assets/logo/paypal.png" alt="Paypal" class="image">
                   <div class="middle">
-                    <button class="btn btn-info" (click)="activatePaypal();selectMethod('paypal', dentist.id)"
+                    <button class="btn btn-info" (click)="activatePaypal();selectMethod('paypal', dentist.data.id)"
                       data-target="#containerPaypal">Paypal</button>
                     <!-- selectMethod('paypal', dentist.id) -->
                   </div>
@@ -55,7 +55,7 @@
                 <div class="container">
                   <img src="../../../../assets/logo/zelle.png" alt="Zelle" class="image">
                   <div class="middle">
-                    <button class="btn btn-info" (click)="selectMethod('zelle', dentist.id)" data-toggle="modal"
+                    <button class="btn btn-info" (click)="selectMethod('zelle', dentist.data.id)" data-toggle="modal"
                       data-target="#voucher">Zelle</button>
                   </div>
                 </div>
@@ -67,7 +67,7 @@
                 <div class="container">
                   <img src="../../../../assets/logo/trasfer.jpg" alt="Transferencia Bancaria" class="image">
                   <div class="middle">
-                    <button class="btn btn-info" (click)="selectMethod('transferencia', dentist.id)" data-toggle="modal" data-target="#voucher"
+                    <button class="btn btn-info" (click)="selectMethod('transferencia', dentist.data.id)" data-toggle="modal" data-target="#voucher"
                     [disabled]="!dentist?.payment?.bankAccounts">Transf.</button>
                   </div>
                 </div>
@@ -111,7 +111,7 @@
                           <label>Fecha del pago:</label>
                           <div class="input-group">
                             <input class="form-control form-field" placeholder="yyyy-mm-dd" formControlName="date" ngbDatepicker
-                              #d="ngbDatepicker" />
+                              #d="ngbDatepicker" [maxDate]=maxDate/>
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
                                 <i class="fas fa-calendar-alt"></i>

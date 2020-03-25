@@ -6,10 +6,11 @@
 
   <div class="col-md-4 text-center py-4 px-sm-4 pale-yellow">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
-    <h5>Nombre:</h5>
-    <p>{{ patient?.name }}</p>
-    <h5>Deuda</h5>
-    <p>{{ patient?.debt }}</p>
+    <h5>Nombre: <span>{{ patient?.name }}</span></h5>
+    <h5>Correo: <span>{{ patient?.user }}</span></h5>
+    <h5>Cédula: {{ patient?.identification }}</h5>
+    <h5>Deuda: <span>{{ patient?.debt }}</span></h5>
+
     <hr class="my-4">
     <button *ngIf="currentUser?.type === 'dentist'" type="button" class="btn btn-warning w-75 mt-3" (click)="onCreate()">Crear</button>
   </div>

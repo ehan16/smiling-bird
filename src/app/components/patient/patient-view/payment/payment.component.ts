@@ -7,6 +7,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 declare var paypal;
 
@@ -21,6 +22,7 @@ export class PaymentComponent implements OnInit {
 
   showSuccess: boolean;
 
+  maxDate = new NgbDate(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
   currentUser: User;
   dentistIdList = [];
   dentistList = [];
@@ -32,7 +34,7 @@ export class PaymentComponent implements OnInit {
   product = {
     price: 30,
     description: 'Consulta médica en Smiling Bird',
-    // img: 'assets/couch.jpg'
+    img: 'assets/couch.jpg'
   };
 
   paidFor = false;
@@ -95,7 +97,6 @@ export class PaymentComponent implements OnInit {
           console.log(dentistData);
         });
       }
-
 
     });
 
@@ -165,6 +166,7 @@ export class PaymentComponent implements OnInit {
   selectMethod(method: 'zelle' | 'paypal' | 'transferencia', dentistId) {
     this.method = method;
     this.dentistId = dentistId;
+    console.log(this.dentistId);
     if (method === 'zelle') {
 
       document.getElementById('containerPaypal').style.display = 'none';
