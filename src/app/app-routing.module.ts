@@ -40,7 +40,7 @@ const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
-    {path: 'medical-record/consult/:consultId', component: ConsultDetailComponent},
+    {path: 'consult/:consultId', component: ConsultDetailComponent},
     {path: 'payment', component: PaymentComponent},
     {path: 'Reportes', component: ReportesComponent}
   ]},

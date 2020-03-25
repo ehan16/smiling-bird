@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 @Injectable()
 export class UserService {
   currentUser: User;
-  currentUserId: string;
   userList: User[];
 
   constructor(

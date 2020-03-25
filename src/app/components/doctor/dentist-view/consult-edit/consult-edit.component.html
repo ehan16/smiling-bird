@@ -22,11 +22,12 @@
           <div [formGroupName]="i" class="my-3">
             <h6 class="font-weight-bold my-3">Tratamiento #{{ i + 1 }}</h6>
             <hr class="mb-2">
-            <textarea cols="30" rows="5"
-            formControlName="description"
-            placeholder="Descripción del tratamiento realizado"
+            <textarea cols="30" rows="5" formControlName="description" placeholder="Descripción del tratamiento realizado"
             class="form-control form-field my-3"
             ></textarea>
+            <span *ngIf="!consultForm.get('description').valid && consultForm.get('description').touched" class="help-block">
+              <span *ngIf="consultForm.get('description').errors['required']">El campo es obligatorio</span>
+            </span>
 
             <div class="custom-file mb-3">
               <input type="file" formControlName="file" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
@@ -44,6 +45,9 @@
 
             <div class="form-bottom mt-3">
               <input type="number" formControlName="price" class="form-control form-field" placeholder="Precio en $">
+              <span *ngIf="!consultForm.get('price').valid && consultForm.get('price').touched" class="help-block">
+                <span *ngIf="consultForm.get('price').errors['required']">El campo es obligatorio</span>
+              </span>
               <button type="button" class="btn btn-delete w-25" (click)="onDelete(i)">
                 <i class="fas fa-trash"></i>
               </button>
@@ -73,7 +77,7 @@
       <div class="row m-3">
         <button type="button" class="btn btn-success btn-block my-2" (click)="createTreatment()">Añadir tratamiento</button>
         <button type="button" class="btn btn-success btn-block my-2" (click)="addRecipe()" [disabled]="recipeExist">Añadir récipe</button>
-        <button class="btn btn-warning btn-block">Aceptar</button>
+        <button type="submit" class="btn btn-warning btn-block" [disabled]="!consultForm.valid">Aceptar</button>
       </div>
 
     </form>

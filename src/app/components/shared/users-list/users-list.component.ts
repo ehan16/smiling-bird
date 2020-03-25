@@ -71,12 +71,8 @@ export class UsersListComponent implements OnInit {
 
       this.auxAppointments = appointmentList;
 
-      appointmentList = appointmentList.filter(
-        appointment => appointment.patient === this.userService.currentUserId
-      );
-      appointmentList = appointmentList.filter(
-        appointment => appointment.completed === false
-      );
+      appointmentList = appointmentList.filter(appointment => appointment.patient === this.authService.id);
+      appointmentList = appointmentList.filter(appointment => appointment.completed === false);
 
       this.activeAppointment = appointmentList.length >= 1;
 
@@ -121,7 +117,7 @@ export class UsersListComponent implements OnInit {
       completed: false,
       accepted: false,
       treatments: [],
-      patient: this.userService.currentUserId,
+      patient: this.authService.id,
       dentist: dentistId,
       recipe: ''
     };

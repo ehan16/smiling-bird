@@ -39,14 +39,8 @@ export class AppointmentsComponent implements OnInit {
     private route: ActivatedRoute,
     private firestore: FirestoreService
   ) {
-    this.currentUser = this.authService.currentUser;
-    // this.currentUser = this.userService.getCurrentUserData();
-    // this.authService.getUserData().then(
-    //   (e: User) => {
-    //     console.log('searched user: ', e);
-    //     this.currentUser = e;
-    //   }
-    // );
+    this.currentUser = this.userService.currentUser;
+    console.log(this.currentUser);
   }
 
   ngOnInit() {
@@ -63,22 +57,6 @@ export class AppointmentsComponent implements OnInit {
       }
     );
 
-    // this.appointmentService.getAll().then(r => {
-    //   console.log(r);
-
-    //   r.map(e => {
-    //     console.log(e.payload.doc.data());
-
-    //     const aux = {
-    //       id: e.payload.doc.id,
-    //       ...e.payload.doc.data()
-    //     } as Appointment;
-
-    //     this.appointmentList.push(aux);
-    //   });
-    //   console.log('appointment list is ', this.appointmentList);
-    // });
-
     this.firestore.getAll('appointments').subscribe(data => {
       this.appointmentList = data.map(e => {
         return {
@@ -88,15 +66,19 @@ export class AppointmentsComponent implements OnInit {
       });
 
       this.auxAppointments = this.appointmentList;
-      // this.appointmentService.appointmentsList = this.appointmentList;
+      console.log('aux appointmets', this.auxAppointments);
+      this.appointmentService.appointmentsList = this.appointmentList;
+      console.log('lista de citas antes de filtrar por completado', this.appointmentList);
+      this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+      console.log('lista de citas antes de filtrar por paciente u odontologo', this.appointmentList);
 
       if (this.currentUser.type === 'patient') {
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.userService.currentUserId);
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.authService.id);
       } else {
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.userService.currentUserId);
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.authService.id);
       }
+
+      console.log('lista de citas es ', this.appointmentList);
 
     });
 
@@ -179,10 +161,6 @@ export class AppointmentsComponent implements OnInit {
     const dentistAppointments = this.auxAppointments.filter(
       appointment => appointment.dentist === this.dentistId
     );
-
-    console.log('Hola');
-    console.log('Selected date ', this.selectedDate);
-    console.log('Dentist appointments ', dentistAppointments);
 
     dentistAppointments.forEach(appointment => {
       if (

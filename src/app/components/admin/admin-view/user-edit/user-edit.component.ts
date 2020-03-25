@@ -72,7 +72,7 @@ export class UserEditComponent implements OnInit {
       comission: this.editForm.value.comission
     };
     this.firestore.setValue(this.editedUserId, user, 'users');
-    this.router.navigate(['/admin', this.userService.currentUserId, 'user-list']);
+    this.router.navigate(['/admin', this.auth.id, 'user-list']);
   }
 
   restorePassword() {

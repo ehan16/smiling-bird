@@ -1,52 +1,39 @@
 <div class="row m-0">
-
   <div class="wrapper">
 
-    <ng-container>
+    <div class="consult-data">
+      <h5>Fecha: <span>{{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</span></h5>
+      <h5>Paciente: <span>{{ getUserName(consult?.patient) }}</span></h5>
+      <h5>Odontólogo: <span>{{ getUserName(consult?.dentist) }}</span></h5>
+    </div>
 
-      <div class="conteiner p-3  m-5">
+    <ul class="list">
+      <li class="media" *ngFor="let treatment of consult?.treatments">
+        <div class="extra">
+          <img
+            src="{{ treatment?.image }}"
+            class="image"
+            alt="tratamiento"
+          />
+          <p class="bg-warning price">{{ treatment?.price }} $</p>
+        </div>
+        <div class="media-body bg-white rounded p-3">
+          <h5 class="bg-info rounded p-2">Tratamiento #1</h5>
+          <p>{{ treatment?.description }}</p>
+        </div>
+      </li>
+    </ul>
 
-      <ul class="list-unstyled p-3 ">
+    <div class="consult-data">
+      <h5>Récipe médico</h5>
+      <p *ngIf="consult?.recipe !== ''">{{ consult?.recipe }}</p>
+      <p *ngIf="consult?.recipe === ''">No posee récipe médico</p>
+    </div>
 
-        <li  class="media">
-          <div class="">
-          <img src="" class="mr-2"
-            alt="donde ta la imagen 2">
-          </div>
-          <div class="media-body bg-white rounded m-3">
-            <h5 class="bg-info rounded"> el titulo de lo que quiero aqui</h5>
-           lo que quiero va aqui y aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-           <h5 class="bg-warning rounded m-3"> el coste de todo</h5>
-        </li>
-
-         <li class="media">
-           <img src="donde ta la imagen" class="mr-2" alt="donde ta la imagen 2">
-           <div class="media-body bg-white rounded m-3">
-             <h5 class="bg-info rounded"> el titulo de lo que quiero aqui</h5>
-             lo que quiero va aqui y aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-             aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-           </div>
-           <h5 class="bg-warning rounded m-3"> el coste de todo</h5>
-         </li>
-           <li class="media">
-             <img src="donde ta la imagen" class="mr-2" alt="donde ta la imagen 2">
-             <div class="media-body bg-white rounded m-3">
-               <h5 class="bg-info rounded"> el titulo de lo que quiero aqui</h5>
-               lo que quiero va aqui y aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-               aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-             </div>
-             <h5 class="bg-warning rounded m-3"> el coste de todo</h5>
-           </li>
-
-      </ul>
-
-      </div>
-
-
-      </ng-container>
+    <div class="buttons">
+      <button class="btn btn-info m-2" type="button" (click)="goBack()">Volver</button>
+      <button class="btn btn-warning m-2" type="button" (click)="onEdit()">Editar</button>
+    </div>
 
   </div>
-
 </div>

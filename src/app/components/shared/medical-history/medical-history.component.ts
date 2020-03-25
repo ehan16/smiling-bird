@@ -55,11 +55,11 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   onEdit(consultId) {
-    this.router.navigate(['consult', consultId, 'edit'], { relativeTo: this.route });
+    this.router.navigate(['../', 'consult', consultId, 'edit'], { relativeTo: this.route });
   }
 
   onSee(consultId) {
-    this.router.navigate(['consult', consultId], { relativeTo: this.route });
+    this.router.navigate(['../', 'consult', consultId], { relativeTo: this.route });
   }
 
   onCreate() {

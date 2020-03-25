@@ -11,19 +11,9 @@
           formControlName="username"
           class="form-control form-field"
         />
-        <span
-          *ngIf="
-            !loginForm.get('username').valid &&
-            loginForm.get('username').touched
-          "
-          class="help-block"
-        >
-          <span *ngIf="loginForm.get('username').errors['required']"
-            >El campo es obligatorio</span
-          >
-          <span *ngIf="loginForm.get('username').errors['email']"
-            >El dato introducido es incorrecto</span
-          >
+        <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched" class="help-block">
+          <span *ngIf="loginForm.get('username').errors['required']">El campo es obligatorio</span>
+          <span *ngIf="loginForm.get('username').errors['email']">El dato introducido es incorrecto</span>
         </span>
       </div>
 
@@ -36,16 +26,8 @@
           formControlName="password"
           class="form-control form-field"
         />
-        <span
-          *ngIf="
-            !loginForm.get('password').valid &&
-            loginForm.get('password').touched
-          "
-          class="help-block"
-        >
-          <span *ngIf="loginForm.get('password').errors['required']"
-            >El campo es obligatorio</span
-          >
+        <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched" class="help-block">
+          <span *ngIf="loginForm.get('password').errors['required']">El campo es obligatorio</span>
         </span>
       </div>
       <div class="m-3">
@@ -55,7 +37,7 @@
       <button
         class="btn btn-warning btn-block"
         type="submit"
-        [disabled]="!loginForm.get('username').valid || !loginForm.get('password').valid"
+        [disabled]="!loginForm.valid"
       >
         Iniciar sesión
       </button>
