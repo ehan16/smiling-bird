@@ -29,11 +29,11 @@ export class PaymentComponent implements OnInit {
   dentistId: string;
   product = {
     price: 777.77,
-    description: 'used couch, decent condition',
-    img: 'assets/couch.jpg'
+    description: 'cita dentista, tratamiento realizado'
   };
 
   paidFor = false;
+  seePaypal = false;
 
   constructor(
     private userService: UserService,
@@ -154,6 +154,10 @@ export class PaymentComponent implements OnInit {
 
   }
 
+  activatePaypal(){
+    document.getElementById('containerPaypal').style.display = "block";
+  }
+
   selectMethod(method: 'zelle' | 'paypal' | 'transferencia', dentistId) {
     this.method = method;
     this.dentistId = dentistId;
@@ -170,6 +174,7 @@ export class PaymentComponent implements OnInit {
       }
 
     } else {
+      this.seePaypal = true;
 
     }
   }
