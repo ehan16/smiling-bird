@@ -86,7 +86,7 @@
 
                     <div class="modal-body px-sm-5">
                       <ul class="list-group m-3" *ngIf="method === 'transferencia'">
-                        <li class="list-group-item list-group-item-light" *ngFor="let bankAccount of dentist?.payment?.bankAccounts">{{ bankAccount?.bank }} - {{ bankAccount?.account }}</li>
+                        <li class="list-group-item list-group-item-info" *ngFor="let bankAccount of dentist?.payment?.bankAccounts">{{ bankAccount?.bank }} - {{ bankAccount?.account }}</li>
                       </ul>
                       <form [formGroup]="voucherForm" (ngSubmit)="onSubmit()">
                         <div class="form-group mt-3">
