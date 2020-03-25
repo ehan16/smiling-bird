@@ -23,15 +23,17 @@ export class PaymentComponent implements OnInit {
   currentUser: User;
   dentistIdList = [];
   dentistList = [];
+  dentistPayments = [];
   userList = [];
   voucherForm: FormGroup;
   method: string;
   dentistId: string;
   product = {
-    price: 777.77,
-    description: 'used couch, decent condition',
+    price: 30,
+    description: 'Consulta médica en Smiling Bird',
     img: 'assets/couch.jpg'
   };
+  order;
 
   paidFor = false;
 
@@ -94,10 +96,16 @@ export class PaymentComponent implements OnInit {
 
       for (let dentistId of this.dentistIdList) {
         const dentist = this.userList.filter(user => user.id === dentistId);
-        this.dentistList.push(dentist[0]);
+        this.firestoreService.getValue(dentistId, 'dentist-extra').subscribe(methods =>{
+          const dentistData = {
+            data: dentist[0],
+            payment: methods
+          };
+          this.dentistList.push(dentistData);
+          console.log(dentistData);
+        });
       }
 
-      console.log(this.dentistList);
 
     });
 
@@ -116,12 +124,13 @@ export class PaymentComponent implements OnInit {
         });
       },
       onApprove: async (data, actions) => {
-        const order = await actions.order.capture();
+        this.order = await actions.order.capture();
         this.paidFor = true;
-        console.log(order);
+        console.log(this.order);
       },
       onError: err => {
         console.log(err);
+        window.alert(err);
       }
     })
 
@@ -150,6 +159,8 @@ export class PaymentComponent implements OnInit {
       dentist: this.dentistId
     };
 
+    const newDebt = this.currentUser.debt - this.voucherForm.value.amount;
+    this.updateDebt(newDebt);
     this.firestoreService.create(paymentData, 'payments');
 
   }
@@ -170,8 +181,15 @@ export class PaymentComponent implements OnInit {
       }
 
     } else {
-
     }
+  }
+
+  paypalPayment(order) {
+
+  }
+
+  updateDebt(newDebt) {
+    this.firestoreService.update(this.authService.id, { debt: newDebt }, 'users');
   }
 
 }

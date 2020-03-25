@@ -19,6 +19,7 @@ import { PaymentAccounts } from 'src/app/models/payment-accounts.model';
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
+
   editForm: FormGroup;
   currentUser: User;
   dentistExtra: PaymentAccounts;

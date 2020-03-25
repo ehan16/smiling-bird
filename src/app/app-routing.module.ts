@@ -6,9 +6,9 @@ import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
 import { HomeComponent } from './components/shared/home/home.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
-import { ProfileComponent } from './components/shared/profile/profile.component';
-import { ProfileDetailComponent } from './components/shared/profile/profile-detail/profile-detail.component';
-import { ProfileEditComponent } from './components/shared/profile/profile-edit/profile-edit.component';
+import { ProfileComponent } from './components/shared/medical-history/profile/profile.component';
+import { ProfileDetailComponent } from './components/shared/medical-history/profile/profile-detail/profile-detail.component';
+import { ProfileEditComponent } from './components/shared/medical-history/profile/profile-edit/profile-edit.component';
 import { PatientViewComponent } from './components/patient/patient-view/patient-view.component';
 import { PaymentComponent } from './components/patient/patient-view/payment/payment.component';
 import { DentistViewComponent } from './components/doctor/dentist-view/dentist-view.component';
@@ -28,20 +28,23 @@ import { ReportesComponent } from './components/doctor/dentist-view/reportes/rep
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
+
   {path: 'visitor', component: VisitorViewComponent, children: [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'signup', component: SignUpComponent},
     {path: 'forgot-password', component: ForgotPasswordComponent}
   ]},
+
   {path: 'patient/:patientId', component: PatientViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: HomeComponent},
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
-    {path: 'consult/:consultId', component: ConsultDetailComponent},
+    {path: 'medical-record/consult/:consultId', component: ConsultDetailComponent},
     {path: 'payment', component: PaymentComponent},
     {path: 'Reportes', component: ReportesComponent}
   ]},
+
   {path: 'dentist/:id', component: DentistViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: DentistDashComponent},
     {path: 'patient-list', component: UsersListComponent},
@@ -51,16 +54,19 @@ const appRoutes: Routes = [
     {path: 'patient-list/:patientId/consult/:consultId/edit', component: ConsultEditComponent},
     {path: 'patient-list/:patientId/message', component: MessageComponent},
   ]},
+
   {path: 'admin/:id', component: AdminViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
     {path: 'user-edit/:editedId', component: UserEditComponent},
     {path: 'user-list/new-user', component: NewUserComponent}
   ]},
+
   {path: ':userType/:id/profile', component: ProfileComponent, canActivate: [AuthGuard], children: [
     {path: '', component: ProfileDetailComponent},
     {path: 'edit', component: ProfileEditComponent}
   ]},
+
   {path: '**', redirectTo: ''}
 ];
 

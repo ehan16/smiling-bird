@@ -1,11 +1,11 @@
 <div class="row m-0">
   <div class="banner font-title">
-    <p *ngIf="currentUser.type === 'patient'">Odontólogos</p>
-    <p *ngIf="currentUser.type === 'dentist'">Pacientes</p>
-    <p *ngIf="currentUser.type === 'admin'">Usuarios</p>
+    <p *ngIf="currentUser?.type === 'patient'">Odontólogos</p>
+    <p *ngIf="currentUser?.type === 'dentist'">Pacientes</p>
+    <p *ngIf="currentUser?.type === 'admin'">Usuarios</p>
   </div>
 
-  <div class="w-100 px-4 mt-4" *ngIf="currentUser.type === 'patient'">
+  <div class="w-100 px-4 mt-4" *ngIf="currentUser?.type === 'patient'">
     <app-appointments></app-appointments>
     <hr>
   </div>
@@ -24,7 +24,7 @@
     <div
       class="w-100"
       id="accordion"
-      *ngIf="currentUser.type === 'patient'; else listView"
+      *ngIf="currentUser.type === 'patient'"
     >
       <div
         class="card"
@@ -182,10 +182,10 @@
 
     <!-- Another list -->
 
-    <ng-container #listView>
+    <ng-container *ngIf="currentUser?.type === 'admin' || currentUser?.type === 'dentist'">
 
       <div class="row">
-        <button class="btn btn-success m-4" (click)="newUser()">Agregar {{ currentUser.type === 'admin' ? 'usuario' : 'paciente' }}</button>
+        <button class="btn btn-success m-4" (click)="newUser()">Agregar {{ currentUser?.type === 'admin' ? 'usuario' : 'paciente' }}</button>
       </div>
 
       <table class="table table-responsive-md list">
@@ -206,19 +206,19 @@
             <td class="text-capitalize">{{ user?.type }}</td>
             <td class="text-center">
               <a
-                *ngIf="currentUser.type === 'dentist'"
+                *ngIf="currentUser?.type === 'dentist'"
                 class="mx-2"
                 (click)="seeMedicalHistory(user.id)"
                 ><i class="fas fa-book"></i
               ></a>
               <a
-                *ngIf="currentUser.type === 'dentist'"
+                *ngIf="currentUser?.type === 'dentist'"
                 class="mx-2"
                 (click)="sendMessage(user, user.id)"
                 ><i class="fas fa-envelope"></i
               ></a>
               <a
-                *ngIf="currentUser.type === 'admin'"
+                *ngIf="currentUser?.type === 'admin'"
                 class="mx-2"
                 (click)="editUser(user.id)"
                 ><i class="fas fa-user-edit"></i

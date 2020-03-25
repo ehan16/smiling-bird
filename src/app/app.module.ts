@@ -13,8 +13,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
-import { ProfileComponent } from './components/shared/profile/profile.component';
-import { ProfileEditComponent } from './components/shared/profile/profile-edit/profile-edit.component';
+import { ProfileComponent } from './components/shared/medical-history/profile/profile.component';
+import { ProfileEditComponent } from './components/shared/medical-history/profile/profile-edit/profile-edit.component';
 import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
 import { UsersListComponent } from './components/shared/users-list/users-list.component';
 import { UserEditComponent } from './components/shared/user-edit/user-edit.component';
@@ -23,7 +23,7 @@ import { ConsultDetailComponent } from './components/shared/medical-history/cons
 import { LoginComponent } from './components/shared/login/login.component';
 import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
 import { HomeComponent } from './components/shared/home/home.component';
-import { ProfileDetailComponent } from './components/shared/profile/profile-detail/profile-detail.component';
+import { ProfileDetailComponent } from './components/shared/medical-history/profile/profile-detail/profile-detail.component';
 
 import { UserService } from './services/user.service';
 import { AdminViewComponent } from './components/admin/admin-view/admin-view.component';
@@ -76,13 +76,13 @@ import { ReportesComponent } from './components/doctor/dentist-view/reportes/rep
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbCarouselModule,
-    NgbDatepickerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
     NgxPayPalModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    NgbCarouselModule,
+    NgbDatepickerModule
   ],
   providers: [UserService, AuthService],
   bootstrap: [AppComponent]

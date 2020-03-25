@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
+
   userList = [];
   currentUser: User;
   searchName: string;
@@ -39,12 +40,6 @@ export class UsersListComponent implements OnInit {
     private authService: AuthService
   ) {
     this.currentUser = this.userService.currentUser;
-    // this.authService.getUserData().then(
-    //   (e: User) => {
-    //     console.log('searched user: ', e);
-    //     this.currentUser = e;
-    //   }
-    // );
   }
 
   ngOnInit() {
@@ -84,6 +79,7 @@ export class UsersListComponent implements OnInit {
       );
 
       this.activeAppointment = appointmentList.length >= 1;
+
     });
 
     this.newAppointment = new FormGroup({
@@ -178,9 +174,7 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  occupiedHour(
-    control: FormControl
-  ): {[s: string]: boolean} {
+  occupiedHour(control: FormControl): {[s: string]: boolean} {
 
     let occupied = false;
     const dentistAppointments = this.auxAppointments.filter(

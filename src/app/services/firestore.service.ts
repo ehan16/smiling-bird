@@ -17,10 +17,6 @@ export class FirestoreService {
     this.firestore.collection(collection).doc(documentId).set(data);
   }
 
-  public add(data: any){
-    return this.firestore.collection('alreadymademail').add(data);
-  }
-
   public get(documentId: string, collection: string) {
     return this.firestore.collection(collection).doc(documentId).get();
   }

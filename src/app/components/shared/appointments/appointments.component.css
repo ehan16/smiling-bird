@@ -10,10 +10,6 @@
     background-color: rgb(175, 221, 235);
   }
 
-  .center {
-    width: 100vw;
-  }
-
   .error {
     width: 100%;
     font-size: 0.7rem;

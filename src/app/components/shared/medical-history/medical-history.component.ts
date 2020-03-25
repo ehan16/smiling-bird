@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Appointment } from 'src/app/models/appointment.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-medical-history',
@@ -15,10 +16,19 @@ export class MedicalHistoryComponent implements OnInit {
   currentUser: User;
   medicalRecord = [];
   patient: User;
+  patientId: string;
 
-  constructor(private firestore: FirestoreService, private userService: UserService, private route: ActivatedRoute) { }
+  constructor(
+    private firestore: FirestoreService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private appointmentService: AppointmentService,
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
+    this.currentUser = this.authService.currentUser;
+
     this.firestore.getAll('appointments').subscribe(data => {
       this.medicalRecord = data.map(e => {
         return {
@@ -28,20 +38,15 @@ export class MedicalHistoryComponent implements OnInit {
       });
     });
 
-    // if (this.currentUser.type === 'patient') {
-    //   this.patient = this.currentUser;
-    //   console.log(this.patient);
-    //   this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.userService.currentUserId);
-    //   this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
-    // } else {
     this.route.params.subscribe(
       (param: Params) => {
-        const patientId = param.patientId;
-        this.firestore.getValue(patientId, 'users').subscribe((user: User) => {
+        this.patientId = param.patientId;
+        this.firestore.getValue(this.patientId, 'users').subscribe((user: User) => {
           this.patient = user;
-          this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === patientId);
+          this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.patientId);
           this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
           console.log(this.patient);
+          console.log(this.medicalRecord);
         });
       }
     );
@@ -49,14 +54,36 @@ export class MedicalHistoryComponent implements OnInit {
 
   }
 
-  onEdit(id) {
-
+  onEdit(consultId) {
+    this.router.navigate(['consult', consultId, 'edit'], { relativeTo: this.route });
   }
 
-  onSee(id) {
-
+  onSee(consultId) {
+    this.router.navigate(['consult', consultId], { relativeTo: this.route });
   }
 
+  onCreate() {
 
+    const date = new Date();
+    const currentHour = date.getHours() + Math.round(date.getMinutes() / 60);
+
+    const data = {
+      completed: true,
+      accepted: true,
+      treatments: [],
+      patient: this.patientId,
+      dentist: this.authService.id,
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() - 1,
+        day: date.getDate()
+      },
+      recipe: '',
+      hour: currentHour
+    };
+
+    this.appointmentService.createConsult(data, this.route);
+
+  }
 
 }

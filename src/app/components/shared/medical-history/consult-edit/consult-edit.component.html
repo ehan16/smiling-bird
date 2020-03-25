@@ -29,22 +29,20 @@
             ></textarea>
 
             <div class="custom-file mb-3">
-              <input type="file" formControlName="image" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
-              <label class="custom-file-label" for="inputGroup"></label>
+              <input type="file" formControlName="file" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
+              <label class="custom-file-label" for="inputGroup">{{ filePath[i] }}</label>
               <div>
 
                 <progress
-                class="progress progress-bar-animated mt-2 mb-4"
-                *ngIf="percentage[i] > 0 && percentage[i] < 100"
-                value={{percentage[i]}}
+                class="progress progress-bar-animated mt-2 mb-4 w-100"
+                value="{{ uploadProgress[i] }}"
                 max="100"
-                >{{ percentage[i] }}</progress>
-
+                >{{ uploadProgress[i] }}</progress>
 
               </div>
             </div>
 
-            <div class="form-bottom">
+            <div class="form-bottom mt-3">
               <input type="number" formControlName="price" class="form-control form-field" placeholder="Precio en $">
               <button type="button" class="btn btn-delete w-25" (click)="onDelete(i)">
                 <i class="fas fa-trash"></i>

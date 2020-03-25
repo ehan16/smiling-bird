@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { FirestoreService } from './firestore.service';
 import { User } from '../models/user.model';
+import { UserService } from './user.service';
 
 @Injectable({
     providedIn:  'root'
@@ -17,7 +18,8 @@ export  class  AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private userService: UserService
   ) {
     console.log('auth init');
     this.afAuth.authState.subscribe(user => {
@@ -82,7 +84,14 @@ export  class  AuthService {
       (result) => {
         this.id = result.user.uid;
         console.log('Log in successful');
-        // this.router.navigate(['/home']);
+
+        this.firestoreService.getValue(this.id, 'users').subscribe((user: User) => {
+          this.currentUser = user;
+          this.userService.currentUser = user;
+          console.log('current user: ', this.currentUser);
+          this.router.navigate([this.currentUser.type, this.id]);
+        });
+
       }
     ).catch(
       (error) => {
