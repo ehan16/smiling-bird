@@ -27,11 +27,8 @@ export class UserService {
         } as User;
       });
 
-
-
     });
 
-    console.log(this.userList);
   }
 
   createUser(data: any, id: string) {

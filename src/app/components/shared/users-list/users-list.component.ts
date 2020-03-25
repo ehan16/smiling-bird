@@ -126,7 +126,8 @@ export class UsersListComponent implements OnInit {
       accepted: false,
       treatments: [],
       patient: this.userService.currentUserId,
-      dentist: dentistId
+      dentist: dentistId,
+      recipe: ''
     };
 
     this.appointmentService.createAppointment(app);

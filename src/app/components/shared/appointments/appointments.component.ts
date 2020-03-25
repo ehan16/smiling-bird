@@ -118,10 +118,8 @@ export class AppointmentsComponent implements OnInit {
   }
 
   modifyAppointment(id, appointment) {
-
     console.log(this.appointmentForm);
     this.appointmentService.updateAppointment(this.appointmentForm.value.date, this.appointmentForm.value.hour, appointment, id);
-
   }
 
   deleteAppointment(id) {
@@ -131,7 +129,7 @@ export class AppointmentsComponent implements OnInit {
 
   startAppointment(appointment, id) {
     this.appointmentService.startAppointment(id);
-    this.router.navigate(['/patient', appointment.patient, 'consult', id], { relativeTo: this.route });
+    this.router.navigate(['/patient-list', appointment.patient, 'consult', id, 'edit'], { relativeTo: this.route });
   }
 
   patchValues(appointment: Appointment) {

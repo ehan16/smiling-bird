@@ -7,6 +7,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/shared/header/header.component';
@@ -78,7 +79,8 @@ import { NewUserComponent } from './components/shared/users-list/new-user/new-us
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    AngularFireStorageModule
   ],
   providers: [UserService, AuthService],
   bootstrap: [AppComponent]

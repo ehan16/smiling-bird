@@ -47,10 +47,12 @@ export class ProfileEditComponent implements OnInit {
   ) {
     this.currentUser = this.userService.currentUser;
     console.log(this.currentUser);
-    this.start = this.currentUser.shift[0];
-    this.end = this.currentUser.shift[1];
 
     if (this.currentUser.type === 'dentist') {
+
+      this.start = this.currentUser.shift[0];
+      this.end = this.currentUser.shift[1];
+
       this.firestore.get(this.auth.id, 'dentist-extra').subscribe(accounts => {
         this.dentistExtra = {
           zelle: accounts.data().zelle,
@@ -147,7 +149,7 @@ export class ProfileEditComponent implements OnInit {
 
     } else {
       window.alert(
-        'ACCIÓN INVÁLIDA: la hora de salida es mayor que la hora de entrada'
+        'ACCIÓN INVÁLIDA: la hora de entrada es mayor o igual que la hora de salida'
       );
     }
   }

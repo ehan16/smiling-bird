@@ -1,104 +1,86 @@
 <div class="row m-0 p-5">
-  <form [formGroup]="consultForm" (ngSubmit)="onEdit()">
-    <div class="row">
-      <div class="col-6 form-group">
-        <label for="date" class="font-weight-bold">Fecha</label>
-        <div class="input-group">
-          <input
-            class="form-control"
-            placeholder="yyyy-mm-dd"
-            formControlName="date"
-            id="date"
-            ngbDatepicker
-            #d="ngbDatepicker"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-secondary calendar"
-              (click)="d.toggle()"
-              type="button"
-            >
-              <i class="fas fa-calendar-alt"></i>
-            </button>
-          </div>
-          <span
-            *ngIf="
-              !consultForm.get('date').valid && consultForm.get('date').touched
-            "
-            class="help-block"
-          >
-            <span *ngIf="consultForm.get('date').errors['required']"
-              >El campo es obligatorio</span
-            >
-          </span>
-        </div>
-      </div>
+
+  <div class="wrapper bg-light px-sm-5 py-5">
+
+    <div class="col-12 text-center font-weight-bold m">
+      <h4>{{ patient?.name }}</h4>
     </div>
 
-    <div class="row">
-      <div class="col-6 form-group">
-        <label for="hour" class="d-block">Hora de la cita</label>
-        <input
-          type="number"
-          formControlName="hour"
-          class="form-control form-field"
-        />
+    <form [formGroup]="consultForm" (ngSubmit)="onEdit()">
+
+      <div class="col-12 text-center">
+
+        <h5 class="font-weight-bold">Fecha de la consulta: </h5>
+        <p class="d-block mb-3">{{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</p>
+
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-12" formArrayName="treatments">
-        <div
-          class="row"
-          *ngFor="
-            let control of consultForm.get('treatments');
-            let i = index
-          "
-          [formGroupName]="i"
-        >
-          <div class="col-sm-8">
-            <input
-              type="text"
-              class="form-control form-field"
-              formControlName="description"
-            />
+      <div class="col-12 mt-5">
+
+        <div formArrayName="treatments" *ngFor="let treatment of Treatments.controls; let i = index">
+
+          <div [formGroupName]="i" class="my-3">
+            <h6 class="font-weight-bold my-3">Tratamiento #{{ i + 1 }}</h6>
+            <hr class="mb-2">
+            <textarea cols="30" rows="5"
+            formControlName="description"
+            placeholder="Descripción del tratamiento realizado"
+            class="form-control form-field my-3"
+            ></textarea>
+
+            <div class="custom-file mb-3">
+              <input type="file" formControlName="image" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
+              <label class="custom-file-label" for="inputGroup"></label>
+              <div>
+
+                <progress
+                class="progress progress-bar-animated mt-2 mb-4"
+                *ngIf="percentage[i] > 0 && percentage[i] < 100"
+                value={{percentage[i]}}
+                max="100"
+                >{{ percentage[i] }}</progress>
+
+
+              </div>
+            </div>
+
+            <div class="form-bottom">
+              <input type="number" formControlName="price" class="form-control form-field" placeholder="Precio en $">
+              <button type="button" class="btn btn-delete w-25" (click)="onDelete(i)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <hr>
           </div>
 
-          <div class="col-sm-4">
-            <input
-              type="number"
-              class="form-control form-field"
-              formControlName="price"
-            />
-          </div>
-
-          <div class="col-sm-10">
-            <input
-              type="file"
-              accept=" .png, .jpg"
-              (change)="onUpload($event)"
-            />
-          </div>
-
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-danger" (click)="onDelete(i)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
         </div>
 
-        <hr />
-        <div class="row">
-          <div class="col-xs-12">
-            <button type="button" class="btn btn-success" (click)="onAdd()">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
       </div>
-    </div>
-    <div class="row m-4">
-      <button class="btn btn-warning btn-block">Aceptar</button>
-    </div>
-  </form>
+
+      <div class="col-12 my-3" *ngIf="recipeExist">
+        <hr>
+        <h5>Récipe médico</h5>
+        <textarea cols="30" rows="5"
+            formControlName="recipe"
+            class="form-control form-field"
+        ></textarea>
+        <div class="form-bottom">
+          <button type="button" class="btn btn-delete w-25" (click)="onDeleteRecipe()">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <hr>
+      </div>
+
+      <div class="row m-3">
+        <button type="button" class="btn btn-success btn-block my-2" (click)="createTreatment()">Añadir tratamiento</button>
+        <button type="button" class="btn btn-success btn-block my-2" (click)="addRecipe()" [disabled]="recipeExist">Añadir récipe</button>
+        <button class="btn btn-warning btn-block">Aceptar</button>
+      </div>
+
+    </form>
+
+
+  </div>
+
 </div>

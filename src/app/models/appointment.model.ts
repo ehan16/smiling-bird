@@ -12,4 +12,5 @@ export class Appointment {
   public completed: boolean;
   public accepted: boolean;
   public treatments = [];
+  public recipes: string;
 }

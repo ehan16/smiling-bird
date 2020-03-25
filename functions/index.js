@@ -9,14 +9,15 @@ const {SENDER_EMAIL,SENDER_PASSWORD} = process.env;
 
  exports.sendEmailNotification = functions.firestore.document('alreadymademail/{docId}').onCreate((snap,ctx)=>{
      const data = snap.data();
+     console.log('data', data);
 
      let autData=nodemailer.createTransport({
          host:'smtp/gmail.com',
          port:465,
          secure:true,
          auth:{
-             user:SENDER_EMAIL,
-             pass:SENDER_PASSWORD
+             user:'smiling.bird.clinic@gmail.com',
+             pass:'bziyokcbfovbqhtu'
          }
      });
 

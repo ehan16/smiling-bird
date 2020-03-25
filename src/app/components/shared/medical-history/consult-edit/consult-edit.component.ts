@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { Appointment } from 'src/app/models/appointment.model';
+import { UserService } from 'src/app/services/user.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
+import { User } from 'src/app/models/user.model';
+import { throwIfEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consult-edit',
@@ -9,25 +16,52 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 })
 export class ConsultEditComponent implements OnInit {
 
+  allowedExtensions = ['png', 'jpg', 'jpeg'];
   consultForm: FormGroup;
-  treatments: FormArray;
+  treatments = new FormArray([]);
+  oldPrice: number;
+  consult: Appointment;
+  patient: User;
+  recipeExist = false;
 
-  constructor(private formBuilder: FormBuilder, private appService: AppointmentService) { }
+
+  filePath = [];
+  fileUrl = [];
+  ref = [];
+  percentage = [];
+  finished = [];
+  uploadProgress = [];
+  files = [];
+  task = [];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private firestoreService: FirestoreService,
+    private fireStorageService: FirebaseStorageService) { }
 
   ngOnInit() {
 
-    // this.consultForm = new FormGroup({
-    //   date: new FormControl('', [Validators.required,this.invalidDate.bind(this)]),
-    //   hour: new FormControl('', [Validators.required, Validators.min(8), Validators.max(16)]),
-    //   price: new FormControl('', [Validators.required, Validators.min(1)]),
-    //   description: new FormControl('', Validators.required),
-    //   treatments: new FormArray([])
-    // });
     this.consultForm = this.formBuilder.group({
-      date: ['', [Validators.required, this.invalidDate.bind(this)]],
-      hour: ['', [Validators.required, Validators.min(1)]],
-      treatments: this.formBuilder.array([this.createTreatment()])
+      treatments: this.treatments
     });
+
+    this.route.params.subscribe(
+      (param: Params) => {
+        let appointmentId = param['consultId'];
+        this.firestoreService.getValue(appointmentId, 'appointments').subscribe((appointment: Appointment) => {
+          this.consult = appointment;
+          console.log('La consulta es ', this.consult);
+        });
+
+        let patientId = param['patientId'];
+        this.firestoreService.getValue(patientId, 'users').subscribe((patient: User) => {
+          this.patient = patient;
+          console.log('El paciente es ', this.patient);
+        });
+      }
+    );
 
   }
 
@@ -36,28 +70,34 @@ export class ConsultEditComponent implements OnInit {
   }
 
   onDelete(index) {
-    (this.consultForm.get('ingredients') as FormArray).removeAt(index);
+    (this.consultForm.get('treatments') as FormArray).removeAt(index);
   }
 
-  createTreatment(): FormGroup {
-    return this.formBuilder.group({
-      description: '',
-      price: ''
-    });
-  }
+  createTreatment() {
+    const treatments = this.consultForm.get('treatments') as FormArray;
 
-   onAdd() {
-     console.log('Ya');
-     (this.consultForm.get('treatments') as FormArray).push(
-       new FormGroup({
-         description: new FormControl('', Validators.required),
-         price: new FormControl(0, [Validators.required, Validators.min(1)]),
-     })
+    treatments.push(
+      this.formBuilder.group({
+        description: ['', Validators.required],
+        price: ['', [Validators.required, Validators.min(1)]],
+        image: [null, []]
+      })
     );
+
   }
 
-  onUpload(event: Event) {
+  get Treatments() {
+    return this.consultForm.get('treatments') as FormArray;
+  }
 
+  onFileChange(event, i: number) {
+    console.log(event);
+    this.files[i] = event.target.files[0];
+    this.filePath[i] = this.files[i].name;
+    this.ref[i] = this.fireStorageService.referenceCloudStorage(this.filePath[i]);
+    this.task[i] = this.ref[i].put(this.files[i]);
+    this.uploadProgress[i] = this.task[i].percentageChanges();
+    this.fileUrl[i] = this.task[i].downloadURL();
   }
 
   invalidDate(control: FormControl): { [s: string]: boolean } {
@@ -69,6 +109,16 @@ export class ConsultEditComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  addRecipe() {
+    this.consultForm.addControl('recipe', new FormControl(''));
+    this.recipeExist = true;
+  }
+
+  onDeleteRecipe() {
+    this.consultForm.removeControl('recipe');
+    this.recipeExist = false;
   }
 
 }

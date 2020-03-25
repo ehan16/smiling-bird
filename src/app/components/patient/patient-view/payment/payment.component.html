@@ -139,7 +139,7 @@
             </div>
 
             <div class="form-group">
-              <label>Monto:</label>
+              <label>Monto ($):</label>
               <input type="number" class="form-control form-field" formControlName="amount">
               <span *ngIf="!voucherForm.get('amount').valid && voucherForm.get('amount').touched" class="help-block">
                 <span *ngIf="voucherForm.get('amount').errors['required']">El campo es obligatorio</span>

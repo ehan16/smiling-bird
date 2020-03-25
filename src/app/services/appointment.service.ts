@@ -51,7 +51,8 @@ export class AppointmentService {
         year: newDate.year,
         month: newDate.month,
         day: newDate.day
-      }
+      },
+      recipe: oldAppointment.recipe
     };
 
     this.firestore.setValue(appointmentId, appointment, 'appointments');

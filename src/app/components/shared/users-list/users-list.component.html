@@ -182,7 +182,7 @@
 
     <!-- Another list -->
 
-    <ng-template #listView>
+    <ng-container #listView>
 
       <div class="row">
         <button class="btn btn-success m-4" (click)="newUser()">Agregar {{ currentUser.type === 'admin' ? 'usuario' : 'paciente' }}</button>
@@ -227,7 +227,7 @@
           </tr>
         </tbody>
       </table>
-    </ng-template>
+    </ng-container>
 
   </div>
 </div>

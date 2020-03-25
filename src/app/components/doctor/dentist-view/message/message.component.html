@@ -12,9 +12,7 @@
             (change)="changedMessage($event)"
             formControlName="pre"
           >
-            <option *ngFor="let message of savedMessages">{{
-              message?.title
-            }}</option>
+            <option *ngFor="let message of savedMessages">{{ message?.title }}</option>
           </select>
           <button
             type="button"
