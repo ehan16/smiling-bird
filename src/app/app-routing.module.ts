@@ -24,6 +24,7 @@ import { NewUserComponent } from './components/shared/users-list/new-user/new-us
 import { ConsultEditComponent } from './components/shared/medical-history/consult-edit/consult-edit.component';
 import { AuthGuard } from './guard/auth.guard';
 import { AdminAuthGuard } from './guard/admin-auth.guard';
+import { ReportesComponent } from './components/doctor/dentist-view/reportes/reportes.component';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'consult/:consultId', component: ConsultDetailComponent},
     {path: 'payment', component: PaymentComponent},
+    {path: 'Reportes', component: ReportesComponent}
   ]},
   {path: 'dentist/:id', component: DentistViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: DentistDashComponent},
