@@ -12,7 +12,6 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./medical-history.component.css']
 })
 export class MedicalHistoryComponent implements OnInit {
-
   currentUser: User;
   medicalRecord = [];
   patient: User;
@@ -24,45 +23,54 @@ export class MedicalHistoryComponent implements OnInit {
     private router: Router,
     private appointmentService: AppointmentService,
     private authService: AuthService
-    ) { }
+  ) {}
 
   ngOnInit() {
     this.currentUser = this.authService.currentUser;
 
-    this.firestore.getAll('appointments').subscribe(data => {
-      this.medicalRecord = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        } as Appointment;
-      });
-    });
+    this.route.params.subscribe((param: Params) => {
+      this.patientId = param['patientId'];
+      console.log(this.patientId);
 
-    this.route.params.subscribe(
-      (param: Params) => {
-        this.patientId = param['patientId'];
-        this.firestore.getValue(this.patientId, 'users').subscribe((user: User) => {
+      if (this.currentUser.type === 'patient') {
+        this.patientId = this.authService.id;
+      }
+
+      this.firestore.getValue(this.patientId, 'users').subscribe((user: User) => {
           this.patient = user;
-          this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.patientId);
-          this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
+
+          this.firestore.getAll('appointments').subscribe(data => {
+            this.medicalRecord = data.map(e => {
+              return {
+                id: e.payload.doc.id,
+                ...e.payload.doc.data()
+              } as Appointment;
+            });
+
+            this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.patientId);
+            this.medicalRecord = this.medicalRecord.filter(appointment => appointment.completed === true);
+          });
+
           console.log(this.patient);
           console.log(this.medicalRecord);
         });
-      }
-    );
+    });
 
   }
 
   onEdit(consultId) {
-    this.router.navigate(['../', 'consult', consultId, 'edit'], { relativeTo: this.route });
+    this.router.navigate(['../', 'consult', consultId, 'edit'], {
+      relativeTo: this.route
+    });
   }
 
   onSee(consultId) {
-    this.router.navigate(['../', 'consult', consultId], { relativeTo: this.route });
+    this.router.navigate(['../', 'consult', consultId], {
+      relativeTo: this.route
+    });
   }
 
   onCreate() {
-
     const date = new Date();
     const currentHour = date.getHours() + Math.round(date.getMinutes() / 60);
 
@@ -82,7 +90,5 @@ export class MedicalHistoryComponent implements OnInit {
     };
 
     this.appointmentService.createConsult(data, this.route);
-
   }
-
 }
