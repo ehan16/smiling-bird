@@ -4,6 +4,7 @@ import { FirestoreService } from './firestore.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
+
 @Injectable()
 export class UserService {
   currentUser: User;
@@ -24,6 +25,17 @@ export class UserService {
 
     });
 
+  }
+  setUserLoggedIn(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getUserLoggedIn() {
+    if (localStorage.getItem('user')) {
+      JSON.parse(localStorage.getItem('user'));
+    } else {
+      console.log('vacio');
+    }
   }
 
   createUser(data: any, id: string) {

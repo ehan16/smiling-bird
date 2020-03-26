@@ -13,10 +13,12 @@ export class DentistDashComponent implements OnInit {
   currentUser: User;
 
   constructor(private userService: UserService, private authService: AuthService) {
+
     this.currentUser = this.authService.currentUser;
   }
 
   ngOnInit() {
+
   }
 
 }

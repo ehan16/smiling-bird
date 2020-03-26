@@ -24,7 +24,11 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     protected auth: AuthService,
   ) {
+    if(this.auth.isAuthenticated == false)
     this.currentUser = this.userService.currentUser;
+    else{
+      this.currentUser = JSON.parse(localStorage.getItem('user'));
+    }
     this.currentId = this.auth.id;
   }
 

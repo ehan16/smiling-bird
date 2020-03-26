@@ -21,31 +21,51 @@ export  class  AuthService {
     private firestoreService: FirestoreService,
     private userService: UserService
   ) {
-    console.log('auth init');
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.user = user;
-        this.id = user.uid;
-        // this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
-        //   (e: User) => {
-        //     this.currentUser = e;
-        //     this.userService.currentUser = e;
-        //     console.log('user id is ', this.id, 'and the user is ', this.currentUser);
-        //   }
-        // );
+ //   console.log('auth init');
+  //   this.afAuth.authState.subscribe(user => {
+  //     if (user) {
+  //       this.user = user;
+  //       this.id = user.uid;
+  //       // this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
+  //       //   (e: User) => {
+  //       //     this.currentUser = e;
+  //       //     this.userService.currentUser = e;
+  //       //     console.log('user id is ', this.id, 'and the user is ', this.currentUser);
+  //       //   }
+  //       // );
 
-        // this.firestoreService.getValue(user.uid, 'users').subscribe((userData: User) => {
-        //   this.currentUser = userData;
-        //   this.userService.currentUser = userData;
-        // });
-        localStorage.setItem('user', JSON.stringify(this.user));
-      } else {
-        localStorage.setItem('user', null);
-      }
-    });
-
+  //       // this.firestoreService.getValue(user.uid, 'users').subscribe((userData: User) => {
+  //       //   this.currentUser = userData;
+  //       //   this.userService.currentUser = userData;
+  //       // });
+  //   //    localStorage.setItem('user', JSON.stringify(this.user));
+  //   //  } else {
+  //  //     localStorage.setItem('user', null);
+  //     }
+  //   });
+    this.checkLocalStorage();
+    
   }
 
+  checkLocalStorage() {
+    if (!localStorage.getItem('user')) {
+      this.getDataFromFirebase();
+    } else {
+      console.log('localStorage ready!');
+    }
+  }
+
+  getDataFromFirebase() {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.user = user; 
+        console.log('Authenticated');
+        this.userService.setUserLoggedIn(this.user); 
+      } else {
+        console.log('Not authenticated');
+      }
+    });
+  }
 
   doRegister(email, password) {
     return new Promise<any>(
@@ -72,6 +92,7 @@ export  class  AuthService {
           this.currentUser = user;
           if ( user.enable ) {
             this.userService.currentUser = user;
+            this.userService.setUserLoggedIn(user);
             console.log('current user: ', this.currentUser);
             this.router.navigate([this.currentUser.type, this.id]);
           } else {
