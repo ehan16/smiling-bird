@@ -1,3 +1,13 @@
+.row{
+  background-image: url(../../../../../assets/background/dentist.jpg);
+  background-size: cover;
+}
+
+.margin{
+  margin-top: 13vh;
+  margin-bottom: 13vh;
+}
+
 span {
   font-size: 0.7rem;
 }

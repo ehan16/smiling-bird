@@ -1,3 +1,13 @@
+.row{
+  background-image: url(../../../../../assets/background/doctor.jpg);
+  background-size: cover;
+}
+
+.margin{
+  margin-top: 13vh;
+  margin-bottom: 13vh;
+}
+
 .register-form {
   padding-top: 20vh;
   padding-bottom: 20vh;
