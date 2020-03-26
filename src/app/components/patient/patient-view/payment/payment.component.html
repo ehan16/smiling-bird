@@ -37,9 +37,9 @@
 
             <div class="row justify-content-center" *ngIf="dentist?.payment">
 
-              <div class="col-sm-4" *ngIf="dentist?.payment?.paypal">
+
                 <!-- overlay paypal -->
-                <div class="container">
+                <div class="col-sm-4">
                   <img src="../../../../assets/logo/paypal.png" alt="Paypal" class="image">
                   <div class="middle">
                     <button class="btn btn-info" (click)="activatePaypal();selectMethod('paypal', dentist.data.id)"
@@ -48,7 +48,7 @@
                   </div>
                 </div>
                 <!-- end overlay -->
-              </div>
+
 
               <div class="col-sm-4" *ngIf="dentist?.payment?.zelle">
                 <!-- overlay zelle -->

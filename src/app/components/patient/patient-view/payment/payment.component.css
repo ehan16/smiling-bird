@@ -15,6 +15,7 @@
 .card-data {
   background-color: rgb(255, 251, 202);
   border-radius: 25px;
+  margin-bottom: 10px;
 }
 
 .container {
