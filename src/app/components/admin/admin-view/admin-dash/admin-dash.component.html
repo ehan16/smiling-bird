@@ -1,14 +1,14 @@
-<div class="m-5 p-4">
+<div class="graphs">
 
   <div class="row">
 
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="card card-stats">
+      <div class="card">
         <div class="card-body ">
           <div class="row">
             <div class="col-5 col-md-4">
               <div class="icon text-center">
-                <i class="fas fa-dollar-sign text-success"></i>
+                <img src="../../../../../assets/extra/dollar.png" class="icon" alt="dollar">
               </div>
             </div>
             <div class="col-7 col-md-8">
@@ -23,17 +23,17 @@
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="card card-stats">
+      <div class="card">
         <div class="card-body ">
           <div class="row">
             <div class="col-5 col-md-4">
               <div class="icon-big text-center icon-warning">
-                <i class="fas fa-notes-medical text-success"></i>
+                <img src="../../../../../assets/extra/appointment-icon.png" class="icon" alt="appointments">
               </div>
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">CITAS ACTIVAS</p>
+                <p class="card-category">CITAS ACT.</p>
                 <p class="card-title">{{ totalActiveApp }}</p>
               </div>
             </div>
@@ -43,12 +43,12 @@
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="card card-stats">
+      <div class="card">
         <div class="card-body ">
           <div class="row">
             <div class="col-5 col-md-4">
               <div class="icon-big text-center icon-warning">
-                <i class="fas fa-user text-danger"></i>
+                <img src="../../../../../assets/extra/user-icon.png" class="icon" alt="user icon">
               </div>
             </div>
             <div class="col-7 col-md-8">
@@ -63,17 +63,17 @@
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="card card-stats">
+      <div class="card">
         <div class="card-body ">
           <div class="row">
             <div class="col-5 col-md-4">
               <div class="icon-big text-center icon-warning">
-                <i class="fas fa-user-md text-primary"></i>
+                <img src="../../../../../assets/extra/dentist-icon.png" class="icon" alt="dentist">
               </div>
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">ODONTÓLOGOS</p>
+                <p class="card-category">DENTISTAS</p>
                 <p class="card-title">{{ totalDentist }}</p>
               </div>
             </div>
@@ -86,38 +86,28 @@
 
 
   <div class="date-range">
+    <form [formGroupName]="dateRangeForm" (ngSubmit)="selectDateRange()" class="date-form">
 
-    <div class="form-group dateInput">
-      <label
-        class="font-weight-bold"
-        >Fecha</label>
-      <div class="input-group">
-        <input
-          class="form-control form-field"
-          ngbDatepicker
-          #d="ngbDatepicker"
-        />
+      <div class="input-group w-50 m-2">
+        <input type="date" class="form-control form-field w-75">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt"></i></button>
+          <button class="btn btn-warning" type="button">
+            <i class="fas fa-calendar-alt"></i>
+          </button>
         </div>
       </div>
-    </div>
-
-    <div class="form-group dateInput">
-      <label
-        class="font-weight-bold"
-        >Fecha</label>
-      <div class="input-group">
-        <input
-          class="form-control form-field"
-          ngbDatepicker
-          #d="ngbDatepicker"
-        />
+      <div class="input-group w-50 m-2">
+        <input type="date" class="form-control form-field w-75">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt"></i></button>
+          <button class="btn btn-warning" type="button">
+            <i class="fas fa-calendar-alt"></i>
+          </button>
         </div>
       </div>
-    </div>
+
+      <button type="submit" class="btn btn-info m-2 w-50">Evaluar</button>
+
+    </form>
 
   </div>
 
@@ -130,12 +120,10 @@
           <p class="card-category">POR RANGO DE FECHA</p>
         </div>
         <div class="card-body ">
-          <canvas id="chartAppDate" width="400" height="100"></canvas>
+          <canvas id="chartAppDate" width="400" height="200"></canvas>
         </div>
         <div class="card-footer ">
           <hr />
-          <div class="stats">
-          </div>
         </div>
       </div>
     </div>
@@ -151,12 +139,10 @@
           <p class="card-category">POR ODONTÓLOGO</p>
         </div>
         <div class="card-body">
-          <canvas id="chartDentist" width="400" height="100"></canvas>
+          <canvas id="chartDentist" width="400" height="200"></canvas>
         </div>
         <div class="card-footer ">
           <hr />
-          <div class="stats">
-          </div>
         </div>
       </div>
 
@@ -178,8 +164,8 @@
         </div>
         <div class="card-footer ">
           <div class="legend">
-            <i class="fa fa-circle text-warning"></i> Finalizada
             <i class="fa fa-circle text-info"></i> Activa
+            <i class="fa fa-circle text-warning"></i> Finalizada
           </div>
         </div>
       </div>
@@ -192,7 +178,7 @@
           <p class="card-category">ANUALES</p>
         </div>
         <div class="card-body">
-          <canvas id="chartEarnings" width="400" height="100"></canvas>
+          <canvas id="chartEarnings" width="400" height="200"></canvas>
         </div>
         <div class="card-footer">
           <hr />

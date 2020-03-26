@@ -4,6 +4,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { User } from 'src/app/models/user.model';
 import { Appointment } from 'src/app/models/appointment.model';
 import { Payment } from 'src/app/models/payment.model';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dash',
@@ -19,21 +20,24 @@ export class AdminDashComponent implements OnInit {
   public chartAppDate;
   public chartDentist;
   public chartEarnings;
-  allPayments = [];
-  allAppointments = [];
-  allActiveApp = [];
-  allCompleteApp = [];
   allPatients = [];
   allDentist = [];
   totalEarnings = 0;
   totalPatients = 0;
   totalDentist = 0;
-  totalActiveApp = 5;
-  totalCompleteApp = 10;
+  totalActiveApp = 0;
+  dateRangeForm: FormGroup;
+  endDate = new Date();
+  startDate = new Date(this.endDate.getFullYear() + '01-01');
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, private fb: FormBuilder) {}
 
   ngOnInit() {
+
+    this.dateRangeForm = this.fb.group({
+      start: this.startDate,
+      end: this.endDate
+    });
 
     // Busca todos los pacientes y dentistas de la base de datos
     this.firestoreService.getAll('users').subscribe(data => {
@@ -57,83 +61,106 @@ export class AdminDashComponent implements OnInit {
 
     // Busca todas las citas de la base de datos
     this.firestoreService.getAll('appointments').subscribe(data => {
-      this.allAppointments = data.map(e => {
+      const allAppointments = data.map(e => {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Appointment;
       });
-      this.allActiveApp = this.allAppointments.filter(appointment => appointment.completed === false);
-      this.allCompleteApp = this.allAppointments.filter(appointment => appointment.completed === true);
+      const allActiveApp = allAppointments.filter(appointment => appointment.completed === false);
+      const allCompleteApp = allAppointments.filter(appointment => appointment.completed === true);
 
-      console.log('activos', this.allActiveApp);
-      console.log('completados', this.allCompleteApp);
+      console.log('activos', allActiveApp);
+      console.log('completados', allCompleteApp);
 
-      this.totalActiveApp = this.allActiveApp.length;
-      this.totalCompleteApp = this.allCompleteApp.length;
+      this.totalActiveApp = allActiveApp.length;
 
-      this.renderChartStatus();
+      this.renderChartStatus(allCompleteApp.length, this.totalActiveApp);
       this.renderChartAppointmentByDate();
+      console.log('dentists', this.allDentist, 'appointments', allAppointments);
+      this.renderChartDentist(this.allDentist, allAppointments);
 
     });
 
     // Se buscan todos los pagos de la base de datos
     this.firestoreService.getAll('payments').subscribe(data => {
-      this.allPayments = data.map(e => {
+      const allPayments = data.map(e => {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Payment;
       });
-      console.log('pagos', this.allPayments);
+      console.log('pagos', allPayments);
 
-      this.allPayments.forEach(payment => {
-        this.totalEarnings = this.totalEarnings + payment.amount;
-      });
+      this.totalEarnings = this.yearEarnings(allPayments);
+
+      this.renderChartEarnings(allPayments);
 
     });
+
+  }
+
+  appointmentsPerDentist(allDentist: User[], allAppointments: Appointment[]) {
+
+    const names = [];
+    const appointments = [];
+    const colors = [];
+    const border = [];
+
+    for (let i = 0; i < allDentist.length; i ++) {
+
+      const dentist = allDentist[i];
+      const id = dentist.id;
+      names[i] = dentist.name;
+      colors.push('rgba(54, 162, 235, 0.8)');
+      border.push('rgba(54, 162, 235, 1)');
+      const dentistAppointments = allAppointments.filter(appoinment => appoinment.dentist === id);
+      appointments[i] = dentistAppointments.length;
+
+    }
+
+    const data = { names, appointments, colors, border};
+    return data;
+
+  }
+
+  renderChartDentist(allDentist, allAppointments) {
 
     this.canvas = document.getElementById('chartDentist');
     this.ctx = this.canvas.getContext('2d');
     this.chartDentist = new Chart(this.ctx, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: this.appointmentsPerDentist(allDentist, allAppointments).names,
         datasets: [{
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(54, 162, 235, 0.5)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)'
-            ],
+            data: this.appointmentsPerDentist(allDentist, allAppointments).appointments,
+            backgroundColor: this.appointmentsPerDentist(allDentist, allAppointments).colors,
+            borderColor: this.appointmentsPerDentist(allDentist, allAppointments).border,
             borderWidth: 1
         }]
       },
       options: {
         legend: { display: false },
+        toolpit: { enabled: true}
       }
     });
 
-
-
-    this.renderChartEarnings();
-
   }
 
+  earningsByMonth(allPayments): number[] {
+    const today = new Date();
+    let data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    allPayments.forEach(payment => {
+      if (payment.date.year === today.getFullYear()) {
+        const paidMonth = payment.date.month;
+        const amount = payment.amount;
+        data[paidMonth - 1] = data[paidMonth - 1] + amount;
+      }
+    });
+    return data;
+  }
 
-
-  renderChartEarnings() {
+  renderChartEarnings(allPayments) {
 
     this.canvas = document.getElementById('chartEarnings');
     this.ctx = this.canvas.getContext('2d');
@@ -142,7 +169,7 @@ export class AdminDashComponent implements OnInit {
       data: {
         labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
         datasets: [{
-          data: [86, 114, 106, 106, 107, 111, 133, 221, 73, 78, 312, 0],
+          data: this.earningsByMonth(allPayments),
           label: 'Ganancias',
           borderColor: '#3e95cd',
           fill: false
@@ -153,9 +180,15 @@ export class AdminDashComponent implements OnInit {
 
   }
 
-
   selectDateRange() {
-
+    console.log(this.startDate, this.endDate);
+    const start = this.startDate;
+    const end = this.endDate;
+    if ((start > end)) {
+      window.alert('Fechas inválidas');
+    } else {
+      window.alert('Exitoso');
+    }
   }
 
   renderChartAppointmentByDate() {
@@ -176,20 +209,20 @@ export class AdminDashComponent implements OnInit {
         ]
       },
       options: { legend: { display: false },
-      tooltips: { enabled: false },
+      tooltips: { enabled: true },
       }
     });
 
   }
 
-  renderChartStatus() {
+  renderChartStatus(totalComplete, totalActive) {
 
     this.canvas = document.getElementById('chartStatus');
     this.ctx = this.canvas.getContext('2d');
     this.chartStatus = new Chart(this.ctx, {
       type: 'pie',
       data: {
-        labels: [1, 2],
+        labels: ['Finalizadas', 'Activas'],
         datasets: [{
           label: 'status',
           pointRadius: 0,
@@ -199,49 +232,26 @@ export class AdminDashComponent implements OnInit {
             '#4acccd',
           ],
           borderWidth: 0,
-          data: [this.totalCompleteApp, this.totalActiveApp]
+          data: [totalComplete, totalActive]
         }]
       },
       options: {
-        legend: {
-          display: false
-        },
-        pieceLabel: {
-          render: 'percentage',
-          fontColor: ['white'],
-          precision: 2
-        },
-        tooltips: {
-          enabled: false
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              display: false
-            },
-            gridLines: {
-              drawBorder: false,
-              zeroLineColor: 'transparent',
-              color: 'rgba(255,255,255,0.05)'
-            }
-          }],
-          xAxes: [{
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: 'rgba(255,255,255,0.1)',
-              zeroLineColor: 'transparent'
-            },
-            ticks: {
-              display: false,
-            }
-          }]
-        },
+        legend: { display: false },
+        tooltips: { enabled: true },
       }
     });
 
   }
 
+  yearEarnings(allPayments: Payment[]): number {
+    let earning = 0;
+    const today = new Date();
+    allPayments.forEach(payment => {
+      if (payment.date.year === today.getFullYear()){
+        earning = earning + payment.amount;
+      }
+    });
+    return earning;
+  }
+
 }
-
-

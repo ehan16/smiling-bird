@@ -152,8 +152,7 @@ export class PaymentComponent implements OnInit {
       dentist: this.dentistId
     };
 
-    const newDebt = this.currentUser.debt - this.voucherForm.value.amount;
-    this.updateDebt(newDebt);
+    this.updateDebt(this.voucherForm.value.amount);
     this.firestoreService.create(paymentData, 'payments');
     window.alert('El pago ha sido existoso');
 
@@ -189,9 +188,9 @@ export class PaymentComponent implements OnInit {
   paypalPayment(order) {
     const today = new Date();
     const paymentData = {
-      amount: this.voucherForm.value.amount,
-      voucher: '',
-      email: this.currentUser.user,
+      amount: this.product.price,
+      voucher: order.id,
+      email: order['payer'].email_address,
       patient: this.currentUser.name,
       method: this.method,
       date: {
@@ -201,9 +200,13 @@ export class PaymentComponent implements OnInit {
       },
       dentist: this.dentistId
     };
+    this.updateDebt(30);
+    this.firestoreService.create(paymentData, 'payments');
+    window.alert('El pago ha sido existoso');
   }
 
-  updateDebt(newDebt) {
+  updateDebt(paidAmount) {
+    const newDebt = this.currentUser.debt - paidAmount;
     this.firestoreService.update(this.authService.id, { debt: newDebt }, 'users');
   }
 
