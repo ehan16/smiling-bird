@@ -5,7 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Appointment } from 'src/app/models/appointment.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 

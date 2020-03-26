@@ -87,9 +87,13 @@ export  class  AuthService {
 
         this.firestoreService.getValue(this.id, 'users').subscribe((user: User) => {
           this.currentUser = user;
-          this.userService.currentUser = user;
-          console.log('current user: ', this.currentUser);
-          this.router.navigate([this.currentUser.type, this.id]);
+          if ( user.enable ) {
+            this.userService.currentUser = user;
+            console.log('current user: ', this.currentUser);
+            this.router.navigate([this.currentUser.type, this.id]);
+          } else {
+            window.alert('Se encuentra bloqueado');
+          }
         });
 
       }
@@ -139,4 +143,9 @@ export  class  AuthService {
     });
 
   }
+
+  hola() {
+
+  }
+
 }

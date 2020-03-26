@@ -87,7 +87,8 @@ export class UserEditComponent implements OnInit {
   }
 
   enableUser() {
-
+    const newBoolean = !this.editedUser.enable;
+    this.firestore.update(this.editedUserId, { enable: newBoolean }, 'users');
   }
 
 }

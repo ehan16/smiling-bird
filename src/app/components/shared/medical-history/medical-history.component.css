@@ -4,6 +4,10 @@
   min-height: 60vh;
 }
 
+span {
+  font-size: 1.1rem;
+}
+
 tr {
   background-color: transparent;
 }

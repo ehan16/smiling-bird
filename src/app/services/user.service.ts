@@ -27,10 +27,7 @@ export class UserService {
   }
 
   createUser(data: any, id: string) {
-    this.af
-      .collection('users')
-      .doc(id)
-      .set(data);
+    this.af.collection('users').doc(id).set(data);
   }
 
   getUserData(id): any {
