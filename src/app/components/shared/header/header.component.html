@@ -18,69 +18,33 @@
       <li class="fas fa-bars"></li>
     </button>
   </div>
-  <div
-    class="container-menu collapse main-theme"
-    [class.show]="show"
-    [ngClass]="show ? 'opened' : 'none'"
-  >
+  <div class="container-menu collapse main-theme" [class.show]="show" [ngClass]="show ? 'opened' : 'none'">
     <div *ngIf="currentUser">
-      <button
-        class="btnList"
-        [routerLink]="['/patient', currentId, 'dentist-list']"
-        *ngIf="currentUser.type === 'patient'"
-      >
+      <button class="btnList" [routerLink]="['/patient', currentId, 'dentist-list']" *ngIf="currentUser.type === 'patient'">
         Odontólogos
       </button>
-      <button
-        class="btnList"
-        [routerLink]="['/patient', currentId, 'medical-record']"
-        *ngIf="currentUser.type === 'patient'"
-      >
+      <button class="btnList" [routerLink]="['/patient', currentId, 'medical-record']" *ngIf="currentUser.type === 'patient'">
         Historial
       </button>
-      <button
-        class="btnList"
-        [routerLink]="['/patient', currentId, 'payment']"
-        *ngIf="currentUser.type === 'patient'"
-      >
+      <button class="btnList" [routerLink]="['/patient', currentId, 'payment']" *ngIf="currentUser.type === 'patient'">
         Pago
       </button>
-      <button
-        class="btnList"
-        [routerLink]="['/dentist', currentId, 'patient-list']"
-        *ngIf="currentUser.type === 'dentist'"
-      >
+      <button class="btnList" [routerLink]="['/dentist', currentId, 'patient-list']" *ngIf="currentUser.type === 'dentist'">
         Pacientes
       </button>
-      <button
-        class="btnList"
-        [routerLink]="['/dentist', currentId, 'Reportes']"
-        *ngIf="currentUser.type === 'dentist'"
-      >
+      <button class="btnList" [routerLink]="['/dentist', currentId, 'Reportes']" *ngIf="currentUser.type === 'dentist'">
         Reportes
       </button>
-      <button
-        class="btnList"
-        [routerLink]="['/admin', currentId ,'user-list']"
-        *ngIf="currentUser.type === 'admin'"
-      >
+      <button class="btnList" [routerLink]="['/admin', currentId ,'user-list']" *ngIf="currentUser.type === 'admin'">
         Usuarios
       </button>
     </div>
   </div>
   <span class="nav-right">
-    <button
-      class="btnList main-theme"
-      routerLink="/visitor/login"
-      *ngIf="!currentUser"
-    >
+    <button class="btnList main-theme" routerLink="/visitor/login" *ngIf="!currentUser">
       Iniciar sesión
     </button>
-    <button
-      class="btnList"
-      *ngIf="currentUser"
-      (click)="goToProfile()"
-    >
+    <button class="btnList" *ngIf="currentUser" (click)="goToProfile()">
       {{ currentUser.name }}
     </button>
   </span>
