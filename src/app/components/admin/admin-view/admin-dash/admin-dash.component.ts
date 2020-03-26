@@ -18,6 +18,7 @@ export class AdminDashComponent implements OnInit {
   public chartStatus;
   public chartAppDate;
   public chartDentist;
+  public chartEarnings;
   allPayments = [];
   allAppointments = [];
   allActiveApp = [];
@@ -95,52 +96,62 @@ export class AdminDashComponent implements OnInit {
     this.canvas = document.getElementById('chartDentist');
     this.ctx = this.canvas.getContext('2d');
     this.chartDentist = new Chart(this.ctx, {
-
-
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(54, 162, 235, 0.5)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1
+        }]
+      },
+      options: {
+        legend: { display: false },
+      }
     });
 
 
-    var speedCanvas = document.getElementById('chartEarnings');
 
-    var dataFirst = {
-      data: [0, 19, 15, 20, 30, 40, 40, 50, 25, 30, 50, 70],
-      fill: false,
-      borderColor: '#fbc658',
-      backgroundColor: 'transparent',
-      pointBorderColor: '#fbc658',
-      pointRadius: 4,
-      pointHoverRadius: 4,
-      pointBorderWidth: 8,
-    };
-
-    var dataSecond = {
-      data: [0, 5, 10, 12, 20, 27, 30, 34, 42, 45, 55, 63],
-      fill: false,
-      borderColor: '#51CACF',
-      backgroundColor: 'transparent',
-      pointBorderColor: '#51CACF',
-      pointRadius: 4,
-      pointHoverRadius: 4,
-      pointBorderWidth: 8
-    };
-
-    var speedData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [dataFirst, dataSecond]
-    };
-
-    var chartOptions = {
-      legend: {
-        display: false,
-        position: 'top'
-      }
-    };
+    this.renderChartEarnings();
 
   }
 
 
 
+  renderChartEarnings() {
 
+    this.canvas = document.getElementById('chartEarnings');
+    this.ctx = this.canvas.getContext('2d');
+    this.chartEarnings = new Chart(this.ctx, {
+      type: 'line',
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        datasets: [{
+          data: [86, 114, 106, 106, 107, 111, 133, 221, 73, 78, 312, 0],
+          label: 'Ganancias',
+          borderColor: '#3e95cd',
+          fill: false
+        }]
+      },
+      options: {}
+    });
+
+  }
 
 
   selectDateRange() {
@@ -157,10 +168,8 @@ export class AdminDashComponent implements OnInit {
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
         datasets: [{
-          borderColor: '#6bd098',
-          backgroundColor: '#6bd098',
-          pointRadius: 0,
-          pointHoverRadius: 0,
+          borderColor: '#3e95cd',
+          backgroundColor: '#3e95cd',
           borderWidth: 3,
           data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
         },
@@ -168,36 +177,6 @@ export class AdminDashComponent implements OnInit {
       },
       options: { legend: { display: false },
       tooltips: { enabled: false },
-      scales: {
-          yAxes: [{
-            ticks: {
-              fontColor: '#9f9f9f',
-              beginAtZero: false,
-              maxTicksLimit: 5,
-              padding: 20
-            },
-            gridLines: {
-              drawBorder: true,
-              zeroLineColor: '#ccc',
-              color: 'rgba(255,255,255,0.05)'
-            }
-
-          }],
-
-          xAxes: [{
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: true,
-              color: 'rgba(255,255,255,0.1)',
-              zeroLineColor: 'transparent',
-              display: false,
-            },
-            ticks: {
-              padding: 20,
-              fontColor: '#9f9f9f'
-            }
-          }]
-        },
       }
     });
 
