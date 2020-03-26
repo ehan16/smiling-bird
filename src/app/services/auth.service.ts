@@ -29,9 +29,15 @@ export  class  AuthService {
         // this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
         //   (e: User) => {
         //     this.currentUser = e;
+        //     this.userService.currentUser = e;
         //     console.log('user id is ', this.id, 'and the user is ', this.currentUser);
         //   }
         // );
+
+        // this.firestoreService.getValue(user.uid, 'users').subscribe((userData: User) => {
+        //   this.currentUser = userData;
+        //   this.userService.currentUser = userData;
+        // });
         localStorage.setItem('user', JSON.stringify(this.user));
       } else {
         localStorage.setItem('user', null);
@@ -40,29 +46,6 @@ export  class  AuthService {
 
   }
 
-  getUser(userId) {
-    this.firestoreService.get(userId, 'users').subscribe(
-      (user) => {
-        this.currentUser = {
-          name: user.data().name,
-          user: user.data().user,
-          identification: user.data().identification,
-          gender: user.data().gender,
-          type: user.data().type,
-          birth: {
-            year: user.data().date.year,
-            month: user.data().date.month,
-            day: user.data().date.day
-          },
-          enable: user.data().enable,
-          debt: user.data().debt,
-          shift: [ user.data().shift[0], user.data().shift[1] ],
-          comission: user.data().comission,
-          id: userId
-        };
-      }
-    );
-  }
 
   doRegister(email, password) {
     return new Promise<any>(
@@ -137,14 +120,8 @@ export  class  AuthService {
     let use = this.afAuth.auth.currentUser;
 
     use.sendEmailVerification().then( () => {
-      // aqui lo manda
     }).catch((error) => {
-      // por si algo pasa
     });
-
-  }
-
-  hola() {
 
   }
 

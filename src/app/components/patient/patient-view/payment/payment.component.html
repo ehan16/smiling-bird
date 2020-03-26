@@ -39,7 +39,7 @@
 
 
                 <!-- overlay paypal -->
-                <div class="col-sm-4">
+                <div class="col-sm-4" *ngIf="dentist?.payment?.paypal">
                   <img src="../../../../assets/logo/paypal.png" alt="Paypal" class="image">
                   <div class="middle">
                     <button class="btn btn-info" (click)="activatePaypal();selectMethod('paypal', dentist.data.id)"
