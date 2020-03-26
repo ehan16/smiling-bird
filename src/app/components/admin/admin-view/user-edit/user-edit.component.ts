@@ -22,7 +22,6 @@ export class UserEditComponent implements OnInit {
     private firestore: FirestoreService,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
     private auth: AuthService
   ) {
     this.route.params.subscribe(

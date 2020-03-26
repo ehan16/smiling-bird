@@ -25,7 +25,7 @@
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "firebase": "^7.10.0",
-    "ngx-bootstrap": "^5.3.2",
+    "ngx-bootstrap": "^5.5.0",
     "ngx-paypal": "^6.0.1",
     "nodemailer": "^6.4.6",
     "roboto-fontface": "^0.10.0",

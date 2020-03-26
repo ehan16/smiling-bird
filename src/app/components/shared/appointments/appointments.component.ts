@@ -22,7 +22,7 @@ export class AppointmentsComponent implements OnInit {
   today = new Date();
   minDate = new NgbDate(
     this.today.getFullYear(),
-    this.today.getMonth(),
+    this.today.getMonth() + 1,
     this.today.getDate() + 1
   );
   start = 8;

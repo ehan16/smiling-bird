@@ -40,7 +40,7 @@ export class MedicalHistoryComponent implements OnInit {
 
     this.route.params.subscribe(
       (param: Params) => {
-        this.patientId = param.patientId;
+        this.patientId = param['patientId'];
         this.firestore.getValue(this.patientId, 'users').subscribe((user: User) => {
           this.patient = user;
           this.medicalRecord = this.medicalRecord.filter(appointment => appointment.patient === this.patientId);
@@ -50,7 +50,6 @@ export class MedicalHistoryComponent implements OnInit {
         });
       }
     );
-    // }
 
   }
 

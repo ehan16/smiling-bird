@@ -86,26 +86,26 @@
 
 
   <div class="date-range">
-    <form [formGroupName]="dateRangeForm" (ngSubmit)="selectDateRange()" class="date-form">
+    <form [formGroup]="dateRangeForm" (ngSubmit)="selectDateRange()" class="date-form">
 
       <div class="input-group w-50 m-2">
-        <input type="date" class="form-control form-field w-75">
+        <input type="date" class="form-control form-field w-75" formControlName="start">
         <div class="input-group-append">
-          <button class="btn btn-warning" type="button">
+          <button class="btn btn-warning" type="button" [disabled]="true">
             <i class="fas fa-calendar-alt"></i>
           </button>
         </div>
       </div>
       <div class="input-group w-50 m-2">
-        <input type="date" class="form-control form-field w-75">
+        <input type="date" class="form-control form-field w-75" formControlName="end">
         <div class="input-group-append">
-          <button class="btn btn-warning" type="button">
+          <button class="btn btn-warning" type="button" [disabled]="true">
             <i class="fas fa-calendar-alt"></i>
           </button>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-info m-2 w-50">Evaluar</button>
+      <button type="button" class="btn btn-info m-2 w-50" [disabled]="!dateRangeForm.valid" (click)="selectDateRange()">Evaluar</button>
 
     </form>
 
@@ -124,6 +124,7 @@
         </div>
         <div class="card-footer ">
           <hr />
+          <p>{{ startDate | date: 'dd-MM-yyyy' }} al {{ endDate | date: 'dd-MM-yyyy' }}</p>
         </div>
       </div>
     </div>

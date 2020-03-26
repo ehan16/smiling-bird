@@ -4,7 +4,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { User } from 'src/app/models/user.model';
 import { Appointment } from 'src/app/models/appointment.model';
 import { Payment } from 'src/app/models/payment.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dash',
@@ -21,6 +21,7 @@ export class AdminDashComponent implements OnInit {
   public chartDentist;
   public chartEarnings;
   allPatients = [];
+  appointments = [];
   allDentist = [];
   totalEarnings = 0;
   totalPatients = 0;
@@ -28,15 +29,15 @@ export class AdminDashComponent implements OnInit {
   totalActiveApp = 0;
   dateRangeForm: FormGroup;
   endDate = new Date();
-  startDate = new Date(this.endDate.getFullYear() + '01-01');
+  startDate = new Date(this.endDate.getFullYear() + '-' + (this.endDate.getMonth()) + '-01');
 
   constructor(private firestoreService: FirestoreService, private fb: FormBuilder) {}
 
   ngOnInit() {
 
     this.dateRangeForm = this.fb.group({
-      start: this.startDate,
-      end: this.endDate
+      start: [ '', Validators.required],
+      end: ['', Validators.required]
     });
 
     // Busca todos los pacientes y dentistas de la base de datos
@@ -50,10 +51,6 @@ export class AdminDashComponent implements OnInit {
 
       this.allPatients = userList.filter(user => user.type === 'patient');
       this.allDentist = userList.filter(user => user.type === 'dentist');
-
-      console.log('Pacientes', this.allPatients);
-      console.log('Dentistas', this.allDentist);
-
       this.totalDentist = this.allDentist.length;
       this.totalPatients = this.allPatients.length;
 
@@ -67,17 +64,14 @@ export class AdminDashComponent implements OnInit {
           ...e.payload.doc.data()
         } as Appointment;
       });
+      this.appointments = allAppointments;
       const allActiveApp = allAppointments.filter(appointment => appointment.completed === false);
       const allCompleteApp = allAppointments.filter(appointment => appointment.completed === true);
-
-      console.log('activos', allActiveApp);
-      console.log('completados', allCompleteApp);
 
       this.totalActiveApp = allActiveApp.length;
 
       this.renderChartStatus(allCompleteApp.length, this.totalActiveApp);
-      this.renderChartAppointmentByDate();
-      console.log('dentists', this.allDentist, 'appointments', allAppointments);
+      this.renderChartAppointmentByDate(this.appointments, this.startDate, this.endDate);
       this.renderChartDentist(this.allDentist, allAppointments);
 
     });
@@ -90,10 +84,8 @@ export class AdminDashComponent implements OnInit {
           ...e.payload.doc.data()
         } as Payment;
       });
-      console.log('pagos', allPayments);
 
       this.totalEarnings = this.yearEarnings(allPayments);
-
       this.renderChartEarnings(allPayments);
 
     });
@@ -149,7 +141,7 @@ export class AdminDashComponent implements OnInit {
 
   earningsByMonth(allPayments): number[] {
     const today = new Date();
-    let data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     allPayments.forEach(payment => {
       if (payment.date.year === today.getFullYear()) {
         const paidMonth = payment.date.month;
@@ -181,17 +173,41 @@ export class AdminDashComponent implements OnInit {
   }
 
   selectDateRange() {
+    console.log('HOLA');
+    this.startDate = new Date(this.dateRangeForm.value.start);
+    this.startDate.setDate(this.startDate.getDate() + 1);
+    this.endDate = new Date(this.dateRangeForm.value.end);
+    this.endDate.setDate(this.endDate.getDate() + 1);
     console.log(this.startDate, this.endDate);
-    const start = this.startDate;
-    const end = this.endDate;
-    if ((start > end)) {
-      window.alert('Fechas inválidas');
+    if ((this.startDate > this.endDate)) {
+      window.alert('Fechas inválidas, intente de nuevo');
     } else {
       window.alert('Exitoso');
+      this.renderChartAppointmentByDate(this.appointments, this.startDate, this.endDate);
     }
   }
 
-  renderChartAppointmentByDate() {
+  sortAppointmentsByDate(allAppointments: Appointment[], startDate, endDate) {
+    const range = [];
+    const appointmentsInRange: number[] = [];
+    allAppointments = allAppointments.filter(appointment => appointment.accepted === true);
+    allAppointments.forEach(appointment => {
+      const date = appointment.date.year + '-' + appointment.date.month + '-' + appointment.date.day;
+      const appDate = new Date(date);
+      if ((appDate > startDate) && (appDate < endDate)) {
+        if (!range.includes(date)) {
+          range.push(date);
+          appointmentsInRange.push(0);
+        }
+        const index = range.indexOf(date);
+        appointmentsInRange[index] = appointmentsInRange[index] + 1;
+      }
+    });
+    const data = { range, appointmentsInRange };
+    return data;
+  }
+
+  renderChartAppointmentByDate(allAppointments, startDate, endDate) {
 
     this.canvas = document.getElementById('chartAppDate');
     this.ctx = this.canvas.getContext('2d');
@@ -199,17 +215,18 @@ export class AdminDashComponent implements OnInit {
     this.chartAppDate = new Chart(this.ctx, {
       type: 'line',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        labels: this.sortAppointmentsByDate(allAppointments, startDate, endDate).range,
         datasets: [{
           borderColor: '#3e95cd',
           backgroundColor: '#3e95cd',
           borderWidth: 3,
-          data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
+          data: this.sortAppointmentsByDate(allAppointments, startDate, endDate).appointmentsInRange
         },
         ]
       },
-      options: { legend: { display: false },
-      tooltips: { enabled: true },
+      options: {
+        legend: { display: false },
+        tooltips: { enabled: true },
       }
     });
 

@@ -66,6 +66,11 @@ export class ConsultEditComponent implements OnInit {
             });
           }
 
+          if (this.consult.recipe) {
+            this.consultForm.addControl('recipe', new FormControl(this.consult.recipe));
+            this.recipeExist = true;
+          }
+
         });
 
         this.patientId = param['patientId'];
