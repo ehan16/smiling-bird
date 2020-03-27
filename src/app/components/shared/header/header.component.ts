@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../../models/user.model';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   currentUser: User;
   currentId: string;
   show = false;
+  subscription: Subscription;
 
   toggleCollapse() {
     this.show = !this.show;
@@ -21,11 +22,15 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService,
     protected auth: AuthService,
   ) {
-    this.currentUser = this.userService.currentUser;
-    this.currentId = this.auth.id;
+    this.subscription = this.auth.userChange.subscribe(
+      (user: User) => {
+        console.log(user);
+        this.currentUser = user;
+        this.currentId = user.id;
+      }
+    );
   }
 
   ngOnInit() {
@@ -48,6 +53,10 @@ export class HeaderComponent implements OnInit {
     } else {
       this.router.navigate(['/visitor']);
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

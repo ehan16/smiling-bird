@@ -21,15 +21,8 @@
       />
     </div>
 
-    <div
-      class="w-100"
-      id="accordion"
-      *ngIf="currentUser.type === 'patient'"
-    >
-      <div
-        class="card"
-        *ngFor="let user of userList | filter: 'name':searchName; let i = index"
-      >
+    <div class="w-100" id="accordion" *ngIf="currentUser?.type === 'patient'">
+      <div class="card" *ngFor="let user of userList | filter: 'name':searchName; let i = index">
         <div class="card-header card-color" id="{{ 'heading' + i }}">
           <h5 class="mb-0">
             <button
@@ -44,12 +37,7 @@
           </h5>
         </div>
 
-        <div
-          id="{{ 'user' + i }}"
-          class="collapse"
-          [attr.aria-labelledby]="'user' + i"
-          data-parent="#accordion"
-        >
+        <div id="{{ 'user' + i }}" class="collapse" [attr.aria-labelledby]="'user' + i" data-parent="#accordion">
           <div class="row acc-content">
             <div class="col-sm-4 avatar">
               <img src="../../../../assets/extra/avatar.png" alt="avatar" />
@@ -68,7 +56,7 @@
                   type="button"
                   data-toggle="modal"
                   [attr.data-target]="'#appointment' + i"
-                  (click)="getDentistShift(user.shift[0], user.shift[1], user.id)"
+                  (click)="getDentistShift(user?.shift[0], user?.shift[1], user?.id)"
                   [disabled]="activeAppointment"
                 >
                   <i class="fas fa-calendar-check mr-3"></i>Solicitar cita
@@ -83,21 +71,13 @@
                   [attr.aria-labelledby]="'appointmentModal' + i"
                   aria-hidden="true"
                 >
-                  <div
-                    class="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
+                  <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h4 class="modal-title" id="{{ 'appointmentModal' + i }}">
                           Solicitar nueva cita
                         </h4>
-                        <button
-                          type="button"
-                          class="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
@@ -105,7 +85,7 @@
                       <div class="modal-body text-center">
                         <form [formGroup]="newAppointment" (ngSubmit)="addAppointment(user.id)">
                           <div class="form-group">
-                            <div *ngIf="currentUser.type === 'patient'">
+                            <div *ngIf="currentUser?.type === 'patient'">
                               <label
                                 class="font-weight-bold d-block"
                                 >Odontólogo:
@@ -205,24 +185,9 @@
             <td>{{ user?.user }}</td>
             <td class="text-capitalize">{{ user?.type }}</td>
             <td class="text-center">
-              <a
-                *ngIf="currentUser?.type === 'dentist'"
-                class="mx-2"
-                (click)="seeMedicalHistory(user.id)"
-                ><i class="fas fa-book"></i
-              ></a>
-              <a
-                *ngIf="currentUser?.type === 'dentist'"
-                class="mx-2"
-                (click)="sendMessage(user, user.id)"
-                ><i class="fas fa-envelope"></i
-              ></a>
-              <a
-                *ngIf="currentUser?.type === 'admin'"
-                class="mx-2"
-                (click)="editUser(user.id)"
-                ><i class="fas fa-user-edit"></i
-              ></a>
+              <a *ngIf="currentUser?.type === 'dentist'" class="mx-2" (click)="seeMedicalHistory(user.id)"><i class="fas fa-book"></i></a>
+              <a *ngIf="currentUser?.type === 'dentist'" class="mx-2" (click)="sendMessage(user, user.id)"><i class="fas fa-envelope"></i></a>
+              <a *ngIf="currentUser?.type === 'admin'" class="mx-2" (click)="editUser(user.id)"><i class="fas fa-user-edit"></i></a>
             </td>
           </tr>
         </tbody>

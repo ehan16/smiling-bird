@@ -5,15 +5,17 @@ import * as firebase from 'firebase';
 import { FirestoreService } from './firestore.service';
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn:  'root'
 })
-export  class  AuthService {
+export class  AuthService {
 
   user: any;
   id: any;
   currentUser: User;
+  userChange: Subject<User> = new Subject<User>();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -21,31 +23,38 @@ export  class  AuthService {
     private firestoreService: FirestoreService,
     private userService: UserService
   ) {
-    console.log('auth init');
+    this.checkLocalStorage();
+  }
+
+  checkLocalStorage() {
+    if (localStorage.getItem('user')) {
+      this.getDataFromFirebase();
+    } else {
+      console.log('local storage ready');
+    }
+  }
+
+  getDataFromFirebase() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
         this.id = user.uid;
-        // this.firestoreService.getValue(user.uid, 'users').pipe(first()).toPromise().then(
-        //   (e: User) => {
-        //     this.currentUser = e;
-        //     this.userService.currentUser = e;
-        //     console.log('user id is ', this.id, 'and the user is ', this.currentUser);
-        //   }
-        // );
-
-        // this.firestoreService.getValue(user.uid, 'users').subscribe((userData: User) => {
-        //   this.currentUser = userData;
-        //   this.userService.currentUser = userData;
-        // });
-        localStorage.setItem('user', JSON.stringify(this.user));
+        this.firestoreService.getSnapshot(user.uid, 'users').subscribe((user) => {
+          const userData = {
+              id: user.payload.id,
+              ...user.payload.data()
+            } as User;
+          this.currentUser = userData;
+          this.userService.currentUser = userData;
+          this.userChange.next(userData);
+        });
+        console.log('Authenticated');
+        localStorage.setItem('user', JSON.stringify(user));
       } else {
-        localStorage.setItem('user', null);
+        console.log('Not authenticated');
       }
     });
-
   }
-
 
   doRegister(email, password) {
     return new Promise<any>(
@@ -53,10 +62,6 @@ export  class  AuthService {
         firebase.auth().createUserWithEmailAndPassword(email, password).then(
           res => {
             resolve(res);
-            // this.afAuth.auth.signOut().then(() => {
-            //   localStorage.removeItem('user');
-            //   this.router.navigate(['/visitor']);
-            // });
           }, error => reject(error));
       });
   }
@@ -66,13 +71,14 @@ export  class  AuthService {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(
       (result) => {
         this.id = result.user.uid;
+        localStorage.setItem('user', JSON.stringify(result));
         console.log('Log in successful');
 
         this.firestoreService.getValue(this.id, 'users').subscribe((user: User) => {
-          this.currentUser = user;
           if ( user.enable ) {
+            this.currentUser = user;
             this.userService.currentUser = user;
-            console.log('current user: ', this.currentUser);
+            this.userChange.next(user);
             this.router.navigate([this.currentUser.type, this.id]);
           } else {
             window.alert('Se encuentra bloqueado');
@@ -92,7 +98,6 @@ export  class  AuthService {
 
       localStorage.removeItem('user');
       console.log('Signed out');
-      // window.alert('Ha cerrado sesion');
       this.router.navigate(['/visitor']);
 
     });

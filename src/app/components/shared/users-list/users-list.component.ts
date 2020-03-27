@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -7,13 +7,14 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Appointment } from 'src/app/models/appointment.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnDestroy {
 
   userList = [];
   currentUser: User;
@@ -31,6 +32,7 @@ export class UsersListComponent implements OnInit {
     this.today.getDate() + 1
   );
   selectedDate = this.minDate;
+  subscription: Subscription;
 
   constructor(
     private userService: UserService,
@@ -39,10 +41,20 @@ export class UsersListComponent implements OnInit {
     private appointmentService: AppointmentService,
     private authService: AuthService
   ) {
-    this.currentUser = this.userService.currentUser;
   }
 
   ngOnInit() {
+
+    this.subscription = this.authService.userChange.subscribe(
+      (user: User) => {
+        this.currentUser = user;
+        this.onInit();
+      }
+    );
+
+  }
+
+  onInit() {
 
     this.userService.getAll().subscribe(data => {
       this.userList = data.map(e => {
@@ -70,10 +82,8 @@ export class UsersListComponent implements OnInit {
       });
 
       this.auxAppointments = appointmentList;
-
       appointmentList = appointmentList.filter(appointment => appointment.patient === this.authService.id);
       appointmentList = appointmentList.filter(appointment => appointment.completed === false);
-
       this.activeAppointment = appointmentList.length >= 1;
 
     });
@@ -202,5 +212,9 @@ export class UsersListComponent implements OnInit {
     this.start = start;
     this.end = end;
     this.dentistId = id;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

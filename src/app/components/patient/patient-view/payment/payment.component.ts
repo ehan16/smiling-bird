@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
 import { Appointment } from 'src/app/models/appointment.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 
 declare var paypal;
 
@@ -16,18 +15,19 @@ declare var paypal;
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
 
   @ViewChild('paypal', { static: true }) paypalElement: ElementRef;
 
   showSuccess: boolean;
-
   maxDate = new NgbDate(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
+
   currentUser: User;
   dentistIdList = [];
   dentistList = [];
   dentistPayments = [];
   userList = [];
+
   voucherForm: FormGroup;
   method: string;
   dentistId: string;
@@ -36,20 +36,27 @@ export class PaymentComponent implements OnInit {
     description: 'Consulta médica en Smiling Bird',
     img: 'assets/couch.jpg'
   };
-
   paidFor = false;
+  subscription: Subscription;
 
   constructor(
-    private userService: UserService,
     private firestoreService: FirestoreService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private authService: AuthService
-  ) {
-    this.currentUser = this.userService.currentUser;
-  }
+  ) { }
 
   ngOnInit() {
+
+    this.subscription = this.authService.userChange.subscribe(
+      (user: User) => {
+        this.currentUser = user;
+        this.onInit();
+      }
+    );
+
+  }
+
+  onInit() {
 
     this.voucherForm = this.fb.group({
       date: ['', Validators.required],
@@ -78,15 +85,13 @@ export class PaymentComponent implements OnInit {
 
       appointmentList = appointmentList.filter(appointment => appointment.patient === this.authService.id);
 
-      for (let appointment of appointmentList) {
+      for (const appointment of appointmentList) {
         if (!this.dentistIdList.includes(appointment.dentist)) {
           this.dentistIdList.push(appointment.dentist);
         }
       }
 
-      console.log(this.dentistIdList);
-
-      for (let dentistId of this.dentistIdList) {
+      for (const dentistId of this.dentistIdList) {
         const dentist = this.userList.filter(user => user.id === dentistId);
         this.firestoreService.getValue(dentistId, 'dentist-extra').subscribe(methods =>{
           const dentistData = {
@@ -208,6 +213,10 @@ export class PaymentComponent implements OnInit {
   updateDebt(paidAmount) {
     const newDebt = this.currentUser.debt - paidAmount;
     this.firestoreService.update(this.authService.id, { debt: newDebt }, 'users');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -13,7 +13,6 @@ export class UserService {
     private firestore: FirestoreService,
     private af: AngularFirestore
   ) {
-    console.log('user service init');
     this.firestore.getAll('users').subscribe(data => {
       this.userList = data.map(e => {
         return {

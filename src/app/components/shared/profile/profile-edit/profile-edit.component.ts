@@ -1,53 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-  FormArray
-} from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { PaymentAccounts } from 'src/app/models/payment-accounts.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css']
 })
-export class ProfileEditComponent implements OnInit {
+export class ProfileEditComponent implements OnInit, OnDestroy {
 
   editForm: FormGroup;
   currentUser: User;
   dentistExtra: PaymentAccounts;
   todayDate = new Date();
-  maxDate: NgbDate = new NgbDate(
-    this.todayDate.getFullYear(),
-    this.todayDate.getMonth() + 1,
-    this.todayDate.getDate()
-  );
-  minDate: NgbDate = new NgbDate(
-    this.todayDate.getFullYear() - 100,
-    this.todayDate.getMonth(),
-    this.todayDate.getDate()
-  );
+  maxDate: NgbDate = new NgbDate( this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
+  minDate: NgbDate = new NgbDate( this.todayDate.getFullYear() - 100, this.todayDate.getMonth(), this.todayDate.getDate());
   start = 8;
   end = 16;
   paypal = new FormControl(true);
   zelle = new FormControl(true);
   banksArray = new FormArray([]);
+  subscription: Subscription;
 
   constructor(
-    private userService: UserService,
     private firestore: FirestoreService,
     private auth: AuthService,
     private formBuilder: FormBuilder
-  ) {
-    this.currentUser = this.userService.currentUser;
-    console.log(this.currentUser);
+  ) { }
+
+  ngOnInit() {
+
+    this.subscription = this.auth.userChange.subscribe(
+      (user: User) => {
+        this.currentUser = user;
+        this.onInit();
+      }
+    );
+
+  }
+
+  onInit() {
+
+    this.editForm = this.formBuilder.group({
+      name: [this.currentUser.name, Validators.required],
+      identification: [this.currentUser.identification, Validators.required],
+      birthDate: [this.currentUser.birth, Validators.required],
+      gender: [this.currentUser.gender, Validators.required],
+      start: [this.start, [Validators.required, this.invalidHour.bind(this)]],
+      end: [this.end, [Validators.required, this.invalidHour.bind(this)]],
+      bankAccounts: this.banksArray,
+      paypal: this.paypal,
+      zelle: this.zelle
+    });
 
     if (this.currentUser.type === 'dentist') {
 
@@ -61,13 +71,12 @@ export class ProfileEditComponent implements OnInit {
           bankAccounts: accounts.data().bankAccounts
         };
 
-        console.log(this.dentistExtra);
         this.paypal.setValue(this.dentistExtra.paypal);
         this.zelle.setValue(this.dentistExtra.zelle);
 
         const bankAccounts = this.dentistExtra.bankAccounts;
         if (bankAccounts) {
-          for (let bankAccount of bankAccounts) {
+          for (const bankAccount of bankAccounts) {
             this.banksArray.push(
               new FormGroup({
                 bank: new FormControl(bankAccount.bank, Validators.required),
@@ -81,22 +90,6 @@ export class ProfileEditComponent implements OnInit {
         }
       });
     }
-
-    console.log('start ', this.start, 'end ', this.end);
-  }
-
-  ngOnInit() {
-    this.editForm = this.formBuilder.group({
-      name: [this.currentUser.name, Validators.required],
-      identification: [this.currentUser.identification, Validators.required],
-      birthDate: [this.currentUser.birth, Validators.required],
-      gender: [this.currentUser.gender, Validators.required],
-      start: [this.start, [Validators.required, this.invalidHour.bind(this)]],
-      end: [this.end, [Validators.required, this.invalidHour.bind(this)]],
-      bankAccounts: this.banksArray,
-      paypal: this.paypal,
-      zelle: this.zelle
-    });
 
   }
 
@@ -162,4 +155,9 @@ export class ProfileEditComponent implements OnInit {
       return null;
     }
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }

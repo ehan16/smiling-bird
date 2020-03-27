@@ -12,11 +12,11 @@
     <p>{{ currentUser?.birth?.day }}-{{ currentUser?.birth?.month }}-{{ currentUser?.birth?.year }}</p>
     <h6 class="text-uppercase font-weight-bold">Género:</h6>
     <p>{{ currentUser?.gender | titlecase }}</p>
-    <span *ngIf="currentUser.type === 'patient'">
+    <span *ngIf="currentUser?.type === 'patient'">
       <h6 class="text-uppercase font-weight-bold">Estado de cuenta:</h6>
       <p>{{ currentUser?.debt }}</p>
     </span>
-    <span *ngIf="currentUser.type === 'dentist'">
+    <span *ngIf="currentUser?.type === 'dentist'">
       <h6 class="text-uppercase font-weight-bold">Horario:</h6>
       <p>{{ currentUser?.shift[0] }} - {{ currentUser?.shift[1] }}</p>
       <hr>

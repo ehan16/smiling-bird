@@ -14,7 +14,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserEditComponent implements OnInit {
 
   editForm: FormGroup = new FormGroup({});
-  currentUser: User;
   editedUser: User;
   editedUserId: string;
 

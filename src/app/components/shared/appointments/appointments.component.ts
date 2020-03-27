@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
 import { Appointment } from 'src/app/models/appointment.model';
@@ -8,13 +8,15 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css']
 })
-export class AppointmentsComponent implements OnInit {
+
+export class AppointmentsComponent implements OnInit, OnDestroy {
 
   currentUser: User;
   appointmentList = [];
@@ -30,6 +32,7 @@ export class AppointmentsComponent implements OnInit {
   auxAppointments = [];
   selectedDate = this.minDate;
   dentistId;
+  subscription: Subscription;
 
   constructor(
     private userService: UserService,
@@ -38,12 +41,20 @@ export class AppointmentsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private firestore: FirestoreService
-  ) {
-    this.currentUser = this.userService.currentUser;
-    console.log(this.currentUser);
-  }
+  ) { }
 
   ngOnInit() {
+
+    this.subscription = this.authService.userChange.subscribe(
+      (user: User) => {
+        this.currentUser = user;
+        this.onInit();
+      }
+    );
+
+  }
+
+  onInit() {
 
     this.appointmentForm = new FormGroup({
       date: new FormControl(this.minDate, [ Validators.required, this.invalidDate.bind(this)]),
@@ -66,19 +77,14 @@ export class AppointmentsComponent implements OnInit {
       });
 
       this.auxAppointments = this.appointmentList;
-      console.log('aux appointmets', this.auxAppointments);
       this.appointmentService.appointmentsList = this.appointmentList;
-      console.log('lista de citas antes de filtrar por completado', this.appointmentList);
       this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
-      console.log('lista de citas antes de filtrar por paciente u odontologo', this.appointmentList);
 
       if (this.currentUser.type === 'patient') {
         this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.authService.id);
       } else {
         this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.authService.id);
       }
-
-      console.log('lista de citas es ', this.appointmentList);
 
     });
 
@@ -202,6 +208,10 @@ export class AppointmentsComponent implements OnInit {
       return true;
     }
 
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

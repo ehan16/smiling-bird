@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -7,6 +7,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { Subscription } from 'rxjs';
 
 const secondaryConfig = {
   apiKey: 'AIzaSyDmNJfyjM7PySxSBIXnLfq9if6tc7mPC5I',
@@ -25,23 +26,18 @@ const secondaryApp = firebase.initializeApp(secondaryConfig, 'secondary');
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.css']
 })
-export class NewUserComponent implements OnInit {
+
+export class NewUserComponent implements OnInit, OnDestroy {
+
   currentUser: User;
   createForm: FormGroup;
   newType = 'patient';
   maxHour = 16;
   minHour = 8;
   todayDate = new Date();
-  maxDate: NgbDate = new NgbDate(
-    this.todayDate.getFullYear(),
-    this.todayDate.getMonth() + 1,
-    this.todayDate.getDate()
-  );
-  minDate: NgbDate = new NgbDate(
-    this.todayDate.getFullYear() - 70,
-    this.todayDate.getMonth() + 1,
-    this.todayDate.getDate()
-  );
+  maxDate: NgbDate = new NgbDate( this.todayDate.getFullYear(), this.todayDate.getMonth() + 1, this.todayDate.getDate());
+  minDate: NgbDate = new NgbDate( this.todayDate.getFullYear() - 70, this.todayDate.getMonth() + 1, this.todayDate.getDate());
+  subscription: Subscription;
 
   constructor(
     private userService: UserService,
@@ -49,11 +45,21 @@ export class NewUserComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private firestoreService: FirestoreService
-  ) {
-    this.currentUser = this.userService.currentUser;
-  }
+  ) { }
 
   ngOnInit() {
+
+    this.subscription = this.auth.userChange.subscribe(
+      (user: User) => {
+        this.currentUser = user;
+        this.onInit();
+      }
+    );
+
+  }
+
+  onInit() {
+
     this.createForm = new FormGroup({
       name: new FormControl('', Validators.required),
       user: new FormControl('', [Validators.required, Validators.email]),
@@ -75,6 +81,7 @@ export class NewUserComponent implements OnInit {
         Validators.min(this.minHour)
       ])
     });
+
   }
 
   onCreate() {
@@ -112,7 +119,6 @@ export class NewUserComponent implements OnInit {
           // }
         },
         error => {
-          console.log(error);
           window.alert(error);
         }
       );
@@ -133,6 +139,7 @@ export class NewUserComponent implements OnInit {
   }
 
   sendEmail(mail: string, password: string) {
+
     const content = '<p>Hola</p>' + '<p>Se le ha creado una cuenta en Smiling Bird con el correo: </p>'
     + mail + '<p>Su actual contraseña es ' + password + '.</p>' + '<p>Por favor inicie sesión y modifique su contraaseña.</p>'
     + '<p>Gracias.</p>' + '<p>El equipo de Smiling Bird</p>';
@@ -144,4 +151,9 @@ export class NewUserComponent implements OnInit {
 
     this.firestoreService.create(aux, 'alreadymademail');
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }

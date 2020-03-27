@@ -9,6 +9,7 @@ import { Payment } from 'src/app/models/payment.model';
   styleUrls: ['./reportes.component.css']
 })
 export class ReportesComponent implements OnInit {
+
   paymentlist = [];
   dentistId: string;
 

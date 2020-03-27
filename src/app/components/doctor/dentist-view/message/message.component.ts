@@ -62,10 +62,9 @@ export class MessageComponent implements OnInit {
       email: this.patient.user
     };
 
-    // this.firestoreService.add(data);
     this.firestoreService.create(data, 'alreadymademail');
-
     window.alert('Se ha enviado el correo');
+    this.router.navigate(['../'], { relativeTo: this.route });
 
   }
 

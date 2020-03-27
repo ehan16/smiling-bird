@@ -45,7 +45,7 @@
       Iniciar sesión
     </button>
     <button class="btnList" *ngIf="currentUser" (click)="goToProfile()">
-      {{ currentUser.name }}
+      {{ currentUser?.name }}
     </button>
   </span>
 </nav>

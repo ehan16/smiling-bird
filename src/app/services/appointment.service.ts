@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Appointment } from '../models/appointment.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable({
@@ -29,11 +28,6 @@ export class AppointmentService {
         this.router.navigate(['consult', id, 'edit'], { relativeTo: route });
       }
     ).catch();
-  }
-
-  getAllPromise() {
-    // tslint:disable-next-line: no-unused-expression
-    return this.firestore.getAll('appointments').pipe( first() ).toPromise();
   }
 
   getAppointmentData(appointmentId): any {
