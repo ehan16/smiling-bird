@@ -47,22 +47,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.authService.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.onInit();
-      }
-    );
-
-  }
-
-  onInit() {
-
     this.voucherForm = this.fb.group({
       date: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       amount: ['', [Validators.required, Validators.min(1)]],
     });
+
+    this.subscription = this.authService.userChange.subscribe(
+      (user: User) => {
+        this.currentUser = user;
+      }
+    );
 
     this.firestoreService.getAll('users').subscribe(data => {
       this.userList = data.map(e => {
@@ -74,7 +69,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
 
     let appointmentList = [];
-
     this.firestoreService.getAll('appointments').subscribe(data => {
       appointmentList = data.map(e => {
         return {
@@ -84,26 +78,24 @@ export class PaymentComponent implements OnInit, OnDestroy {
       });
 
       appointmentList = appointmentList.filter(appointment => appointment.patient === this.authService.id);
-
       for (const appointment of appointmentList) {
-        if (!this.dentistIdList.includes(appointment.dentist)) {
-          this.dentistIdList.push(appointment.dentist);
-        }
+      if (!this.dentistIdList.includes(appointment.dentist)) {
+        this.dentistIdList.push(appointment.dentist);
       }
+    }
 
       for (const dentistId of this.dentistIdList) {
-        const dentist = this.userList.filter(user => user.id === dentistId);
-        this.firestoreService.getValue(dentistId, 'dentist-extra').subscribe(methods =>{
-          const dentistData = {
-            data: dentist[0],
-            payment: methods
-          };
-          this.dentistList.push(dentistData);
-          console.log(dentistData);
-        });
-      }
-
-    });
+      const dentist = this.userList.filter(user => user.id === dentistId);
+      this.firestoreService.getValue(dentistId, 'dentist-extra').subscribe(methods => {
+        const dentistData = {
+          data: dentist[0],
+          payment: methods
+      };
+        this.dentistList.push(dentistData);
+        console.log(dentistData);
+      });
+    }
+  });
 
     paypal.Buttons({
       createOrder: (data, actions) => {
@@ -125,14 +117,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
         console.log(order);
         console.log(data);
         this.paypalPayment(order);
-      },
-      onError: err => {
-        console.log(err);
-        window.alert(err);
-      }
-    })
-
-    .render(this.paypalElement.nativeElement);
+        },
+        onError: err => {
+          console.log(err);
+          window.alert(err);
+        }
+      }).render(this.paypalElement.nativeElement);
 
   }
 
@@ -216,7 +206,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

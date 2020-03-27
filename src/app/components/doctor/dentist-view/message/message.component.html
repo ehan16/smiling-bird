@@ -52,22 +52,9 @@
       </div>
 
       <div class="form-row align-items-center my-2">
-        <button
-          class="col-auto btn btn-send font-weight-bold "
-          type="submit"
-          [disabled]="!messageForm.valid"
-        >
-          Enviar
-        </button>
-        <button
-          class="col-auto btn btn-send font-weight-bold"
-          data-toggle="modal"
-          data-target="#NuevoPredeterminado"
-          data-whatever="@getbootstrap"
-          type="button"
-        >
-          Crear
-        </button>
+        <button class="col-auto btn btn-send font-weight-bold " type="submit" [disabled]="!messageForm.valid">Enviar</button>
+        <button class="col-auto btn btn-send font-weight-bold" data-toggle="modal" data-target="#NuevoPredeterminado" data-whatever="@getbootstrap" type="button">Crear</button>
+        <button class="col-auto btn btn-send font-weight-bold" type="button" (click)="goBack()">Volver</button>
       </div>
     </form>
   </div>

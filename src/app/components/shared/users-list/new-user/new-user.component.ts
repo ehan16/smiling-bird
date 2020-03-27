@@ -49,16 +49,15 @@ export class NewUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.auth.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.onInit();
-      }
-    );
-
-  }
-
-  onInit() {
+    if (this.auth.currentUser) {
+      this.currentUser = this.auth.currentUser;
+    } else {
+      this.subscription = this.auth.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+        }
+      );
+    }
 
     this.createForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -111,12 +110,8 @@ export class NewUserComponent implements OnInit, OnDestroy {
 
           this.userService.createUser(user, res.user.uid);
           this.sendEmail(this.createForm.value.user, this.createForm.value.password);
-
-          // if (this.currentUser.type === 'dentist') {
-          //   this.router.navigate(['../', res.user.uid, 'medical-record'], { relativeTo: this.route });
-          // } else {
           this.router.navigate(['../'], { relativeTo: this.route });
-          // }
+
         },
         error => {
           window.alert(error);
@@ -153,7 +148,9 @@ export class NewUserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

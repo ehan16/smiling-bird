@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -16,17 +15,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
   currentUser: User;
   subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, public auth: AuthService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public auth: AuthService) { }
 
   ngOnInit() {
-
-    this.subscription = this.auth.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.editMode = false;
-      }
-    );
-
+    if (this.auth.currentUser) {
+      this.currentUser = this.auth.currentUser;
+    } else {
+      this.subscription = this.auth.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+        }
+      );
+    }
+    this.editMode = false;
   }
 
   onEditMode() {
@@ -41,13 +42,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   logOut() {
+    this.auth.currentUser = null;
     this.auth.signOut();
     window.alert('Ha cerrado sesion');
-    this.userService.currentUser = null;
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

@@ -30,12 +30,17 @@ export class MedicalHistoryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.authService.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.onInit();
-      }
-    );
+    if (this.authService.currentUser) {
+      this.currentUser = this.authService.currentUser;
+      this.onInit();
+    } else {
+      this.subscription = this.authService.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+          this.onInit();
+        }
+      );
+    }
 
   }
 
@@ -107,7 +112,9 @@ export class MedicalHistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

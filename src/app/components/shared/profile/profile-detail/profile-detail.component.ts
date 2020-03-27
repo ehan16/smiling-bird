@@ -23,27 +23,35 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    if (this.auth.currentUser) {
+      this.currentUser = this.auth.currentUser;
+      this.onInit();
+    }
     this.subscription = this.auth.userChange.subscribe(
       (user: User) => {
         this.currentUser = user;
-
-        if (this.currentUser.type === 'dentist') {
-          this.firestore.get(this.auth.id, 'dentist-extra').subscribe(accounts => {
-            this.dentistExtra = {
-              zelle: accounts.data().zelle,
-              paypal: accounts.data().paypal,
-              bankAccounts: accounts.data().bankAccounts
-            };
-          });
-        }
-
+        this.onInit();
       }
     );
 
   }
 
+  onInit() {
+    if (this.currentUser.type === 'dentist') {
+      this.firestore.get(this.auth.id, 'dentist-extra').subscribe(accounts => {
+        this.dentistExtra = {
+          zelle: accounts.data().zelle,
+          paypal: accounts.data().paypal,
+          bankAccounts: accounts.data().bankAccounts
+        };
+      });
+    }
+  }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

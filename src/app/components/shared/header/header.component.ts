@@ -24,13 +24,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     protected auth: AuthService,
   ) {
-    this.subscription = this.auth.userChange.subscribe(
-      (user: User) => {
-        console.log(user);
-        this.currentUser = user;
-        this.currentId = user.id;
-      }
-    );
+    if (this.auth.currentUser) {
+      this.currentUser = this.auth.currentUser;
+      this.currentId = this.auth.id;
+    } else {
+      this.subscription = this.auth.userChange.subscribe(
+        (user: User) => {
+          console.log(user);
+          this.currentUser = user;
+          this.currentId = user.id;
+        }
+      );
+    }
   }
 
   ngOnInit() {
@@ -56,7 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

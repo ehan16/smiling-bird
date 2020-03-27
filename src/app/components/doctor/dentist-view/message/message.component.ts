@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
+
   messageForm: FormGroup;
   newMessageForm: FormGroup;
   patientId;
@@ -64,7 +65,7 @@ export class MessageComponent implements OnInit {
 
     this.firestoreService.create(data, 'alreadymademail');
     window.alert('Se ha enviado el correo');
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../../'], { relativeTo: this.route });
 
   }
 
@@ -104,6 +105,10 @@ export class MessageComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  goBack() {
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
 }

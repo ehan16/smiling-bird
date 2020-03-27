@@ -4,7 +4,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { FirestoreService } from './firestore.service';
 import { User } from '../models/user.model';
-import { UserService } from './user.service';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -21,7 +20,6 @@ export class  AuthService {
     private afAuth: AngularFireAuth,
     private router: Router,
     private firestoreService: FirestoreService,
-    private userService: UserService
   ) {
     this.checkLocalStorage();
   }
@@ -41,11 +39,10 @@ export class  AuthService {
         this.id = user.uid;
         this.firestoreService.getSnapshot(user.uid, 'users').subscribe((user) => {
           const userData = {
-              id: user.payload.id,
-              ...user.payload.data()
-            } as User;
+            id: user.payload.id,
+            ...user.payload.data()
+          } as User;
           this.currentUser = userData;
-          this.userService.currentUser = userData;
           this.userChange.next(userData);
         });
         console.log('Authenticated');
@@ -63,7 +60,7 @@ export class  AuthService {
           res => {
             resolve(res);
           }, error => reject(error));
-      });
+    });
   }
 
   signInWithEmail(email: string, password: string) {
@@ -77,7 +74,6 @@ export class  AuthService {
         this.firestoreService.getValue(this.id, 'users').subscribe((user: User) => {
           if ( user.enable ) {
             this.currentUser = user;
-            this.userService.currentUser = user;
             this.userChange.next(user);
             this.router.navigate([this.currentUser.type, this.id]);
           } else {
@@ -123,11 +119,9 @@ export class  AuthService {
 
   VerifyEmail(user) {
     let use = this.afAuth.auth.currentUser;
-
     use.sendEmailVerification().then( () => {
     }).catch((error) => {
     });
-
   }
 
 }

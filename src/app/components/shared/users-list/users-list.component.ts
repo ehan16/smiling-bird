@@ -45,33 +45,17 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.authService.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.onInit();
-      }
-    );
-
-  }
-
-  onInit() {
-
-    this.userService.getAll().subscribe(data => {
-      this.userList = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        } as User;
-      });
-
-      if (this.currentUser.type === 'patient') {
-        this.userList = this.userList.filter(user => user.type === 'dentist');
-      } else if (this.currentUser.type === 'dentist') {
-        this.userList = this.userList.filter(user => user.type === 'patient');
-      } else {
-        this.userList = this.userService.userList;
-      }
-    });
+    if (this.authService.currentUser) {
+      this.currentUser = this.authService.currentUser;
+      this.onInit();
+    } else {
+      this.subscription = this.authService.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+          this.onInit();
+        }
+      );
+    }
 
     this.appointmentService.getAll().subscribe(data => {
       let appointmentList = data.map(e => {
@@ -107,6 +91,27 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.selectedDate = x;
       }
     );
+
+  }
+
+  onInit() {
+
+    this.userService.getAll().subscribe(data => {
+      this.userList = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as User;
+      });
+
+      if (this.currentUser.type === 'patient') {
+        this.userList = this.userList.filter(user => user.type === 'dentist');
+      } else if (this.currentUser.type === 'dentist') {
+        this.userList = this.userList.filter(user => user.type === 'patient');
+      } else {
+        this.userList = this.userService.userList;
+      }
+    });
 
   }
 
@@ -215,6 +220,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
+
 }

@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { FirestoreService } from './firestore.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
-  currentUser: User;
+
   userList: User[];
 
   constructor(
@@ -43,10 +42,6 @@ export class UserService {
     this.firestore.getValue(id , 'users').subscribe((user: User) => {
       return user;
     });
-  }
-
-  getCurrentUser() {
-    return this.currentUser;
   }
 
 }

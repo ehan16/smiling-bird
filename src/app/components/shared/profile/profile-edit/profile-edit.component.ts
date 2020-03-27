@@ -36,12 +36,17 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.auth.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.onInit();
-      }
-    );
+    if (this.auth.currentUser) {
+      this.currentUser = this.auth.currentUser;
+      this.onInit();
+    } else {
+      this.subscription = this.auth.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+          this.onInit();
+        }
+      );
+    }
 
   }
 
@@ -157,7 +162,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

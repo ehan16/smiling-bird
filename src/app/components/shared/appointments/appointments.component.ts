@@ -45,16 +45,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.authService.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-        this.onInit();
-      }
-    );
-
-  }
-
-  onInit() {
+    if (this.authService.currentUser) {
+      this.currentUser = this.authService.currentUser;
+    } else {
+      this.subscription = this.authService.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+          this.onInit();
+        }
+      );
+    }
 
     this.appointmentForm = new FormGroup({
       date: new FormControl(this.minDate, [ Validators.required, this.invalidDate.bind(this)]),
@@ -68,6 +68,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       }
     );
 
+  }
+
+  onInit() {
     this.firestore.getAll('appointments').subscribe(data => {
       this.appointmentList = data.map(e => {
         return {
@@ -87,7 +90,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       }
 
     });
-
   }
 
   invalidDate(control: FormControl): { [s: string]: boolean } {
@@ -211,7 +213,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }
