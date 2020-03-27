@@ -32,7 +32,7 @@
       <button class="btnList" [routerLink]="['/dentist', currentId, 'patient-list']" *ngIf="currentUser.type === 'dentist'">
         Pacientes
       </button>
-      <button class="btnList" [routerLink]="['/dentist', currentId, 'Reportes']" *ngIf="currentUser.type === 'dentist'">
+      <button class="btnList" [routerLink]="['/dentist', currentId, 'report']" *ngIf="currentUser.type === 'dentist'">
         Reportes
       </button>
       <button class="btnList" [routerLink]="['/admin', currentId ,'user-list']" *ngIf="currentUser.type === 'admin'">

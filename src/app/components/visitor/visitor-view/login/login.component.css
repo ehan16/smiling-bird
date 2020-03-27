@@ -13,6 +13,14 @@ span {
 }
 
 .login-form {
-  padding-top: 20vh;
-  padding-bottom: 20vh;
+  border-radius: 15px;
+  margin-top: 13vh;
+  margin-bottom: 13vh;
+  padding: 5% 10%;
+}
+
+@media (max-width: 600px) {
+  .login-form {
+    padding: 10%;
+  }
 }

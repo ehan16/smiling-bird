@@ -1,15 +1,15 @@
 <div class="row m-0">
-  <div class="wrapper">
+  <div class="wrapper bg-light">
 
     <div class="consult-data">
       <h5>Fecha: <span>{{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</span></h5>
-      <h5>Paciente: <span>{{ getUserName(consult?.patient) }}</span></h5>
-      <h5>Odontólogo: <span>{{ getUserName(consult?.dentist) }}</span></h5>
+      <h5>Paciente: <span>{{ getUserName(consult?.patient) | titlecase }}</span></h5>
+      <h5>Odontólogo: <span>{{ getUserName(consult?.dentist) | titlecase }}</span></h5>
     </div>
 
     <ul class="list">
-      <li class="media" *ngFor="let treatment of consult?.treatments">
-        <div class="extra">
+      <li class="media my-3" *ngFor="let treatment of consult?.treatments; let i = index">
+        <div class="text-center">
           <img
             src="{{ treatment?.image }}"
             class="image"
@@ -18,7 +18,7 @@
           <p class="bg-warning price">{{ treatment?.price }} $</p>
         </div>
         <div class="media-body bg-white rounded p-3">
-          <h5 class="bg-info rounded p-2">Tratamiento #1</h5>
+          <h6 class="bg-info rounded p-2">Tratamiento #{{ i + 1 }}</h6>
           <p>{{ treatment?.description }}</p>
         </div>
       </li>

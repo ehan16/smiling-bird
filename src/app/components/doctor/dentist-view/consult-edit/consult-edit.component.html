@@ -3,56 +3,56 @@
   <div class="wrapper bg-light px-sm-5 py-5">
 
     <div class="col-12 text-center font-weight-bold m">
-      <h4>{{ patient?.name }}</h4>
+      <h4>Paciente: {{ patient?.name | titlecase}}</h4>
+    </div>
+
+    <div class="col-12 text-center">
+      <h4 class="font-weight-bold">Fecha de la consulta: {{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</h4>
     </div>
 
     <form [formGroup]="consultForm" (ngSubmit)="onEdit()">
 
-      <div class="col-12 text-center">
-
-        <h5 class="font-weight-bold">Fecha de la consulta: </h5>
-        <p class="d-block mb-3">{{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</p>
-
-      </div>
-
       <div class="col-12 mt-5">
 
-        <div formArrayName="treatments" *ngFor="let treatment of Treatments.controls; let i = index">
+        <div *ngIf="treatments">
+          <div formArrayName="treatments" *ngFor="let treatment of Treatments.controls; let i = index">
 
-          <div [formGroupName]="i" class="my-3">
-            <h6 class="font-weight-bold my-3">Tratamiento #{{ i + 1 }}</h6>
-            <hr class="mb-2">
-            <textarea cols="30" rows="5" formControlName="description" placeholder="Descripción del tratamiento realizado"
-            class="form-control form-field my-3"
-            ></textarea>
-            <span *ngIf="!consultForm.get('description').valid && consultForm.get('description').touched" class="help-block">
-              <span *ngIf="consultForm.get('description').errors['required']">El campo es obligatorio</span>
-            </span>
+            <div [formGroupName]="i" class="my-3">
 
-            <div class="custom-file mb-3">
-              <input type="file" formControlName="file" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
-              <label class="custom-file-label" for="inputGroup">{{ filePath[i] }}</label>
-              <div>
+              <h6 class="font-weight-bold my-3">Tratamiento #{{ i + 1 }}</h6>
+              <hr class="mb-2">
+              <textarea cols="30" rows="4" formControlName="description" placeholder="Descripción del tratamiento realizado"
+              class="form-control form-field my-3"
+              ></textarea>
 
-                <progress
-                class="progress progress-bar-animated mt-2 mb-4 w-100"
-                value="{{ uploadProgress[i] }}"
-                max="100"
-                >{{ uploadProgress[i] }}</progress>
+              <div class="custom-file mb-3">
+                <input type="file" formControlName="file" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
+                <label class="custom-file-label" for="inputGroup">{{ fileNames[i] }}</label>
+                <div>
 
+                  <progress
+                  class="progress progress-bar-animated mt-2 mb-4 w-100"
+                  value="{{ uploadProgress[i] }}"
+                  max="100"
+                  >{{ uploadProgress[i] }}</progress>
+
+                </div>
               </div>
+
+              <div class="text-center" *ngIf="fileUrl[i]">
+                <img src="{{ fileUrl[i] }}">
+              </div>
+
+              <div class="form-bottom mt-3">
+                <input type="number" formControlName="price" class="form-control form-field" placeholder="Precio en $">
+                <button type="button" class="btn btn-delete w-25" (click)="onDelete(i)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+              <hr>
+
             </div>
 
-            <div class="form-bottom mt-3">
-              <input type="number" formControlName="price" class="form-control form-field" placeholder="Precio en $">
-              <span *ngIf="!consultForm.get('price').valid && consultForm.get('price').touched" class="help-block">
-                <span *ngIf="consultForm.get('price').errors['required']">El campo es obligatorio</span>
-              </span>
-              <button type="button" class="btn btn-delete w-25" (click)="onDelete(i)">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-            <hr>
           </div>
 
         </div>
@@ -74,10 +74,11 @@
         <hr>
       </div>
 
-      <div class="row m-3">
+      <div class="m-3">
         <button type="button" class="btn btn-success btn-block my-2" (click)="createTreatment()">Añadir tratamiento</button>
         <button type="button" class="btn btn-success btn-block my-2" (click)="addRecipe()" [disabled]="recipeExist">Añadir récipe</button>
         <button type="submit" class="btn btn-warning btn-block" [disabled]="!consultForm.valid">Aceptar</button>
+        <button type="submit" class="btn btn-info btn-block my-2" (click)="goBack()">Volver</button>
       </div>
 
     </form>

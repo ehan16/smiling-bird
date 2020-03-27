@@ -3,6 +3,11 @@
   margin: 30px 8px 0px 0px;
 }
 
+.row{
+  background-image: url(../../../../../assets/background/dentist.jpg);
+  background-size: cover;
+}
+
 span {
   font-size: 1.1rem;
 }
@@ -18,7 +23,7 @@ span {
 }
 
 .media-body {
-  min-height: 35vh;
+  min-height: 30vh;
   margin: auto 30px;
   border: 0.5px solid black;
 }
@@ -36,6 +41,7 @@ span {
   margin-top: 10vh;
   margin-bottom: 10vh;
   border-radius: 15px;
+  padding: 20px;
 }
 
 .extra {
@@ -62,6 +68,10 @@ span {
   .consult-data, .recipe {
     width: 90%;
   }
+
+  .media-body {
+    width: 70%;
+  }
 }
 
 @media (max-width: 530px) {
@@ -74,4 +84,7 @@ span {
     padding-left: 10px;
   }
 
+  .media-body {
+    width: 80%;
+  }
 }

@@ -4,6 +4,13 @@
   min-height: 60vh;
 }
 
+.user {
+  background-color: #ffecb3;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-align: center;
+}
+
 span {
   font-size: 1.1rem;
 }

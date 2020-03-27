@@ -37,7 +37,7 @@ export class ConsultDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['../', '../', 'medical-record'], { relativeTo: this.route });
+    this.router.navigate(['../../', 'medical-record'], { relativeTo: this.route });
   }
 
   onEdit() {

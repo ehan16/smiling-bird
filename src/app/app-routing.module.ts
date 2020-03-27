@@ -41,12 +41,12 @@ const appRoutes: Routes = [
     {path: 'dentist-list', component: UsersListComponent},
     {path: 'medical-record', component: MedicalHistoryComponent},
     {path: 'consult/:consultId', component: ConsultDetailComponent},
-    {path: 'payment', component: PaymentComponent},
-    {path: 'Reportes', component: ReportesComponent}
+    {path: 'payment', component: PaymentComponent}
   ]},
 
   {path: 'dentist/:id', component: DentistViewComponent, canActivate: [AuthGuard], children: [
     {path: '', component: DentistDashComponent},
+    {path: 'report', component: ReportesComponent},
     {path: 'patient-list', component: UsersListComponent},
     {path: 'patient-list/new-patient', component: NewUserComponent},
     {path: 'patient-list/:patientId/medical-record', component: MedicalHistoryComponent},

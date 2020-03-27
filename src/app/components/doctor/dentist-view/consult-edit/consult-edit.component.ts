@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Appointment } from 'src/app/models/appointment.model';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FirebaseStorageService } from 'src/app/services/firebase-storage.service';
 import { User } from 'src/app/models/user.model';
@@ -17,14 +17,14 @@ export class ConsultEditComponent implements OnInit {
 
   consultForm: FormGroup;
   treatments = new FormArray([]);
-  oldPrice: number = 0;
+  oldPrice = 0;
   consult: Appointment;
   consultId: string;
   patient: User;
   patientId: string;
   recipeExist = false;
 
-  filePath = [];
+  fileNames = [];
   ref = [];
   task = [];
   uploadProgress = [];
@@ -33,6 +33,7 @@ export class ConsultEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private firestoreService: FirestoreService,
     private fireStorageService: FirebaseStorageService) { }
 
@@ -58,11 +59,17 @@ export class ConsultEditComponent implements OnInit {
                 new FormGroup({
                   description: new FormControl(treatment.description, Validators.required),
                   price: new FormControl(treatment.price, [Validators.required, Validators.min(0)]),
-                  file: new FormControl(null),
+                  file: new FormControl(treatment.file),
                   fileName: new FormControl(treatment.fileName),
                   image: new FormControl(treatment.image)
                 })
               );
+              this.fileNames.push(treatment.filename);
+              this.uploadProgress.push(100);
+              this.fileUrl.push(treatment.image);
+              this.ref.push(null);
+              this.task.push(null);
+              console.log(this.treatments);
             });
           }
 
@@ -113,7 +120,7 @@ export class ConsultEditComponent implements OnInit {
 
   onDelete(index) {
     (this.consultForm.get('treatments') as FormArray).removeAt(index);
-    this.filePath.splice(index, 1);
+    this.fileNames.splice(index, 1);
     this.ref.splice(index, 1);
     this.task.splice(index, 1);
     this.fileUrl.splice(index, 1);
@@ -142,12 +149,12 @@ export class ConsultEditComponent implements OnInit {
 
     let treatmentsControl = this.Treatments.at(i);
 
-    this.filePath[i] = event.target.files[0].name;
+    this.fileNames[i] = event.target.files[0].name;
 
     treatmentsControl.get('fileName').patchValue(event.target.files[0].name);
 
-    this.ref[i] = this.fireStorageService.referenceCloudStorage(this.filePath[i]);
-    this.task[i] = this.fireStorageService.uploadCloudStorage(this.filePath[i], event.target.files[0]);
+    this.ref[i] = this.fireStorageService.referenceCloudStorage(this.fileNames[i]);
+    this.task[i] = this.fireStorageService.uploadCloudStorage(this.fileNames[i], event.target.files[0]);
     this.uploadProgress[i] = this.task[i].percentageChanges();
 
     this.task[i].snapshotChanges().pipe(
@@ -162,7 +169,7 @@ export class ConsultEditComponent implements OnInit {
   }
 
   addRecipe() {
-    this.consultForm.addControl('recipe', new FormControl(''));
+    this.consultForm.addControl('recipe', new FormControl('', Validators.required));
     this.recipeExist = true;
   }
 
@@ -178,6 +185,10 @@ export class ConsultEditComponent implements OnInit {
     });
     total = total - this.oldPrice;
     this.firestoreService.update(this.patientId, {debt: total} , 'users');
+  }
+
+  goBack() {
+    this.router.navigate(['../../../', 'medical-record'], { relativeTo: this.route });
   }
 
 }

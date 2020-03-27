@@ -4,9 +4,9 @@
     <p>Historial médico<p>
   </div>
 
-  <div class="col-md-4 text-center py-4 px-sm-4 pale-yellow">
+  <div class="col-md-4 px-sm-4 user">
     <img src="../../../../assets/extra/avatar.png" alt="avatar">
-    <h5>Nombre: <span>{{ patient?.name }}</span></h5>
+    <h5>Nombre: <span>{{ patient?.name | titlecase }}</span></h5>
     <h5>Correo: <span>{{ patient?.user }}</span></h5>
     <h5>Cédula: {{ patient?.identification }}</h5>
     <h5>Deuda: <span>{{ patient?.debt }}</span></h5>
