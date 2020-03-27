@@ -1,13 +1,19 @@
-  <div class="row m-0 p-5">
+<div class="row m-0 pl-5 pr-5">
 
-    <div class="table-wrapper">
+  <div class="total">
+    <div class="amount">
+      <h3>Ganancias: {{ total }}</h3>
+    </div>
+  </div>
 
+  <ng-container>
+    <!-- <ng-container class="table-wrapper"> -->
       <table class="table table-responsive-md">
         <thead>
           <tr class="bg-info">
             <th>Nombre</th>
             <th>Correo</th>
-            <th>Medio</th>
+            <th>Método</th>
             <th>Monto</th>
             <th>Fecha</th>
             <th>Referencia</th>
@@ -24,7 +30,8 @@
           </tr>
         </tbody>
       </table>
+    <!-- </ng-container> -->
 
-    </div>
+</ng-container>
 
 </div>

@@ -22,10 +22,9 @@ export class AppointmentService {
   }
 
   createConsult(data: any, route: ActivatedRoute) {
-    this.af.collection('appointments').add(data).then(
-      (docRef) => {
+    this.af.collection('appointments').add(data).then((docRef) => {
         const id = docRef.id;
-        this.router.navigate(['consult', id, 'edit'], { relativeTo: route });
+        this.router.navigate(['../', 'consult', id, 'edit'], { relativeTo: route });
       }
     ).catch();
   }

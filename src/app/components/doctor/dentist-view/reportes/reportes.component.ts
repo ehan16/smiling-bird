@@ -12,6 +12,8 @@ export class ReportesComponent implements OnInit {
 
   paymentlist = [];
   dentistId: string;
+  total = 0;
+  today = new Date();
 
   constructor(
     private authService: AuthService,
@@ -31,7 +33,13 @@ export class ReportesComponent implements OnInit {
       });
 
       this.paymentlist = this.paymentlist.filter(payments => payments.dentist === this.dentistId);
+      this.paymentlist = this.paymentlist.filter(payment => payment.date.year === this.today.getFullYear());
       console.log(this.paymentlist);
+
+      this.paymentlist.forEach(payment => {
+        this.total = this.total + payment.amount;
+      });
+
     });
   }
 }
