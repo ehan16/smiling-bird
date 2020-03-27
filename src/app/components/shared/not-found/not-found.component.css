@@ -1,4 +1,13 @@
 .not-found {
-  height: 80vh;
+  width: 80%;
   margin: 10vh auto
 }
+
+.content {
+  display: flex;
+  min-height: 90vh;
+  justify-content: center;
+  align-items: center;
+}
+
+

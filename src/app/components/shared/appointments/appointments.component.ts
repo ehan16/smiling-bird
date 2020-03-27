@@ -47,6 +47,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
     if (this.authService.currentUser) {
       this.currentUser = this.authService.currentUser;
+      this.onInit();
     } else {
       this.subscription = this.authService.userChange.subscribe(
         (user: User) => {
@@ -84,9 +85,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
 
       if (this.currentUser.type === 'patient') {
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.authService.id);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.authService.localUser.uid);
       } else {
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.authService.id);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.authService.localUser.uid);
       }
 
     });

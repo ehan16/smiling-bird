@@ -17,7 +17,7 @@ export class ReportesComponent implements OnInit {
     private authService: AuthService,
     private firestore: FirestoreService
   ) {
-    this.dentistId = this.authService.id;
+    this.dentistId = this.authService.localUser.uid;
     console.log(this.dentistId);
   }
 

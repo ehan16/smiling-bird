@@ -1,18 +1,13 @@
-@media (max-width: 760px) {
-  .list {
-    margin: auto;
-    width: fit-content;
-  }
-}
-
 .tr {
   background-color: #f3fdff;
 }
+
 .table-wrapper {
-  padding: 0vw 6vw 6vw 6vw;
+  margin: 5vh auto;
   min-height: 60vh;
 }
 
 tr:hover {
   background-color: rgb(175, 221, 235);
 }
+
