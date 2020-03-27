@@ -34,7 +34,6 @@ export class AppointmentService {
     this.firestore
       .getValue(appointmentId, 'appointments')
       .subscribe((appointment: Appointment) => {
-        // console.log('appointment: ', appointment);
         return appointment;
       });
   }

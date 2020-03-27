@@ -30,16 +30,12 @@ export class AdminAuthGuard implements CanActivate {
     | UrlTree {
 
 
-    let type = '';
-
-    if ( this.auth.isAuthenticated === true ) {
-      const user = this.userService.getUserData(this.auth.id);
-      type = user.type;
-    }
-
-    if ( this.auth.isAuthenticated !== true || type !== 'admin' ) {
+    if ( this.auth.isAuthenticated !== true) {
       console.log('Access Denied');
-      this.router.navigate(['/visitor']);
+      this.router.navigate(['/visitor', 'login']);
+    } else if (this.auth.userRole !== 'admin') {
+      console.log('Access Denied');
+      this.router.navigate(['/not-found']);
     }
 
     return true;

@@ -40,6 +40,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { ForgotPasswordComponent } from './components/visitor/visitor-view/login/forgot-password/forgot-password.component';
 import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
 import { ReportesComponent } from './components/doctor/dentist-view/reportes/reportes.component';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ReportesComponent } from './components/doctor/dentist-view/reportes/rep
     VisitorViewComponent,
     ForgotPasswordComponent,
     NewUserComponent,
-    ReportesComponent
+    ReportesComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

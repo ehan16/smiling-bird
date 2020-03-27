@@ -47,7 +47,9 @@ export class  AuthService {
         });
         console.log('Authenticated');
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('role', this.currentUser.type);
       } else {
+        localStorage.setItem('user', null);
         console.log('Not authenticated');
       }
     });
@@ -74,6 +76,7 @@ export class  AuthService {
         this.firestoreService.getValue(this.id, 'users').subscribe((user: User) => {
           if ( user.enable ) {
             this.currentUser = user;
+            localStorage.setItem('role', this.currentUser.type);
             this.userChange.next(user);
             this.router.navigate([this.currentUser.type, this.id]);
           } else {
@@ -104,6 +107,16 @@ export class  AuthService {
      return (user !== null) ? true : false;
   }
 
+  get userRole(): string {
+    const role = localStorage.getItem('role');
+    return role;
+  }
+
+  get localUser() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user;
+  }
+
   sendPasswordResetEmail(email) {
     return this.afAuth.auth.sendPasswordResetEmail(email).then(
       () => {
@@ -111,10 +124,6 @@ export class  AuthService {
       }).catch((error) => {
         window.alert(error);
       });
-  }
-
-  getCurrentUID() {
-    return this.id;
   }
 
   VerifyEmail(user) {

@@ -25,6 +25,7 @@ import { ConsultEditComponent } from './components/doctor/dentist-view/consult-e
 import { AuthGuard } from './guard/auth.guard';
 import { AdminAuthGuard } from './guard/admin-auth.guard';
 import { ReportesComponent } from './components/doctor/dentist-view/reportes/reportes.component';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 const appRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/visitor'},
@@ -55,7 +56,7 @@ const appRoutes: Routes = [
     {path: 'patient-list/:patientId/message', component: MessageComponent},
   ]},
 
-  {path: 'admin/:id', component: AdminViewComponent, canActivate: [AuthGuard], children: [
+  {path: 'admin/:id', component: AdminViewComponent, canActivate: [AdminAuthGuard], children: [
     {path: '', component: AdminDashComponent},
     {path: 'user-list', component: UsersListComponent},
     {path: 'user-edit/:editedId', component: UserEditComponent},
@@ -67,7 +68,9 @@ const appRoutes: Routes = [
     {path: 'edit', component: ProfileEditComponent}
   ]},
 
-  {path: '**', redirectTo: ''}
+  {path: 'not-found', component: NotFoundComponent},
+
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
