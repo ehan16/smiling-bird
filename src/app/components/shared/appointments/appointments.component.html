@@ -1,10 +1,11 @@
 <div class="row m-0">
   <div class="col-12">
-    <div class="text-center mb-3 w-100" *ngIf="appointmentList?.length < 1">
+
+    <div class="text-center mb-3 w-100" *ngIf="!showAppointments">
       <h5>¡No tiene citas pendientes!</h5>
     </div>
 
-    <div *ngIf="appointmentList?.length > 0">
+    <ng-container *ngIf="showAppointments">
 
       <div class="wrapper m-4">
 
@@ -97,12 +98,9 @@
                   </div>
 
                   <div class="modal-body text-center">
-                    <form
-                      [formGroup]="appointmentForm"
-                      (ngSubmit)="modifyAppointment(appointment.id, appointment)"
-                    >
+                    <form [formGroup]="appointmentForm" (ngSubmit)="modifyAppointment(appointment.id, appointment)">
                       <div class="form-group">
-                        <div *ngIf="currentUser.type === 'dentist'">
+                        <div *ngIf="currentUser?.type === 'dentist'">
                           <label class="font-weight-bold d-block">Paciente:</label>
                           <span> {{ getUserName(appointment?.patient) }}</span>
                         </div>
@@ -182,7 +180,7 @@
 
       </div>
 
-    </div>
+    </ng-container>
 
   </div>
 </div>

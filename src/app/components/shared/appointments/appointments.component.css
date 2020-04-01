@@ -2,8 +2,8 @@
     background-color: rgb(80, 185, 218);
   }
 
-  .tr {
-    background-color: #f3fdff;
+  .tbody {
+    background-color: #e8fbff;
   }
 
   tbody > tr:hover {

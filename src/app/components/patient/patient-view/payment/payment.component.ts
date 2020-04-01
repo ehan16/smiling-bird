@@ -53,11 +53,15 @@ export class PaymentComponent implements OnInit, OnDestroy {
       amount: ['', [Validators.required, Validators.min(1)]],
     });
 
-    this.subscription = this.authService.userChange.subscribe(
-      (user: User) => {
-        this.currentUser = user;
-      }
-    );
+    if (this.authService.currentUser) {
+      this.currentUser = this.authService.currentUser;
+    } else {
+      this.subscription = this.authService.userChange.subscribe(
+        (user: User) => {
+          this.currentUser = user;
+        }
+      );
+    }
 
     this.firestoreService.getAll('users').subscribe(data => {
       this.userList = data.map(e => {

@@ -3,6 +3,10 @@
   min-height: 60vh;
 }
 
+.tbody {
+  background-color: #e8fbff;
+}
+
 tr:hover {
   background-color: rgb(175, 221, 235);
 }

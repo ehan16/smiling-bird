@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Appointment } from 'src/app/models/appointment.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-consult-detail',
@@ -14,13 +15,17 @@ export class ConsultDetailComponent implements OnInit {
 
   consultId: string;
   consult: Appointment;
+  role;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private firestoreService: FirestoreService,
-    private userService: UserService
-    ) { }
+    private userService: UserService,
+    private auth: AuthService
+    ) {
+      this.role = this.auth.userRole;
+    }
 
   ngOnInit() {
     this.route.params.subscribe(

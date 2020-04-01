@@ -1,4 +1,4 @@
-<div class="row m-0 justify-content-center align-content-center p-5">
+<div class="row m-0 justify-content-center align-content-center p-5 background">
   <div class="conteiner-fluid rounded justify-content-center bg-form">
     <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
       <div class="container-fluid mt-2 text-center">
@@ -54,7 +54,6 @@
       <div class="form-row align-items-center my-2">
         <button class="col-auto btn btn-send font-weight-bold " type="submit" [disabled]="!messageForm.valid">Enviar</button>
         <button class="col-auto btn btn-send font-weight-bold" data-toggle="modal" data-target="#NuevoPredeterminado" data-whatever="@getbootstrap" type="button">Crear</button>
-        <button class="col-auto btn btn-send font-weight-bold" type="button" (click)="goBack()">Volver</button>
       </div>
     </form>
   </div>

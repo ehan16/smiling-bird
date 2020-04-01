@@ -115,6 +115,7 @@ export class ConsultEditComponent implements OnInit {
     };
 
     this.firestoreService.setValue(this.consultId, consult, 'appointments');
+    this.router.navigate(['../'], { relativeTo: this.route });
 
   }
 

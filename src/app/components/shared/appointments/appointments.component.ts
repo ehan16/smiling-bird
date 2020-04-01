@@ -19,20 +19,17 @@ import { Subscription } from 'rxjs';
 export class AppointmentsComponent implements OnInit, OnDestroy {
 
   currentUser: User;
-  appointmentList = [];
+  appointmentList;
   appointmentForm: FormGroup;
   today = new Date();
-  minDate = new NgbDate(
-    this.today.getFullYear(),
-    this.today.getMonth() + 1,
-    this.today.getDate() + 1
-  );
+  minDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getDate() + 1);
   start = 8;
   end = 16;
   auxAppointments = [];
   selectedDate = this.minDate;
   dentistId;
   subscription: Subscription;
+  showAppointments = false;
 
   constructor(
     private userService: UserService,
@@ -84,11 +81,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       this.appointmentService.appointmentsList = this.appointmentList;
       this.appointmentList = this.appointmentList.filter(appointment => appointment.completed === false);
 
-      if (this.currentUser.type === 'patient') {
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.authService.localUser.uid);
+      if (this.authService.userRole === 'patient') {
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.patient === this.authService.id);
       } else {
-        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.authService.localUser.uid);
+        this.appointmentList = this.appointmentList.filter(appointment => appointment.dentist === this.authService.id);
       }
+
+      this.showAppointments = (this.appointmentList.length > 0);
 
     });
   }
@@ -120,7 +119,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   startAppointment(appointment, id) {
     this.appointmentService.startAppointment(id);
-    this.router.navigate(['/patient-list', appointment.patient, 'consult', id, 'edit'], { relativeTo: this.route });
+    this.router.navigate(['/patient-list', appointment.patient, 'consult', id, 'edit']);
   }
 
   patchValues(appointment: Appointment) {

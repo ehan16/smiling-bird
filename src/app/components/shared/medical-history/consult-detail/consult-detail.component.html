@@ -32,7 +32,7 @@
 
     <div class="buttons">
       <button class="btn btn-info m-2" type="button" (click)="goBack()">Volver</button>
-      <button class="btn btn-warning m-2" type="button" (click)="onEdit()">Editar</button>
+      <button class="btn btn-warning m-2" type="button" (click)="onEdit()" *ngIf="role === 'dentist'">Editar</button>
     </div>
 
   </div>

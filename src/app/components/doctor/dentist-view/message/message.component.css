@@ -5,6 +5,12 @@
   padding: 2rem;
 }
 
+.background {
+  background-image: url(../../../../../assets/background/dentist.jpg);
+  background-size: cover;
+  height: 110vh;
+}
+
 span {
   font-size: 0.7rem;
 }
