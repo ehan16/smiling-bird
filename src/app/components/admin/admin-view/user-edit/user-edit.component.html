@@ -1,0 +1,111 @@
+<div class="row m-0 p-5 form-wrapper">
+  <div class="bg-light d-flex wrapper">
+
+    <div class="col-md-5 p-5 text-center">
+      <img src="../../../../assets/extra/avatar.png" alt="avatar" />
+      <h4>{{ editedUser.name }}</h4>
+      <h5>{{ editedUser.type | titlecase }}</h5>
+      <button class="btn btn-warning" (click)="enableUser()">{{ editedUser.enable ? 'Desabilitar' : 'Habilitar' }}</button>
+    </div>
+    <div class="col-md-7 p-5">
+      <h5 class="font-weight-bold my-3">Detalles de la cuenta</h5>
+      <hr />
+      <form [formGroup]="editForm" (ngSubmit)="onEdit()">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name" class="font-weight-bold">Nombre</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control form-field"
+            />
+            <span
+              *ngIf="!editForm.get('name').valid && editForm.get('name').touched"
+              class="help-block"
+            >
+              <span *ngIf="editForm.get('name').errors['required']"
+                >El campo es obligatorio</span
+              >
+            </span>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="identification" class="font-weight-bold">Cédula</label>
+            <input
+              type="number"
+              id="identification"
+              class="form-control form-field"
+              formControlName="identification"
+            />
+            <span
+              *ngIf="
+                !editForm.get('identification').valid &&
+                editForm.get('identification').touched
+              "
+              class="help-block"
+            >
+              <span *ngIf="editForm.get('identification').errors['required']"
+                >El campo es obligatorio</span
+              >
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="gender" class="text-uppercase font-weight-bold"
+              >Género</label
+            >
+            <select
+              id="gender"
+              formControlName="gender"
+              class="form-control form-field"
+            >
+              <option value="mujer">Mujer</option>
+              <option value="hombre">Hombre</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="type" class="text-uppercase font-weight-bold">Tipo</label>
+            <select
+              id="type"
+              formControlName="type"
+              class="form-control form-field"
+            >
+              <option value="patient">Patient</option>
+              <option value="dentist">Dentista</option>
+            </select>
+          </div>
+
+          <div class="form-row" *ngIf="this.editedUser.type === 'dentist'">
+            <label for="comission" class="text-uppercase font-weight-bold"
+              >Comisión</label
+            >
+            <input
+              type="number"
+              id="comission"
+              formControlName="comission"
+              class="form-control form-field"
+            />
+          </div>
+        </div>
+
+        <div class="form-row text-center">
+          <button class="btn btn-warning my-4 mr-2" type="button" (click)="restorePassword()">
+            Restaurar contraseña
+          </button>
+          <button
+            class="btn btn-warning my-4"
+            type="submit"
+            [disabled]="!editForm.valid"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

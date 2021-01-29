@@ -1,0 +1,92 @@
+button {
+  background-color: transparent;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+}
+
+button,
+.home {
+  font-size: 0.9rem;
+  padding: 16px;
+  color: #121212;
+}
+
+.btnList:hover,
+.home:hover {
+  background: #73ced3;
+  color: #101010;
+}
+
+[class*="container"] {
+  display: block;
+  position: relative;
+  float: left;
+}
+
+.home,
+#btnMenu {
+  position: relative;
+  float: left;
+}
+
+#btnMenu {
+  display: none;
+}
+
+header {
+  background: radial-gradient(ellipse at center, rgb(88, 209, 232) 0%, rgb(21, 182, 212) 100%);
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  box-shadow: 0 8px 6px -6px rgb(14, 79, 98);
+}
+
+.sticky_nav {
+  height: fit-content;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  /*box-shadow: 0 6px 4px -4px rgb(94, 199, 138);*/
+}
+
+@media (max-width: 683px) {
+
+  #btnMenu {
+    display: block;
+  }
+
+  header, .none {
+    display: none;
+  }
+
+  .btnList {
+    width: 8rem;
+    box-shadow: 0 2px 2px -2px #333;
+    width: 100%;
+  }
+
+  .opened {
+    width: 100%;
+    top: 100%;
+    display: block;
+    position: absolute;
+  }
+
+  .opened .btnList {
+    display: inline-block;
+  }
+
+  .nav-right .btnList {
+    padding: 0.9rem;
+  }
+
+}
+
+.nav-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+}

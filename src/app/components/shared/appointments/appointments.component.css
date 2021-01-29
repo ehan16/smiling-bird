@@ -1,0 +1,40 @@
+  .mythead{
+    background-color: rgb(80, 185, 218);
+  }
+
+  .tbody {
+    background-color: #e8fbff;
+  }
+
+  tbody > tr:hover {
+    background-color: rgb(175, 221, 235);
+  }
+
+  .error {
+    width: 100%;
+    font-size: 0.7rem;
+    text-align: left;
+  }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+  }
+
+  .wrapper {
+    padding: 4vw 2vw 0vw 2vw;
+  }
+
+  @media (max-width: 1000px) {
+    .wrapper {
+      padding: 6vw 4vw 0vw 4vw;
+    }
+  }
+
+  @media (max-width: 880px) {
+    .icons {
+      height: 70px;
+    }
+  }

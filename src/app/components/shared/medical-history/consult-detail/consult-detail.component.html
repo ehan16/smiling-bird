@@ -1,0 +1,39 @@
+<div class="row m-0">
+  <div class="wrapper bg-light">
+
+    <div class="consult-data">
+      <h5>Fecha: <span>{{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</span></h5>
+      <h5>Paciente: <span>{{ getUserName(consult?.patient) | titlecase }}</span></h5>
+      <h5>Odontólogo: <span>{{ getUserName(consult?.dentist) | titlecase }}</span></h5>
+    </div>
+
+    <ul class="list">
+      <li class="media my-3" *ngFor="let treatment of consult?.treatments; let i = index">
+        <div class="text-center">
+          <img
+            src="{{ treatment?.image }}"
+            class="image"
+            alt="tratamiento"
+          />
+          <p class="bg-warning price">{{ treatment?.price }} $</p>
+        </div>
+        <div class="media-body bg-white rounded p-3">
+          <h6 class="bg-info rounded p-2">Tratamiento #{{ i + 1 }}</h6>
+          <p>{{ treatment?.description }}</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="consult-data">
+      <h5>Récipe médico</h5>
+      <p *ngIf="consult?.recipe !== ''">{{ consult?.recipe }}</p>
+      <p *ngIf="consult?.recipe === ''">No posee récipe médico</p>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-info m-2" type="button" (click)="goBack()">Volver</button>
+      <button class="btn btn-warning m-2" type="button" (click)="onEdit()" *ngIf="role === 'dentist'">Editar</button>
+    </div>
+
+  </div>
+</div>

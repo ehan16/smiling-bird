@@ -1,0 +1,186 @@
+<div class="row m-0">
+  <div class="col-12">
+
+    <div class="text-center mb-3 w-100" *ngIf="!showAppointments">
+      <h5>¡No tiene citas pendientes!</h5>
+    </div>
+
+    <ng-container *ngIf="showAppointments">
+
+      <div class="wrapper m-4">
+
+        <table class="table table-hover table-responsive-lg text-center">
+          <thead class="mythead">
+            <tr>
+              <th scope="col">N°</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Email</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Dentista</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+
+          <tbody *ngFor="let appointment of appointmentList; let i = index">
+            <tr>
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ getUserName(appointment?.patient) }}</td>
+              <td>{{ getUserEmail(appointment?.patient) }}</td>
+              <td>
+                {{ appointment?.date?.day }}/{{ appointment?.date?.month }}/{{
+                  appointment?.date?.year
+                }}
+              </td>
+              <td>{{ appointment?.hour }}</td>
+              <td>{{ getUserName(appointment?.dentist) }}</td>
+              <td class="icons">
+                <ng-container *ngIf="!appointment?.accepted">
+                  <button
+                    *ngIf="currentUser.type === 'dentist'"
+                    class="btn-success rounded m-1"
+                    (click)="acceptAppointment(appointment.id)"
+                  >
+                    <i class="fas fa-check"></i>
+                  </button>
+                  <p *ngIf="currentUser.type === 'patient'" class="px-3">En espera</p>
+                </ng-container>
+                <ng-container *ngIf="appointment?.accepted">
+                  <button
+                    *ngIf="currentUser?.type === 'dentist'"
+                    class="btn-secondary rounded m-1"
+                    (click)="startAppointment(appointment, appointment.id)"
+                  >
+                    <i class="fas fa-book"></i>
+                  </button>
+                  <button
+                    class="btn-info rounded m-1"
+                    type="button"
+                    data-toggle="modal"
+                    [attr.data-target]="'#appointment' + i"
+                    (click)="patchValues(appointment)"
+                  >
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                </ng-container>
+                <button
+                  class="btn-danger rounded m-1"
+                  (click)="deleteAppointment(appointment.id)"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Modal nueva cita-->
+            <div
+              class="modal fade"
+              id="{{ 'appointment' + i }}"
+              tabindex="-1"
+              role="dialog"
+              [attr.aria-labelledby]="'appointmentModal' + i"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="{{ 'appointmentModal' + i }}">
+                      Modificar cita
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body text-center">
+                    <form [formGroup]="appointmentForm" (ngSubmit)="modifyAppointment(appointment.id, appointment)">
+                      <div class="form-group">
+                        <div *ngIf="currentUser?.type === 'dentist'">
+                          <label class="font-weight-bold d-block">Paciente:</label>
+                          <span> {{ getUserName(appointment?.patient) }}</span>
+                        </div>
+                        <div *ngIf="currentUser.type === 'patient'">
+                          <label class="font-weight-bold d-block">Odontólogo:</label>
+                          <span> {{ getUserName(appointment?.dentist) }}</span>
+                          <label class="font-weight-bold d-block mt-3">Horario:</label>
+                          <span>{{ getUserShift(appointment?.dentist)[0] }}  -  {{ getUserShift(appointment?.dentist)[1] }}</span>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="form-group dateInput">
+                        <label for="date" class="font-weight-bold">Fecha</label>
+                        <div class="input-group">
+                          <input
+                            class="form-control form-field"
+                            placeholder="yyyy-mm-dd"
+                            formControlName="date"
+                            ngbDatepicker
+                            #d="ngbDatepicker"
+                            [minDate]="minDate"
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-secondary calendar"
+                              (click)="d.toggle()"
+                              type="button"
+                            >
+                              <i class="fas fa-calendar-alt"></i>
+                            </button>
+                          </div>
+                          <span *ngIf="!appointmentForm.get('date').valid && appointmentForm.get('date').touched" class="help-block error">
+                            <span *ngIf="appointmentForm.get('date').errors['required']">El campo es obligatorio</span>
+                            <span *ngIf="appointmentForm.get('date').errors['invalidDate']">Día no laboral</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="hour" class="d-block">Hora de la cita</label>
+                        <input type="text" class="w-50" formControlName="hour" class="form-control form-field"/>
+                        <span *ngIf="!appointmentForm.get('hour').valid && appointmentForm.get('hour').touched" class="help-block error">
+                          <span *ngIf="appointmentForm.get('hour').errors['occupiedHour']">Horario ocupado</span>
+                          <span *ngIf="appointmentForm.get('hour').errors['invalidHour']">Hora no laboral</span>
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer mt-3">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      (click)="modifyAppointment(appointment.id, appointment)"
+                      [disabled]="!appointmentForm.get('hour').valid"
+                      data-dismiss="modal"
+                    >
+                      Aceptar
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Fin modal -->
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </ng-container>
+
+  </div>
+</div>

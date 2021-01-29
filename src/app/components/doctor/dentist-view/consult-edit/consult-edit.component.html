@@ -1,0 +1,89 @@
+<div class="row m-0 p-5">
+
+  <div class="wrapper bg-light px-sm-5 py-5">
+
+    <div class="col-12 text-center font-weight-bold m">
+      <h4>Paciente: {{ patient?.name | titlecase}}</h4>
+    </div>
+
+    <div class="col-12 text-center">
+      <h4 class="font-weight-bold">Fecha de la consulta: {{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</h4>
+    </div>
+
+    <form [formGroup]="consultForm" (ngSubmit)="onEdit()">
+
+      <div class="col-12 mt-5">
+
+        <div *ngIf="treatments">
+          <div formArrayName="treatments" *ngFor="let treatment of Treatments.controls; let i = index">
+
+            <div [formGroupName]="i" class="my-3">
+
+              <h6 class="font-weight-bold my-3">Tratamiento #{{ i + 1 }}</h6>
+              <hr class="mb-2">
+              <textarea cols="30" rows="4" formControlName="description" placeholder="Descripción del tratamiento realizado"
+              class="form-control form-field my-3"
+              ></textarea>
+
+              <div class="custom-file mb-3">
+                <input type="file" formControlName="file" accept=".png, .jpg" class="custom-file-input" id="inputGroup" (change)="onFileChange($event, i)">
+                <label class="custom-file-label" for="inputGroup">{{ fileNames[i] }}</label>
+                <div>
+
+                  <progress
+                  class="progress progress-bar-animated mt-2 mb-4 w-100"
+                  value="{{ uploadProgress[i] }}"
+                  max="100"
+                  >{{ uploadProgress[i] }}</progress>
+
+                </div>
+              </div>
+
+              <div class="text-center" *ngIf="fileUrl[i]">
+                <img src="{{ fileUrl[i] }}">
+              </div>
+
+              <div class="form-bottom mt-3">
+                <input type="number" formControlName="price" class="form-control form-field" placeholder="Precio en $">
+                <button type="button" class="btn btn-delete w-25" (click)="onDelete(i)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+              <hr>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-12 my-3" *ngIf="recipeExist">
+        <hr>
+        <h5>Récipe médico</h5>
+        <textarea cols="30" rows="5"
+            formControlName="recipe"
+            class="form-control form-field"
+        ></textarea>
+        <div class="form-bottom">
+          <button type="button" class="btn btn-delete w-25" (click)="onDeleteRecipe()">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <hr>
+      </div>
+
+      <div class="m-3">
+        <button type="button" class="btn btn-success btn-block my-2" (click)="createTreatment()">Añadir tratamiento</button>
+        <button type="button" class="btn btn-success btn-block my-2" (click)="addRecipe()" [disabled]="recipeExist">Añadir récipe</button>
+        <button type="submit" class="btn btn-warning btn-block" [disabled]="!consultForm.valid">Aceptar</button>
+        <button type="submit" class="btn btn-info btn-block my-2" (click)="goBack()">Volver</button>
+      </div>
+
+    </form>
+
+
+  </div>
+
+</div>

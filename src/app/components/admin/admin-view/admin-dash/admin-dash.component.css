@@ -1,0 +1,102 @@
+.graphs {
+  padding: 1.5rem;
+  margin: 2.3rem;
+}
+
+.card {
+  margin-top: 5vh;
+  border-radius: 20px;
+  box-shadow: 0 8px 6px -6px rgb(53, 62, 65);
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  font-weight: bolder;
+}
+
+.card-category {
+  font-size: 0.9rem;
+  font-weight: lighter;
+  color: rgb(95, 95, 95);
+  margin-bottom: 5px;
+}
+
+.card-header, .card-footer {
+  background-color: #ffe1aa;
+}
+
+.numbers {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.icon {
+  height: 19vh;
+}
+
+.date-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  margin: 7vh 0 3vh 0;
+}
+
+@media (max-width: 770px) {
+  .icon {
+    height: 20vh;
+  }
+
+  .card-category {
+    font-size: 0.8rem;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 610px) {
+  .icon {
+    height: 15vh;
+  }
+
+  .card-category {
+    font-size: 0.7rem;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .graphs {
+    padding: 1rem;
+    margin: 2vh 0 5vh 0;
+  }
+
+  .icon {
+    height: 20vh;
+  }
+
+  .card-category {
+    font-size: 1.1rem;
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+  }
+
+  .numbers {
+    margin-right: 15px;
+  }
+
+  .date-form {
+    flex-direction: column;
+  }
+}

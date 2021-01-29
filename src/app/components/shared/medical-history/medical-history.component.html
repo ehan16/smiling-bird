@@ -1,0 +1,42 @@
+<div class="row m-0">
+
+  <div class="banner font-title">
+    <p>Historial médico<p>
+  </div>
+
+  <div class="col-md-4 px-sm-4 user">
+    <img src="../../../../assets/extra/avatar.png" alt="avatar">
+    <h5>Nombre: <span>{{ patient?.name | titlecase }}</span></h5>
+    <h5>Correo: <span>{{ patient?.user }}</span></h5>
+    <h5>Cédula: {{ patient?.identification }}</h5>
+    <h5>Deuda: <span>{{ patient?.debt }}</span></h5>
+
+    <hr class="my-4">
+    <button *ngIf="currentUser?.type === 'dentist'" type="button" class="btn btn-warning w-75 mt-3" (click)="onCreate()">Crear</button>
+  </div>
+
+  <div class="col-md-8 py-4">
+    <div class="border rounded bg-light table-wrapper">
+
+      <table class="table table-responsive-sm">
+        <thead>
+          <th scope="col">N°</th>
+          <th scope="col" class="w-50">Fecha</th>
+          <th scope="col">Hora</th>
+          <th scope="col">Acción</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consult of medicalRecord; let i = index">
+            <th>{{ i + 1 }}</th>
+            <th>{{ consult?.date?.day }}/{{ consult?.date?.month }}/{{ consult?.date?.year }}</th>
+            <th>{{ consult?.hour }}</th>
+            <th class="d-flex">
+              <a (click)="onSee(consult.id)" class="mx-2"><i class="fas fa-file-medical"></i></a>
+              <a (click)="onEdit(consult.id)" class="mx-2" *ngIf="currentUser?.type === 'dentist'"><i class="fas fa-pen"></i></a>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

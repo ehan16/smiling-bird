@@ -1,0 +1,177 @@
+<div class="banner font-title">
+  <p>Pagos</p>
+</div>
+
+<div class="row mx-0 my-4 px-3">
+
+  <!-- col izq -->
+  <div class="col-md-4 text-center p-4 rounded-sm card-data">
+    <img src="../../../../assets/extra/avatar.png" alt="avatar">
+    <h5 class="font-weight-bold">Nombre: </h5> <span>{{ currentUser?.name | titlecase }}</span>
+    <h5 class="mt-2 font-weight-bold">Estado de Cuenta: </h5> <span>{{currentUser?.debt}}</span>
+  </div>
+
+  <!-- col der -->
+  <div class="col-md-8 p-3 rounded-sm">
+
+    <div class="w-100" id="accordion">
+
+      <div class="card" *ngFor="let dentist of dentistList; let i = index">
+        <div class="card-header card-color" id="{{ 'heading' + i }}">
+          <h5 class="mb-0 mt-2">
+            <button class="btn btn-name" data-toggle="collapse" [attr.data-target]="'#dentist' + i" [attr.aria-expanded]="false"
+              [attr.aria-controls]="'dentist' + i">
+              {{ dentist?.data?.name }} (C.I: {{ dentist?.data?.identification }})
+            </button>
+          </h5>
+        </div>
+
+        <div id="{{ 'dentist' + i }}" class="collapse" [attr.aria-labelledby]="'#dentist' + i" data-parent="#accordion">
+          <div class="card-body card-style pb-4">
+
+            <div class="row">
+              <div class="col-12 text-center my-3">
+                <h4>Métodos de pagos permitidos</h4>
+              </div>
+            </div>
+
+            <div class="row justify-content-center" *ngIf="dentist?.payment">
+
+
+                <!-- overlay paypal -->
+                <div class="col-sm-4" *ngIf="dentist?.payment?.paypal">
+                  <img src="../../../../assets/logo/paypal.png" alt="Paypal" class="image">
+                  <div class="middle">
+                    <button class="btn btn-info" (click)="activatePaypal();selectMethod('paypal', dentist.data.id)"
+                      data-target="#containerPaypal">Paypal</button>
+                    <!-- selectMethod('paypal', dentist.id) -->
+                  </div>
+                </div>
+                <!-- end overlay -->
+
+
+              <div class="col-sm-4" *ngIf="dentist?.payment?.zelle">
+                <!-- overlay zelle -->
+                <div class="container">
+                  <img src="../../../../assets/logo/zelle.png" alt="Zelle" class="image">
+                  <div class="middle">
+                    <button class="btn btn-info" (click)="selectMethod('zelle', dentist.data.id)" data-toggle="modal"
+                      data-target="#voucher">Zelle</button>
+                  </div>
+                </div>
+                <!-- end overlay -->
+              </div>
+
+              <div class="col-sm-4">
+                <!-- overlay transf -->
+                <div class="container">
+                  <img src="../../../../assets/logo/trasfer.jpg" alt="Transferencia Bancaria" class="image">
+                  <div class="middle">
+                    <button class="btn btn-info" (click)="selectMethod('transferencia', dentist.data.id)" data-toggle="modal" data-target="#voucher"
+                    [disabled]="!dentist?.payment?.bankAccounts">Transf.</button>
+                  </div>
+                </div>
+                <!-- end overlay -->
+              </div>
+
+              <!-- Comienzo del modal -->
+              <div class="modal fade m-5" id="voucher" tabindex="-1" role="dialog" aria-labelledby="voucher" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="voucher">
+                        Información del pago
+                      </h5>
+                    </div>
+
+                    <div class="modal-body px-sm-5">
+                      <ul class="list-group m-3" *ngIf="method === 'transferencia'">
+                        <li class="list-group-item list-group-item-info" *ngFor="let bankAccount of dentist?.payment?.bankAccounts">{{ bankAccount?.bank }} - {{ bankAccount?.account }}</li>
+                      </ul>
+                      <form [formGroup]="voucherForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group mt-3">
+                          <label>Correo del que paga:</label>
+                          <input type="email" class="form-control form-field" formControlName="email">
+                          <span *ngIf="!voucherForm.get('email').valid && voucherForm.get('email').touched" class="help-block">
+                            <span *ngIf="voucherForm.get('email').errors['required']">El campo es obligatorio</span>
+                            <span *ngIf="voucherForm.get('email').errors['email']">Dato inválido</span>
+                          </span>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Monto ($):</label>
+                          <input type="number" class="form-control form-field" formControlName="amount">
+                          <span *ngIf="!voucherForm.get('amount').valid && voucherForm.get('amount').touched" class="help-block">
+                            <span *ngIf="voucherForm.get('amount').errors['required']">El campo es obligatorio</span>
+                            <span *ngIf="voucherForm.get('amount').errors['min']">Monto inválido</span>
+                          </span>
+                        </div>
+
+                        <div class="form-group dateInput">
+                          <label>Fecha del pago:</label>
+                          <div class="input-group">
+                            <input class="form-control form-field" placeholder="yyyy-mm-dd" formControlName="date" ngbDatepicker
+                              #d="ngbDatepicker" [maxDate]=maxDate/>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                <i class="fas fa-calendar-alt"></i>
+                              </button>
+                            </div>
+                            <span *ngIf="!voucherForm.get('date').valid && voucherForm.get('date').touched" class="help-block error">
+                              <span *ngIf="voucherForm.get('date').errors['required']">El campo es obligatorio</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="form-group" *ngIf="method === 'transferencia'">
+                          <label>Número de referencia: </label>
+                          <input type="text" class="form-control form-field" formControlName="voucher">
+                          <span *ngIf="!voucherForm.get('voucher').valid && voucherForm.get('voucher').touched"
+                            class="help-block error">
+                            <span *ngIf="voucherForm.get('voucher').errors['required']">El campo es obligatorio</span>
+                          </span>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                      </button>
+                      <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()"
+                        [disabled]="!voucherForm.valid">
+                        Guardar
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!-- Fin del modal -->
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- paypal -->
+    <div class="container mt-5" id="containerPaypal">
+      <div class="row  justify-content-center">
+        <div class="col-8 text-center">
+          <!-- <div *ngIf="!paidFor">
+            <h5>El costo de la cita es de - ${{ product.price }}</h5>
+          </div> -->
+          <div *ngIf=paidFor>
+            <h5>Has pagado al odontólogo</h5>
+          </div>
+          <div [hidden]="paidFor" #paypal></div>
+        </div>
+      </div>
+    </div>
+    <!-- paypal-end -->
+
+  </div>
+</div>

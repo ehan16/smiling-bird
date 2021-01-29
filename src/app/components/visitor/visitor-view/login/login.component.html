@@ -1,0 +1,47 @@
+
+<div class="row m-0 justify-content-center align-content-center">
+  <div class="login-form bg-light text-center">
+    <img src="../../../../assets/extra/avatar.png" alt="avatar" />
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Usuario</label>
+        <input
+          type="email"
+          placeholder="Usuario@123.com"
+          id="username"
+          formControlName="username"
+          class="form-control form-field"
+        />
+        <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched" class="help-block">
+          <span *ngIf="loginForm.get('username').errors['required']">El campo es obligatorio</span>
+          <span *ngIf="loginForm.get('username').errors['email']">El dato introducido es incorrecto</span>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="********"
+          formControlName="password"
+          class="form-control form-field"
+        />
+        <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched" class="help-block">
+          <span *ngIf="loginForm.get('password').errors['required']">El campo es obligatorio</span>
+        </span>
+      </div>
+      <div class="m-3">
+        <a class="d-block" routerLink="/visitor/forgot-password">Recuperar contraseña</a>
+        <a routerLink="/visitor/signup" class="d-block">Registrarse</a>
+      </div>
+      <button
+        class="btn btn-warning btn-block"
+        type="submit"
+        [disabled]="!loginForm.valid"
+      >
+        Iniciar sesión
+      </button>
+    </form>
+  </div>
+</div>

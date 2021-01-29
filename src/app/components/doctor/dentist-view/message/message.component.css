@@ -1,0 +1,29 @@
+.bg-form {
+  margin-top: 13vh;
+  background-color: #11afc7;
+  width: 75%;
+  padding: 2rem;
+}
+
+.background {
+  background-image: url(../../../../../assets/background/dentist.jpg);
+  background-size: cover;
+  height: 110vh;
+}
+
+span {
+  font-size: 0.7rem;
+}
+
+.btn-send {
+  width: 40%;
+  margin-left: 10px;
+  background-color: #ffe895;
+}
+
+@media (max-width: 700px) {
+  .bg-form {
+    width: 100%;
+    padding: 1rem;
+  }
+}

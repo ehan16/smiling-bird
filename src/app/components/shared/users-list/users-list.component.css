@@ -1,0 +1,58 @@
+.table-wrapper {
+  padding: 0vw 6vw 6vw 6vw;
+  min-height: 60vh;
+}
+
+.tbody {
+  background-color: #e8fbff;
+}
+
+tr:hover {
+  background-color: rgb(175, 221, 235);
+}
+
+.error {
+  width: 100%;
+  font-size: 0.7rem;
+  text-align: left;
+}
+
+i:hover {
+  color: #ffb641b5;
+}
+
+.card-color {
+  background: #ffc76eb5;
+}
+
+.card-color:hover {
+  background: #ffb641b5;
+}
+
+.acc-content {
+  margin: 0;
+  background: #fff8c39e;
+}
+
+.avatar {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.btn-user {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  text-align: left;
+}
+
+.tr {
+  background-color: #f3fdff;
+}
+
+@media (max-width: 760px) {
+  .list {
+    margin:auto;
+    width: fit-content;
+  }
+}

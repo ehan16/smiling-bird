@@ -1,0 +1,51 @@
+<header class="text-center">
+  <img
+    src="../../assets/logo/logo2.png"
+    alt="Smiling Bird logo"
+    height="100rem"
+  />
+</header>
+<nav class="main-theme sticky_nav" #stickyNav>
+  <div class="container_left">
+    <a class="home" (click)="goToHome()">
+      <li class="fas fa-home"></li>
+    </a>
+    <button
+      id="btnMenu"
+      (click)="toggleCollapse()"
+      class="navbar-toggler navbar-toggler-right"
+    >
+      <li class="fas fa-bars"></li>
+    </button>
+  </div>
+  <div class="container-menu collapse main-theme" [class.show]="show" [ngClass]="show ? 'opened' : 'none'">
+    <div *ngIf="currentUser">
+      <button class="btnList" [routerLink]="['/patient', currentId, 'dentist-list']" *ngIf="currentUser.type === 'patient'">
+        Odontólogos
+      </button>
+      <button class="btnList" [routerLink]="['/patient', currentId, 'medical-record']" *ngIf="currentUser.type === 'patient'">
+        Historial
+      </button>
+      <button class="btnList" [routerLink]="['/patient', currentId, 'payment']" *ngIf="currentUser.type === 'patient'">
+        Pago
+      </button>
+      <button class="btnList" [routerLink]="['/dentist', currentId, 'patient-list']" *ngIf="currentUser.type === 'dentist'">
+        Pacientes
+      </button>
+      <button class="btnList" [routerLink]="['/dentist', currentId, 'report']" *ngIf="currentUser.type === 'dentist'">
+        Reportes
+      </button>
+      <button class="btnList" [routerLink]="['/admin', currentId ,'user-list']" *ngIf="currentUser.type === 'admin'">
+        Usuarios
+      </button>
+    </div>
+  </div>
+  <span class="nav-right">
+    <button class="btnList main-theme" routerLink="/visitor/login" *ngIf="!currentUser">
+      Iniciar sesión
+    </button>
+    <button class="btnList" *ngIf="currentUser" (click)="goToProfile()">
+      {{ currentUser?.name }}
+    </button>
+  </span>
+</nav>

@@ -1,65 +1,92 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { NgbCarouselModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { AdminComponent } from './admin/admin.component';
-import { DentistComponent } from './dentist/dentist.component';
-import { PatientComponent } from './patient/patient.component';
-import { FooterComponent } from './footer/footer.component';
-import { PaymentComponent } from './patient/payment/payment.component';
-import { MedicalHistoryComponent } from './medical-history/medical-history.component';
-import { MessageComponent } from './dentist/message/message.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ConfigurationComponent } from './profile/configuration/configuration.component';
-import { AppointmentsComponent } from './appointments/appointments.component';
-import { AppointmentListComponent } from './appointments/appointment-list/appointment-list.component';
-import { AppointmentEditComponent } from './appointments/appointment-edit/appointment-edit.component';
-import { AppointmentDetailComponent } from './appointments/appointment-detail/appointment-detail.component';
-import { AppointmentItemComponent } from './appointments/appointment-list/appointment-item/appointment-item.component';
-import { UsersListComponent } from './users-list/users-list.component';
-import { UserItemComponent } from './users-list/user-item/user-item.component';
-import { UserEditComponent } from './users-list/user-edit/user-edit.component';
-import { AppRoutingModule } from './app-routing.module';
-import { ConsultListComponent } from './medical-history/consult-list/consult-list.component';
-import { ConsultItemComponent } from './medical-history/consult-list/consult-item/consult-item.component';
-import { ConsultEditComponent } from './medical-history/consult-edit/consult-edit.component';
-import { ConsultDetailComponent } from './medical-history/consult-detail/consult-detail.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
+import { MedicalHistoryComponent } from './components/shared/medical-history/medical-history.component';
+import { ProfileComponent } from './components/shared/profile/profile.component';
+import { ProfileEditComponent } from './components/shared/profile/profile-edit/profile-edit.component';
+import { AppointmentsComponent } from './components/shared/appointments/appointments.component';
+import { UsersListComponent } from './components/shared/users-list/users-list.component';
+import { UserEditComponent } from './components/admin/admin-view/user-edit/user-edit.component';
+import { ConsultEditComponent } from './components/doctor/dentist-view/consult-edit/consult-edit.component';
+import { ConsultDetailComponent } from './components/shared/medical-history/consult-detail/consult-detail.component';
+import { LoginComponent } from './components/visitor/visitor-view/login/login.component';
+import { SignUpComponent } from './components/visitor/visitor-view/sign-up/sign-up.component';
+import { HomeComponent } from './components/shared/home/home.component';
+import { ProfileDetailComponent } from './components/shared/profile/profile-detail/profile-detail.component';
+
+import { UserService } from './services/user.service';
+import { AdminViewComponent } from './components/admin/admin-view/admin-view.component';
+import { AdminDashComponent } from './components/admin/admin-view/admin-dash/admin-dash.component';
+import { DentistViewComponent } from './components/doctor/dentist-view/dentist-view.component';
+import { DentistDashComponent } from './components/doctor/dentist-view/dentist-dash/dentist-dash.component';
+import { PatientViewComponent } from './components/patient/patient-view/patient-view.component';
+import { PaymentComponent } from './components/patient/patient-view/payment/payment.component';
+import { MessageComponent } from './components/doctor/dentist-view/message/message.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { AuthService } from './services/auth.service';
+import { VisitorViewComponent } from './components/visitor/visitor-view/visitor-view.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { ForgotPasswordComponent } from './components/visitor/visitor-view/login/forgot-password/forgot-password.component';
+import { NewUserComponent } from './components/shared/users-list/new-user/new-user.component';
+import { ReportesComponent } from './components/doctor/dentist-view/reportes/reportes.component';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AdminComponent,
-    DentistComponent,
-    PatientComponent,
     FooterComponent,
-    PaymentComponent,
     MedicalHistoryComponent,
-    MessageComponent,
     ProfileComponent,
-    ConfigurationComponent,
+    ProfileEditComponent,
     AppointmentsComponent,
-    AppointmentListComponent,
-    AppointmentEditComponent,
-    AppointmentDetailComponent,
-    AppointmentItemComponent,
     UsersListComponent,
-    UserItemComponent,
     UserEditComponent,
-    ConsultListComponent,
-    ConsultItemComponent,
     ConsultEditComponent,
-    ConsultDetailComponent
+    ConsultDetailComponent,
+    LoginComponent,
+    SignUpComponent,
+    HomeComponent,
+    ProfileDetailComponent,
+    AdminViewComponent,
+    AdminDashComponent,
+    DentistViewComponent,
+    DentistDashComponent,
+    PatientViewComponent,
+    PaymentComponent,
+    MessageComponent,
+    FilterPipe,
+    VisitorViewComponent,
+    ForgotPasswordComponent,
+    NewUserComponent,
+    ReportesComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    NgxPayPalModule,
+    AngularFireStorageModule,
+    NgbCarouselModule,
+    NgbDatepickerModule
   ],
-  providers: [],
+  providers: [UserService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

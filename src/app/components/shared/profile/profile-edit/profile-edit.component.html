@@ -1,0 +1,160 @@
+<div class="px-5">
+  <h5 class="text-center my-3">INFORMACIÓN</h5>
+  <hr />
+  <form [formGroup]="editForm" (ngSubmit)="onEdit()">
+    <div class="form-group">
+      <label for="name" class="text-uppercase font-weight-bold">Nombre</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="form-control form-field"
+      />
+      <span
+        *ngIf="!editForm.get('name').valid && editForm.get('name').touched"
+        class="help-block"
+      >
+        <span *ngIf="editForm.get('name').errors['required']"
+          >El campo es obligatorio</span
+        >
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="identification" class="text-uppercase font-weight-bold"
+        >Cédula</label
+      >
+      <input
+        type="number"
+        value="{{ currentUser.identification }}"
+        id="identification"
+        class="form-control form-field"
+        formControlName="identification"
+      />
+      <span
+        *ngIf="
+          !editForm.get('identification').valid &&
+          editForm.get('identification').touched
+        "
+        class="help-block"
+      >
+        <span *ngIf="editForm.get('identification').errors['required']"
+          >El campo es obligatorio</span
+        >
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="user" class="text-uppercase font-weight-bold">Correo</label>
+      <input id="user" value="{{ currentUser.user }}" class="form-control form-field" disabled/>
+    </div>
+
+    <div class="form-group">
+      <label for="birthDate" class="text-uppercase font-weight-bold d-block"
+        >Año de nacimiento</label
+      >
+      <div class="input-group">
+        <input
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          formControlName="birthDate"
+          id="birthDate"
+          ngbDatepicker
+          #d="ngbDatepicker"
+          [maxDate]="maxDate"
+          [minDate]="minDate"
+        />
+        <div class="input-group-append bg-warning">
+          <button
+            class="btn btn-outline-secondary calendar"
+            (click)="d.toggle()"
+            type="button"
+          ><i class="fas fa-calendar"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender" class="text-uppercase font-weight-bold">Género</label>
+      <select
+        id="gender"
+        formControlName="gender"
+        class="form-control form-field"
+      >
+        <option value="mujer">Mujer</option>
+        <option value="hombre">Hombre</option>
+      </select>
+    </div>
+
+    <span *ngIf="currentUser.type === 'dentist'">
+      <label for="shift" class="text-uppercase font-weight-bold">Horario</label>
+      <div class="form-hour">
+        <div class="form-group d-flex">
+          <label
+            for="entrance"
+            class="text-uppercase font-weight-bold my-2 mr-2"
+            >Entrada</label
+          >
+          <input
+            type="number"
+            id="entrance"
+            formControlName="start"
+            class="form-control form-field my-2 mr-3"
+            [(ngModel)]="start"
+          />
+        </div>
+        <div class="form-group d-flex">
+          <label for="exit" class="text-uppercase font-weight-bold my-2 mr-4"
+            >Salida</label
+          >
+          <input
+            type="number"
+            id="exit"
+            formControlName="end"
+            [(ngModel)]="end"
+            class="form-control form-field my-2 mr-3"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="text-uppercase font-weight-bold">Métodos de pago</label>
+        <div class="row mx-3">
+
+          <div class="col-12 form-check d-inline">
+            <input type="checkbox" class="form-check-input" formControlName="paypal">
+            <label class="form-check-label mr-5">Paypal</label>
+            <input type="checkbox" class="form-check-input ml-5" formControlName="zelle">
+            <label class="form-check-label">Zelle</label>
+          </div>
+
+          <hr>
+
+          <div formArrayName="bankAccounts" *ngFor="let bankAccount of BankAccounts.controls; let i = index">
+            <div [formGroupName]="i" class="banks my-3">
+              <input type="text" formControlName="bank" placeholder="Nombre del banco" class="form-control form-field form-bank">
+              <input type="number" formControlName="account" placeholder="Número de cuenta" class="form-control form-field">
+              <button type="button" class="btn btn-delete" (click)="deleteBankAccount(i)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success btn-block my-4" (click)="createBankAccount()">
+            Añadir <i class="fas fa-plus mx-3"></i>
+          </button>
+
+        </div>
+      </div>
+
+    </span>
+
+    <button
+      class="btn btn-warning btn-block my-4"
+      type="submit"
+      [disabled]="!editForm.valid"
+    >
+      Guardar datos
+    </button>
+  </form>
+</div>

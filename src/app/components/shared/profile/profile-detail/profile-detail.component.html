@@ -1,0 +1,31 @@
+<div class="px-5">
+  <h5 class="text-center my-3">INFORMACIÓN</h5>
+  <hr>
+  <div class="row information px-4 flex-column">
+    <h6 class="text-uppercase font-weight-bold">Nombre y Apellido:</h6>
+    <p>{{ currentUser?.name }}</p>
+    <h6 class="text-uppercase font-weight-bold">Cédula:</h6>
+    <p>{{ currentUser?.identification }}</p>
+    <h6 class="text-uppercase font-weight-bold">Correo:</h6>
+    <p>{{ currentUser.user }}</p>
+    <h6 class="text-uppercase font-weight-bold">Fecha de nacimiento:</h6>
+    <p>{{ currentUser?.birth?.day }}-{{ currentUser?.birth?.month }}-{{ currentUser?.birth?.year }}</p>
+    <h6 class="text-uppercase font-weight-bold">Género:</h6>
+    <p>{{ currentUser?.gender | titlecase }}</p>
+    <span *ngIf="currentUser?.type === 'patient'">
+      <h6 class="text-uppercase font-weight-bold">Estado de cuenta:</h6>
+      <p>{{ currentUser?.debt }}</p>
+    </span>
+    <span *ngIf="currentUser?.type === 'dentist'">
+      <h6 class="text-uppercase font-weight-bold">Horario:</h6>
+      <p>{{ currentUser?.shift[0] }} - {{ currentUser?.shift[1] }}</p>
+      <hr>
+      <h5 class="text-uppercase font-weight-bold">Métodos de pago:</h5>
+      <ul class="list-group mb-5">
+        <li class="list-group-item" *ngIf="dentistExtra?.paypal">Paypal</li>
+        <li class="list-group-item" *ngIf="dentistExtra?.zelle">Zelle</li>
+        <li class="list-group-item" *ngFor="let bankAccount of dentistExtra?.bankAccounts">{{ bankAccount.bank }} - {{ bankAccount.account }}</li>
+      </ul>
+    </span>
+  </div>
+</div>

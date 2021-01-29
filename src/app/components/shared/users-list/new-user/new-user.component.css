@@ -1,0 +1,15 @@
+.wrapper {
+  padding: 40px;
+  margin: auto;
+  margin-top: 12vh;
+  margin-bottom: 12vh;
+}
+
+.shift {
+  font-size: 0.8rem;
+}
+
+span {
+  font-size: 0.7rem;
+}
+

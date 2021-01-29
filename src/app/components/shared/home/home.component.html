@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="row">
+    <img
+      src="../../../assets/background/smile.jpeg"
+      alt="banner"
+      width="100%"
+    />
+  </div>
+
+  <div class="row name">
+      <h1 class="font-weight-light">Smiling Bird</h1>
+      <h4 class="font-weight-light">
+        Tu clínica odontológica de confianza, siempre contigo
+      </h4>
+  </div>
+
+  <div class="row align-items-end justify-content-center mb-5">
+    <h5 class="text-center m-5 d-block">
+      ¡Bienvenidos a nuestro espacio en la red!
+    </h5>
+    <p class="w-75">
+      En Smiling Bird ponemos a tu disposición la experiencia del mejor equipo
+      de odontólogos y las instalaciones más modernas y cómodas, con el apoyo de 
+      la última tecnología en odontología a nivel mundial.
+    </p>
+    <p class="w-75">
+      Somos un grupo humano verdaderamente comprometido con lo que hace, 
+      con capacidad de brindar un servicio de salud bucal integral, 
+      personalizado y con un alto valor científico, 
+      enfocados en la ética, la responsabilidad y sentido social de
+      nuestra labor.
+    </p>
+    <p class="w-75 font-italic my-5">
+      Así que ven a Smiling Bird y vuela alto con nosotros.
+    </p>
+    <h6 class="w-100 font-italic font-weight-light text-muted text-center">
+      CARACAS-VENEZUELA
+    </h6>
+  </div>
+
+  <div class="row">
+    <ngb-carousel class="w-100">
+      <ng-template ngbSlide *ngFor="let testimonial of testimonials">
+        <div class="picsum-img-wrapper">
+          <div class="testimonial p-4">
+            <h2 class="font-weight-light w-100 text-center">
+              Testimonios y opiniones
+            </h2>
+          </div>
+        </div>
+        <div class="carousel-caption">
+          <p class="font-italic">
+            {{ testimonial.opinion }}
+          </p>
+          <hr />
+          <h6 class="font-weight-light">{{ testimonial.name }}</h6>
+          <h6 class="font-weigt-lighter my-3 text-white-50 font-italic">
+            {{ testimonial.career }}
+          </h6>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+
+  <div class="row text-center">
+    <h2 class="font-weight-light w-100 m-5">
+      Nuestros servicios
+    </h2>
+    <p class="font-weight-bold w-100">
+      ¡Todas las Especialidades en el mismo lugar!
+    </p>
+
+    <div *ngFor="let service of services" class="col-sm treatment m-sm-4 p-4">
+      <img class="thumbnail" alt="thumbnail" src="{{ service.image }}" />
+      <div class="cover">
+        <h4 class="font-weight-light m-5 text-uppercase">
+          {{ service.title }}
+        </h4>
+        <hr />
+        <p>
+          {{ service.description }}
+        </p>
+        <hr />
+      </div>
+    </div>
+  </div>
+
+  <div class="address row mt-5">
+    <img
+      src="../../../assets/background/mapa.png"
+      alt="mapa"
+      width="100%"
+      class="map"
+    />
+    <div class="direction">
+      <p class="font-weight-light">
+        Distribuidor Metropolitano <br />
+        Final Av. Boyacá con autopista Gran Mariscal de Ayacucho (Petare-Guarenas). <br />
+        Urbanización Terrazas del Ávila, Caracas-Miranda. <br />
+        Zona postal 1073. <br />
+        (0212) 234-2313 / 234-9283 <br />
+        Lun-Vie 8:00-16:00
+      </p>
+    </div>
+  </div>
+</div>

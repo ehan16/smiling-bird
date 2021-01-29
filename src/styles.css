@@ -1,1 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background-color: rgb(255, 253, 232);
+}
+
+.content {
+  min-height: 110vh;
+  padding: 7vh 0 0 0;
+}
+
+
+p, label, h1, h2, h3, h4, h5, h6, li {
+  font-family: 'Noto Serif', serif
+}
+
+.font-title {
+  letter-spacing: 3px;
+  text-shadow: 2px 2px rgb(255, 245, 152);
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.form-field {
+  background-color: #e6fcff;
+}
+
+.pale-yellow {
+  background-color: #fffef0;
+}
+
+.main-theme {
+  background: rgba(142,220,235,1);
+}
+
+.address {
+  position: relative;
+}
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 40vh;
+  background-image: url(./assets/background/Teeth_smile-min.png);
+  color: #131313;
+  font-size: 3rem;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  /* For mobile phones: */
+
+  .banner{
+    font-size: 2.5rem;
+  }
+
+  .banner img {
+    height: 30vh;
+  }
+
+  .content{
+    padding: 6.6vh 0 0 0;
+  }
+
+}

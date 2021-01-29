@@ -1,0 +1,37 @@
+<div class="row m-0 pl-5 pr-5">
+
+  <div class="total">
+    <div class="amount">
+      <h3>Ganancias: {{ total }}</h3>
+    </div>
+  </div>
+
+  <ng-container>
+    <!-- <ng-container class="table-wrapper"> -->
+      <table class="table table-responsive-md">
+        <thead>
+          <tr class="bg-info">
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Método</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th>Referencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of paymentlist ">
+            <th scope="row">{{ payment?.patient }}</th>
+            <td>{{ payment?.email }}</td>
+            <td>{{ payment?.method }}</td>
+            <td>{{ payment?.amount }}</td>
+            <td>{{ payment?.date.day}} / {{payment?.date.month}} / {{payment?.date.year }}</td>
+            <td>{{ payment?.voucher }} </td>
+          </tr>
+        </tbody>
+      </table>
+    <!-- </ng-container> -->
+
+</ng-container>
+
+</div>
